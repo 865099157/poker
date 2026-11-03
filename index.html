@@ -34,7 +34,7 @@ html,body{height:100%}
 body{background:#e9e4dc;font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;color:var(--inkpurple);display:flex;justify-content:center}
 #phone{width:100%;max-width:430px;height:100dvh;background:var(--cream);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(50,40,63,.18)}
 /* ---------- 通用 ---------- */
-.view{display:none;flex:1;flex-direction:column;overflow-y:auto;padding:16px 16px 92px}
+.view{display:none;flex:1;flex-direction:column;overflow-y:auto;padding:16px 16px 112px}
 .view.on{display:flex}
 h1,h2,h3{font-weight:800;letter-spacing:.5px}
 .btn{border:none;border-radius:14px;padding:13px 18px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .08s,opacity .15s}
@@ -57,7 +57,7 @@ h1,h2,h3{font-weight:800;letter-spacing:.5px}
 #topbar{padding:14px 16px 8px;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--cream),rgba(250,248,241,0));z-index:5}
 #topbar .logo{font-size:17px;font-weight:900;color:var(--purple)}
 #topbar .logo em{font-style:normal;color:var(--brand2);text-shadow:0 1px 10px rgba(114,82,160,.28)}
-#netbadge{font-size:11px;font-weight:700;color:#3c9a63;background:var(--mint);border-radius:99px;padding:3px 10px;display:flex;align-items:center;gap:5px}
+#netbadge{font-size:11px;font-weight:700;color:#3c9a63;background:var(--mint);border-radius:99px;padding:3px 10px;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
 #netbadge.off{color:#9b93a8;background:#eee9f2}
 #netbadge .dot{width:7px;height:7px;border-radius:50%;background:#3c9a63;animation:pulse 1.6s infinite}
 #netbadge.off .dot{background:#b7b0c2;animation:none}
@@ -110,7 +110,7 @@ h1,h2,h3{font-weight:800;letter-spacing:.5px}
 #tablearea{flex:1;background:radial-gradient(ellipse at 50% 30%,#8d6cb8 0%,var(--purple) 55%,#5d4285 100%);position:relative;display:flex;flex-direction:column;align-items:center;padding-top:10px;overflow:hidden}
 #handno{position:absolute;top:10px;left:14px;color:rgba(255,255,255,.85);font-size:11.5px;font-weight:700;background:rgba(50,40,63,.3);padding:4px 10px;border-radius:99px;backdrop-filter:blur(4px)}
 #stagechip{position:absolute;top:10px;right:14px;color:#fff;font-size:11.5px;font-weight:800;background:rgba(201,131,88,.85);padding:4px 12px;border-radius:99px}
-.oval{width:82%;max-width:340px;background:linear-gradient(180deg,#4a3a60,#3a2d4d);border:6px solid var(--butter);border-radius:100px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:44px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.oval{width:82%;max-width:340px;background:linear-gradient(180deg,#4a3a60,#3a2d4d);border:6px solid var(--butter);border-radius:100px;padding:10px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:38px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
 #potline{color:var(--gold);font-weight:900;font-size:15px;letter-spacing:1px}
 #board{display:flex;gap:6px;min-height:64px;align-items:center}
 .pcard{width:44px;height:62px;background:#fff;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;box-shadow:0 3px 8px rgba(0,0,0,.3);animation:dealin .3s backwards}
@@ -137,7 +137,7 @@ h1,h2,h3{font-weight:800;letter-spacing:.5px}
 .seat .holecards .pcard .r{font-size:9px}.seat .holecards .pcard .s{font-size:8px}
 .dealerbtn{position:absolute;top:-8px;right:-4px;background:#fff;color:var(--purple);font-size:9px;font-weight:900;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
 /* 底部操作区 */
-#actionbar{background:var(--cream);padding:10px 14px 14px;border-radius:26px 26px 0 0;box-shadow:0 -8px 30px rgba(50,40,63,.15);position:relative;z-index:4}
+#actionbar{background:var(--cream);padding:10px 14px calc(14px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;box-shadow:0 -8px 30px rgba(50,40,63,.15);position:relative;z-index:9}
 #advisorrow{display:flex;gap:10px;align-items:stretch;margin-bottom:10px}
 #advisorbox{flex:1;background:#fff;border-radius:14px;padding:9px 12px;box-shadow:var(--shadow)}
 #advisorbox .eq{font-size:19px;font-weight:900;color:var(--purple)}
@@ -149,9 +149,18 @@ h1,h2,h3{font-weight:800;letter-spacing:.5px}
 .strat.used{background:#ddd6e6;color:#a79dbb}
 #actions{display:flex;gap:8px}
 #actions .btn{flex:1;padding:12px 4px;font-size:13.5px}
-#raiseRow{display:none;margin-top:10px;align-items:center;gap:10px}
-#raiseRow input[type=range]{flex:1;accent-color:var(--warmorange)}
-#raiseVal{font-weight:900;color:var(--purple);min-width:64px;text-align:right}
+/* 加注面板：悬浮在操作条上方，不挤压牌桌，也不与底部手势条重叠 */
+#raiseRow{display:none;position:absolute;left:10px;right:10px;bottom:calc(100% + 10px);z-index:12;background:var(--cream);border-radius:18px;padding:12px 14px 14px;box-shadow:0 16px 44px rgba(50,40,63,.38);flex-direction:column;gap:10px;animation:sheetup .22s var(--spring)}
+@keyframes sheetup{from{transform:translateY(14px);opacity:0}}
+#raiseRow .rr-hd{display:flex;align-items:center;gap:8px}
+#raiseRow .rr-t{font-size:11.5px;font-weight:800;color:#9b93a8;letter-spacing:2px}
+#raiseVal{font-weight:900;color:var(--purple);font-size:20px;margin-left:auto;font-variant-numeric:tabular-nums}
+.rr-x{width:26px;height:26px;border-radius:50%;border:none;background:#eee7f2;color:#8f86a0;font-size:12px;cursor:pointer;flex-shrink:0}
+.rr-x:active{transform:scale(.9)}
+#raiseRow input[type=range]{width:100%;height:36px;accent-color:var(--warmorange);margin:0}
+.rr-chips{display:flex;gap:8px}
+.rr-chips button{flex:1;background:#fff;border:1px solid #e7dff0;border-radius:10px;padding:9px 0;font-size:12px;font-weight:800;color:var(--purple);cursor:pointer;font-family:inherit;transition:transform .12s var(--spring)}
+.rr-chips button:active{transform:scale(.94);background:#f6f1fb}
 #newspaper{font-size:11px;color:#8f86a0;padding:7px 14px;background:var(--butter);border-radius:10px;margin-bottom:9px;line-height:1.5;max-height:44px;overflow:hidden}
 /* 弹层 */
 .overlay{position:absolute;inset:0;background:rgba(50,40,63,.55);backdrop-filter:blur(6px);z-index:20;display:none;align-items:center;justify-content:center;padding:24px}
@@ -295,7 +304,9 @@ body{background:#d7d0e4}
 .brandwrap svg{display:block;border-radius:11px}
 .brandwrap.lg{width:76px;height:76px;border-radius:22px;box-shadow:0 14px 36px rgba(90,60,140,.32),inset 0 1px 0 rgba(255,255,255,.5);margin:0 auto 8px}
 .brandwrap.lg svg{border-radius:22px}
-#topbar .logo{display:flex;align-items:center;gap:9px;letter-spacing:.5px}
+#topbar .logo{display:flex;align-items:center;gap:9px;letter-spacing:.5px;min-width:0}
+#topbar .logo .tt{white-space:nowrap;flex-shrink:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+#topbar .logo .tt em{font-style:normal;color:var(--inkpurple)}
 .avbadge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:10px;flex-shrink:0;vertical-align:middle;overflow:hidden;
   background:linear-gradient(140deg,var(--a),var(--b));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.62),inset 0 -1px 0 rgba(0,0,0,.06),0 3px 10px rgba(50,40,63,.20)}
@@ -650,7 +661,7 @@ body.lite .holdmic,
 body.lite .strat{box-shadow:none!important}
 
 /* ===== 联机（房间）页面样式 ===== */
-#view-room,#view-lobby{padding:14px 16px 96px}
+#view-room,#view-lobby{padding:14px 16px 112px}
 .rm-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(50,40,63,.1);margin-bottom:12px}
 body.night .rm-card{background:rgba(36,29,50,.9);border-color:rgba(255,255,255,.1)}
 .rm-code{font-size:34px;font-weight:900;letter-spacing:.22em;color:var(--purple);text-align:center;font-variant-numeric:tabular-nums}
@@ -664,7 +675,9 @@ body.night .rm-seat.filled{background:rgba(48,38,66,.9)}
 .rm-seat .nm{font-size:11px;font-weight:800;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rm-seat .host{font-size:9px;color:var(--warmorange);font-weight:900}
 .rm-seat.empty .nm{color:#b3a9c6;font-weight:700}
-.rm-hint{text-align:center;font-size:12px;color:#8b80a0;margin:10px 0 2px;font-weight:700}
+.rm-hint{text-align:center;font-size:12px;color:#8b80a0;margin:12px 0 2px;font-weight:700;line-height:1.6}
+.rm-hint b{color:#6f6390}
+.rm-lbl{margin-top:14px;font-size:10.5px;font-weight:800;letter-spacing:3px;color:#b3a9c6}
 .rm-link{display:flex;gap:8px;margin-top:10px}
 .rm-link input{flex:1;min-width:0;border:1px solid rgba(114,82,160,.25);border-radius:12px;padding:10px;font-size:12px;background:rgba(255,255,255,.85);color:#32283F}
 body.night .rm-link input{background:rgba(255,255,255,.08);color:#EDE6F6;border-color:rgba(255,255,255,.14)}
@@ -706,7 +719,7 @@ body.lite .sheet{animation-duration:.16s}
 
 /* ---------- 小屏（微信安卓 320-360px）排版保护 ---------- */
 @media (max-width:360px){
-  .view{padding:12px 12px 92px}
+  .view{padding:12px 12px 108px}
   #topbar{padding:12px 12px 6px;gap:7px}
   #topbar .logo{font-size:15px}
   #nettext{display:none}
@@ -745,7 +758,7 @@ body.lite .sheet{animation-duration:.16s}
 
   <!-- 顶栏 -->
   <div id="topbar">
-    <div class="logo"><span data-brand="sm"></span>好好学习 <em>天天德扑</em></div>
+    <div class="logo"><span data-brand="sm"></span><span class="tt">好好学习 <em>天天德扑</em></span></div>
     <div class="spacer"></div>
     <button id="themebtn" aria-label="切换夜间模式" title="夜间模式"></button>
     <button id="bgmbtn" aria-label="背景音乐开关" title="背景音乐"></button>
@@ -850,6 +863,7 @@ body.lite .sheet{animation-duration:.16s}
       <div style="text-align:center;margin-top:2px"><span class="rm-badge wait" id="lbStatus">连接中…</span></div>
       <div id="qrbox"></div>
       <div class="rm-hint" id="lbHint">把这个二维码发到微信群，好友扫码即可加入</div>
+      <div class="rm-lbl">座位</div>
       <div class="rm-seats" id="lbSeats"></div>
       <div class="rm-link">
         <input id="lbLink" readonly value="">
@@ -914,9 +928,15 @@ body.lite .sheet{animation-duration:.16s}
           <button class="btn primary" id="btnRaise" onclick="showRaise()">加注融资</button>
         </div>
         <div id="raiseRow">
+          <div class="rr-hd"><span class="rr-t">加注融资</span><span id="raiseVal">¥0</span><button class="rr-x" onclick="hideRaise()" aria-label="收起加注面板">✕</button></div>
           <input type="range" id="raiseSlider" min="0" max="100" value="0">
-          <div id="raiseVal">¥0</div>
-          <button class="btn orange small" onclick="act('raise')">确认加注</button>
+          <div class="rr-chips">
+            <button onclick="raisePct(.5)">½ 池</button>
+            <button onclick="raisePct(.75)">¾ 池</button>
+            <button onclick="raisePct(1)">满池</button>
+            <button onclick="raisePct(2)">全下</button>
+          </div>
+          <button class="btn orange" style="width:100%;padding:13px 0;font-size:14.5px" onclick="act('raise')">确认加注</button>
         </div>
       </div>
     </div>
@@ -1585,7 +1605,11 @@ function updateActions(p){
   rr.style.display='none';
 }
 $('raiseSlider')&&document.addEventListener('input',e=>{if(e.target.id==='raiseSlider')$('raiseVal').textContent='¥'+e.target.value;});
-function showRaise(){$('raiseRow').style.display='flex';}
+function showRaise(){const rr=$('raiseRow');rr.style.display='flex';}
+function hideRaise(){$('raiseRow').style.display='none';}
+function raisePct(f){const sl=$('raiseSlider');const min=+sl.min,max=+sl.max;
+  const v=(f>=2)?max:Math.round(min+(max-min)*f);   // 全下=顶格，其余按剩余区间取比例
+  sl.value=Math.max(min,Math.min(max,v));$('raiseVal').textContent='¥'+sl.value;try{SFX.tick();}catch(e){}}
 
 function useStrat(k){
   if(NET.on&&NET.seat!==G.cur&&!NET.applying)return toast('还没轮到你');
@@ -2127,6 +2151,7 @@ function setMusicIcon(){
   const s=$('homeMusicState');if(s)s.textContent=musicOn?'正在播放 ·《时间机器》':'《时间机器》 · 顶栏扬声器可开关';
   const mb=$('musicbar');if(mb)mb.classList.toggle('on',musicOn&&!!G);
 }
+let bgmWanted=false;   // 用户「想要音乐」的真实意图：只有手动关才置 false，被打断不丢
 function _tryPlayBGM(){
   if(!bgmEl||!bgmEl.paused)return;
   const p=bgmEl.play();
@@ -2134,29 +2159,42 @@ function _tryPlayBGM(){
 }
 function startBGM(){
   if(!bgmEl){toast('浏览器不支持音频播放');return;}
+  bgmWanted=true;
   _tryPlayBGM();
 }
 /* 播放真正开始时才置位（play() 的 promise 在部分内核会挂起，以 playing 事件为准） */
 if(bgmEl){
   bgmEl.addEventListener('playing',()=>{musicOn=true;if(SAVE)SAVE.bgm=true;save();setMusicIcon();});
-  bgmEl.addEventListener('pause',()=>{if(!document.hidden){musicOn=false;setMusicIcon();}});
-  bgmEl.addEventListener('canplaythrough',()=>{if(!musicOn&&SAVE.bgm!==false&&bgmEl.paused)_tryPlayBGM();});
+  bgmEl.addEventListener('pause',()=>{/* 只改图标不改意图，看门狗会自动拉起 */setMusicIcon();});
+  bgmEl.addEventListener('ended',()=>{try{bgmEl.currentTime=0;_tryPlayBGM();}catch(e){}});
+  bgmEl.addEventListener('canplaythrough',()=>{if(!bgmWanted&&SAVE.bgm!==false&&bgmEl.paused)startBGM();});
+  bgmEl.addEventListener('error',()=>{/* 数据 URI 一般不报错，兜底重建一次 */
+    try{if(!bgmWanted)return;bgmEl.src=BGM_URL;bgmEl.loop=true;_tryPlayBGM();}catch(e){}});
+  /* 看门狗：微信内核抢音频焦点/内存回收导致的静默暂停，3 秒内自动恢复 */
+  setInterval(()=>{
+    if(document.hidden||!bgmWanted||SAVE.bgm===false)return;
+    if(bgmEl.paused){
+      if(bgmEl.readyState>=2)_tryPlayBGM();
+      else if(bgmEl.error){bgmEl.src=BGM_URL;bgmEl.loop=true;}
+    }
+  },3000);
 }
-function stopBGM(){if(bgmEl)bgmEl.pause();musicOn=false;if(SAVE)SAVE.bgm=false;save();setMusicIcon();}
-function toggleMusic(){musicOn?stopBGM():startBGM();}
+function stopBGM(){bgmWanted=false;if(bgmEl)bgmEl.pause();musicOn=false;if(SAVE)SAVE.bgm=false;save();setMusicIcon();}
+function toggleMusic(){(bgmWanted||!bgmEl.paused)?stopBGM():startBGM();}
 /* 测试/调试句柄（const 不上 window，这里显式暴露） */
 try{window.musicOnGet=()=>musicOn;window.bgmElRef=bgmEl;}catch(e){}
 /* 自动播放策略：微信 JSBridge 就绪立即播；否则挂在第一次触摸上（iOS/安卓通用兜底） */
 (function(){
-  const kick=()=>{if(!musicOn&&SAVE.bgm!==false)startBGM();};
+  const kick=()=>{if(!bgmWanted&&SAVE.bgm!==false)startBGM();};
   try{if(typeof WeixinJSBridge!=='undefined')kick();}catch(e){}
   document.addEventListener('WeixinJSBridgeReady',kick,false);
   try{if(typeof wx!=='undefined'&&wx.ready)wx.ready(kick);}catch(e){}
   const once=()=>{kick();document.removeEventListener('touchstart',once,true);document.removeEventListener('pointerdown',once,true);};
   document.addEventListener('touchstart',once,{capture:true,passive:true});
   document.addEventListener('pointerdown',once,{capture:true});
-  document.addEventListener('visibilitychange',()=>{if(!bgmEl||!musicOn)return;
-    if(document.hidden)bgmEl.pause();else bgmEl.play().catch(()=>{});});
+  document.addEventListener('visibilitychange',()=>{if(!bgmEl)return;
+    if(document.hidden){try{bgmEl.pause();}catch(e){}}
+    else if(bgmWanted){_tryPlayBGM();}});
 })();
 /* 音效合成器：短促克制的高级电子音（金币双音 / 轻点 / 筹码 / 发牌 / 胜利琶音） */
 const SFX=(()=>{
@@ -2970,7 +3008,7 @@ function updateLobbyStatus(){
   else if(n<2){el.className='rm-badge wait';el.textContent=`已入座 ${n}/${NET.maxPlayers} · 还差人`;}
   else{el.className='rm-badge';el.textContent=`已入座 ${n}/${NET.maxPlayers}`;}
   if(NET.host){
-    $('lbHint').innerHTML='把二维码发到微信群 → 保持<b>本页面在最前台</b>。<span style="color:#a1483a">切去微信聊天或锁屏时，好友的入座会收不到响应。</span>发完链接记得点左上角返回游戏。';
+    $('lbHint').innerHTML='<b>① 把二维码发到微信群</b>　<b>② 保持本页面在最前台</b><br><span style="color:#a1483a">切去微信聊天或锁屏时，好友入座会收不到响应</span>';
     const btn=$('lbStart');
     btn.style.display=NET.started?'none':'block';
     btn.textContent=`开局（当前 ${n} 人）`;
