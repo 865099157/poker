@@ -1,0 +1,3024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="好好学习 天天德扑">
+<meta name="theme-color" content="#7252A0">
+<meta property="og:type" content="website">
+<meta property="og:title" content="好好学习 天天德扑">
+<meta property="og:description" content="德扑 × 投资 · 情景博弈｜2-8 人同桌，AI 温和建议与幽默点评，陆家嘴行情大厅">
+<title>好好学习 天天德扑</title>
+<style>
+:root{
+  --purple:#7252A0;      /* 卷耳紫 主色 */
+  --inkpurple:#32283F;   /* 墨紫 深 */
+  --mistpurple:#D6C9EA;  /* 雾紫 */
+  --cream:#FAF8F1;       /* 奶油纸 底 */
+  --butter:#F3F2CB;      /* 奶黄 */
+  --warmorange:#C98358;  /* 暖橙 */
+  --brand2:#8D6CB8;      /* 亮卷耳紫 品牌副色（品牌名统一紫调） */
+  --iceblue:#BED1EB;     /* 冰蓝 */
+  --mint:#CFE8D8;        /* 浅绿(柔和) */
+  --coral:#D96C5F;       /* 输/警示 柔和红 */
+  --gold:#E8C47A;
+  --shadow:0 6px 24px rgba(50,40,63,.10);
+  --r:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{background:#e9e4dc;font-family:-apple-system,"PingFang SC","Noto Sans SC",sans-serif;color:var(--inkpurple);display:flex;justify-content:center}
+#phone{width:100%;max-width:430px;height:100dvh;background:var(--cream);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(50,40,63,.18)}
+/* ---------- 通用 ---------- */
+.view{display:none;flex:1;flex-direction:column;overflow-y:auto;padding:16px 16px 92px}
+.view.on{display:flex}
+h1,h2,h3{font-weight:800;letter-spacing:.5px}
+.btn{border:none;border-radius:14px;padding:13px 18px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform .08s,opacity .15s}
+.btn:active{transform:scale(.96)}
+.btn.primary{background:var(--purple);color:#fff;box-shadow:0 6px 16px rgba(114,82,160,.35)}
+.btn.orange{background:var(--warmorange);color:#fff;box-shadow:0 6px 16px rgba(201,131,88,.35)}
+.btn.ghost{background:#fff;color:var(--purple);border:1.5px solid var(--mistpurple)}
+.btn.soft{background:var(--mistpurple);color:var(--inkpurple)}
+.btn.small{padding:8px 12px;font-size:13px;border-radius:11px}
+.btn:disabled{opacity:.35;pointer-events:none}
+.card{background:#fff;border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin-bottom:12px}
+.tag{display:inline-block;font-size:11px;padding:3px 9px;border-radius:99px;background:var(--mistpurple);color:var(--purple);font-weight:700;margin-right:6px}
+.tag.o{background:var(--butter);color:#9a7a2e}
+.row{display:flex;align-items:center;gap:10px}
+.spacer{flex:1}
+.muted{color:#9b93a8;font-size:12px}
+.input{width:100%;border:1.5px solid var(--mistpurple);border-radius:12px;padding:12px 14px;font-size:15px;font-family:inherit;background:#fff;color:var(--inkpurple)}
+.input:focus{outline:none;border-color:var(--purple)}
+/* ---------- 顶部 ---------- */
+#topbar{padding:14px 16px 8px;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,var(--cream),rgba(250,248,241,0));z-index:5}
+#topbar .logo{font-size:17px;font-weight:900;color:var(--purple)}
+#topbar .logo em{font-style:normal;color:var(--brand2);text-shadow:0 1px 10px rgba(114,82,160,.28)}
+#netbadge{font-size:11px;font-weight:700;color:#3c9a63;background:var(--mint);border-radius:99px;padding:3px 10px;display:flex;align-items:center;gap:5px}
+#netbadge.off{color:#9b93a8;background:#eee9f2}
+#netbadge .dot{width:7px;height:7px;border-radius:50%;background:#3c9a63;animation:pulse 1.6s infinite}
+#netbadge.off .dot{background:#b7b0c2;animation:none}
+@keyframes pulse{50%{opacity:.3}}
+/* ---------- 底部导航 ---------- */
+#tabbar{position:absolute;bottom:0;left:0;right:0;height:76px;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-top:1px solid #eee7f2;display:flex;z-index:6;padding-bottom:6px}
+#tabbar .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10.5px;color:#a79dbb;cursor:pointer;font-weight:600}
+#tabbar .tab .ico{font-size:21px;filter:grayscale(1) opacity(.5)}
+#tabbar .tab.on{color:var(--purple)}
+#tabbar .tab.on .ico{filter:none}
+/* ---------- 首页 ---------- */
+.hero{text-align:center;padding:26px 0 8px}
+.hero .big{font-size:34px;font-weight:900;color:var(--purple);letter-spacing:2px}
+.hero .big em{font-style:normal;color:var(--brand2);text-shadow:0 2px 16px rgba(114,82,160,.32)}
+.hero .sub{margin-top:8px;font-size:13px;color:#9b93a8;letter-spacing:4px}
+.suits{font-size:20px;margin-top:10px;letter-spacing:10px;color:var(--mistpurple)}
+.menu{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.menu .m{background:#fff;border-radius:var(--r);padding:18px 16px;box-shadow:var(--shadow);cursor:pointer;transition:transform .1s}
+.menu .m:active{transform:scale(.97)}
+.menu .m .ico{font-size:26px}
+.menu .m .t{font-weight:800;font-size:15px;margin-top:8px;color:var(--inkpurple)}
+.menu .m .d{font-size:11.5px;color:#9b93a8;margin-top:3px;line-height:1.5}
+.menu .m.wide{grid-column:span 2;background:linear-gradient(135deg,var(--purple),#8d6cb8);color:#fff}
+.menu .m.wide .t{color:#fff}.menu .m.wide .d{color:rgba(255,255,255,.75)}
+/* ---------- 档案 ---------- */
+.avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+.avatar-grid .av{aspect-ratio:1;border-radius:16px;background:var(--butter);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;border:2.5px solid transparent}
+.avatar-grid .av.on{border-color:var(--purple);background:var(--mistpurple)}
+.avbig{width:84px;height:84px;border-radius:26px;background:linear-gradient(135deg,var(--mistpurple),var(--butter));display:flex;align-items:center;justify-content:center;font-size:44px;flex-shrink:0;box-shadow:var(--shadow)}
+.statgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.stat{background:var(--cream);border-radius:14px;padding:12px 14px}
+.stat .v{font-size:19px;font-weight:900;color:var(--purple)}
+.stat .k{font-size:11px;color:#9b93a8;margin-top:2px}
+.title-chip{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--inkpurple),var(--purple));color:var(--gold);font-size:12px;font-weight:800;padding:6px 14px;border-radius:99px;letter-spacing:1px}
+/* ---------- 开局设置 ---------- */
+.roster{display:flex;flex-direction:column;gap:10px}
+.roster .p{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:10px 12px;box-shadow:var(--shadow)}
+.roster .p .pav{width:44px;height:44px;border-radius:14px;background:var(--butter);display:flex;align-items:center;justify-content:center;font-size:22px}
+.roster .p input{border:none;font-size:15px;font-weight:700;flex:1;min-width:0;background:transparent;font-family:inherit;color:var(--inkpurple)}
+.roster .p input:focus{outline:none}
+.delbtn{width:30px;height:30px;border-radius:10px;border:none;background:#f4e9e7;color:var(--coral);font-weight:900;cursor:pointer;font-size:15px}
+.addbtn{border:2px dashed var(--mistpurple);border-radius:16px;padding:14px;background:none;color:var(--purple);font-weight:700;width:100%;cursor:pointer;font-family:inherit;font-size:14px}
+.chipsel{display:flex;gap:8px;margin:10px 0 16px}
+.chipsel .c{flex:1;text-align:center;background:#fff;border-radius:12px;padding:9px 4px;font-weight:800;font-size:13px;color:var(--purple);cursor:pointer;border:2px solid transparent}
+.chipsel .c.on{border-color:var(--purple);background:var(--mistpurple)}
+/* ---------- 游戏桌 ---------- */
+#view-game{padding:0 0 0 0;display:none;flex-direction:column;overflow:hidden}
+#view-game.on{display:flex}
+#gamewrap{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+#tablearea{flex:1;background:radial-gradient(ellipse at 50% 30%,#8d6cb8 0%,var(--purple) 55%,#5d4285 100%);position:relative;display:flex;flex-direction:column;align-items:center;padding-top:10px;overflow:hidden}
+#handno{position:absolute;top:10px;left:14px;color:rgba(255,255,255,.85);font-size:11.5px;font-weight:700;background:rgba(50,40,63,.3);padding:4px 10px;border-radius:99px;backdrop-filter:blur(4px)}
+#stagechip{position:absolute;top:10px;right:14px;color:#fff;font-size:11.5px;font-weight:800;background:rgba(201,131,88,.85);padding:4px 12px;border-radius:99px}
+.oval{width:82%;max-width:340px;background:linear-gradient(180deg,#4a3a60,#3a2d4d);border:6px solid var(--butter);border-radius:100px;padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:44px;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+#potline{color:var(--gold);font-weight:900;font-size:15px;letter-spacing:1px}
+#board{display:flex;gap:6px;min-height:64px;align-items:center}
+.pcard{width:44px;height:62px;background:#fff;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;box-shadow:0 3px 8px rgba(0,0,0,.3);animation:dealin .3s backwards}
+.pcard .r{font-size:17px;line-height:1.05}
+.pcard .s{font-size:14px;line-height:1}
+.pcard.red{color:var(--coral)}
+.pcard.back{background:linear-gradient(135deg,var(--purple),var(--inkpurple));position:relative}
+.pcard.back::after{content:"◈";color:var(--mistpurple);font-size:18px}
+@keyframes dealin{from{transform:translateY(-14px) scale(.7);opacity:0}}
+#seats{position:absolute;inset:0;pointer-events:none}
+.seat{position:absolute;width:86px;text-align:center;pointer-events:auto}
+.seat .bubble{background:rgba(255,255,255,.94);border-radius:14px;padding:5px 6px 6px;box-shadow:0 4px 14px rgba(0,0,0,.25);position:relative}
+.seat.act .bubble{outline:3px solid var(--warmorange);animation:glow 1s infinite}
+@keyframes glow{50%{outline-color:var(--butter)}}
+.seat .fav{width:30px;height:30px;border-radius:10px;background:var(--butter);display:flex;align-items:center;justify-content:center;font-size:16px;margin:0 auto 2px}
+.seat .fn{font-size:10.5px;font-weight:800;color:var(--inkpurple);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.seat .fs{font-size:10.5px;color:var(--purple);font-weight:800}
+.seat .fb{font-size:9.5px;color:#fff;background:var(--warmorange);border-radius:99px;padding:1px 7px;display:inline-block;margin-top:2px}
+.seat.folded{opacity:.45}
+.seat .holecards{display:flex;gap:3px;justify-content:center;margin-top:3px}
+.seat .holecards .pcard{width:22px;height:31px;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.seat .holecards .pcard .r{font-size:9px}.seat .holecards .pcard .s{font-size:8px}
+.dealerbtn{position:absolute;top:-8px;right:-4px;background:#fff;color:var(--purple);font-size:9px;font-weight:900;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+/* 底部操作区 */
+#actionbar{background:var(--cream);padding:10px 14px 14px;border-radius:26px 26px 0 0;box-shadow:0 -8px 30px rgba(50,40,63,.15);position:relative;z-index:4}
+#advisorrow{display:flex;gap:10px;align-items:stretch;margin-bottom:10px}
+#advisorbox{flex:1;background:#fff;border-radius:14px;padding:9px 12px;box-shadow:var(--shadow)}
+#advisorbox .eq{font-size:19px;font-weight:900;color:var(--purple)}
+#advisorbox .eq small{font-size:10px;color:#9b93a8;font-weight:600}
+#advisortip{font-size:11.5px;color:var(--inkpurple);margin-top:2px;line-height:1.45}
+#stratcards{display:flex;gap:6px;flex-direction:column;justify-content:center}
+.strat{background:linear-gradient(135deg,var(--inkpurple),var(--purple));color:#fff;border-radius:11px;padding:7px 10px;font-size:10.5px;font-weight:800;cursor:pointer;border:none;font-family:inherit;text-align:center;line-height:1.3;min-width:74px}
+.strat:disabled{opacity:.3}
+.strat.used{background:#ddd6e6;color:#a79dbb}
+#actions{display:flex;gap:8px}
+#actions .btn{flex:1;padding:12px 4px;font-size:13.5px}
+#raiseRow{display:none;margin-top:10px;align-items:center;gap:10px}
+#raiseRow input[type=range]{flex:1;accent-color:var(--warmorange)}
+#raiseVal{font-weight:900;color:var(--purple);min-width:64px;text-align:right}
+#newspaper{font-size:11px;color:#8f86a0;padding:7px 14px;background:var(--butter);border-radius:10px;margin-bottom:9px;line-height:1.5;max-height:44px;overflow:hidden}
+/* 弹层 */
+.overlay{position:absolute;inset:0;background:rgba(50,40,63,.55);backdrop-filter:blur(6px);z-index:20;display:none;align-items:center;justify-content:center;padding:24px}
+.overlay.on{display:flex}
+.sheet{background:var(--cream);border-radius:24px;padding:22px;width:100%;max-height:82%;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.4);animation:pop .25s}
+@keyframes pop{from{transform:scale(.9);opacity:0}}
+.sheet h3{font-size:18px;color:var(--purple);margin-bottom:12px}
+#passname{font-size:22px;font-weight:900;color:var(--warmorange);margin:10px 0}
+/* 展示牌 & 结果 */
+#resultcards{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.resrow{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.resrow .rn{font-weight:800;flex:1}
+.resrow .win{color:var(--purple)}
+.resrow .rh{font-size:12px;color:var(--warmorange);font-weight:800}
+/* ---------- 聊天抽屉 ---------- */
+#chatbtn{position:absolute;right:12px;bottom:190px;z-index:8;width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 6px 20px rgba(0,0,0,.3);border:none;font-size:20px;cursor:pointer}
+#voicebtn{position:absolute;right:12px;bottom:244px;z-index:8;width:46px;height:46px;border-radius:50%;background:var(--mint);box-shadow:0 6px 20px rgba(0,0,0,.2);border:none;font-size:18px;cursor:pointer}
+#micstate{position:absolute;left:14px;bottom:196px;z-index:8;display:none;align-items:center;gap:6px;background:rgba(255,255,255,.92);border-radius:99px;padding:5px 12px;font-size:11px;font-weight:800;color:#3c9a63}
+#micstate.on{display:flex}
+#micstate .eqbars{display:flex;gap:2px;align-items:flex-end;height:12px}
+#micstate .eqbars i{width:3px;background:#3c9a63;border-radius:2px;animation:eq .8s infinite}
+#micstate .eqbars i:nth-child(2){animation-delay:.2s}#micstate .eqbars i:nth-child(3){animation-delay:.4s}
+@keyframes eq{50%{height:3px}0%,100%{height:12px}}
+#chatdrawer{position:absolute;left:0;right:0;bottom:0;height:62%;background:var(--cream);border-radius:26px 26px 0 0;z-index:15;display:none;flex-direction:column;box-shadow:0 -10px 40px rgba(0,0,0,.35);transform:translateY(100%);transition:transform .28s}
+#chatdrawer.on{display:flex;transform:translateY(0)}
+#chatdrawer .hd{padding:14px 16px 8px;display:flex;align-items:center}
+#chatmsgs{flex:1;overflow-y:auto;padding:6px 16px;display:flex;flex-direction:column;gap:8px}
+.cmsg{max-width:78%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.45;box-shadow:var(--shadow)}
+.cmsg.me{align-self:flex-end;background:var(--purple);color:#fff;border-bottom-right-radius:4px}
+.cmsg.them{align-self:flex-start;background:#fff;border-bottom-left-radius:4px}
+.cmsg .who{font-size:10px;font-weight:800;color:var(--warmorange);margin-bottom:2px}
+.cmsg.me .who{color:var(--butter)}
+.cmsg.voice{display:flex;align-items:center;gap:8px;cursor:pointer;min-width:110px}
+.cmsg.voice .bars{display:flex;gap:2px;align-items:center;height:16px}
+.cmsg.voice .bars i{width:3px;border-radius:2px;background:currentColor;opacity:.7}
+.cmsg.voice.playing .bars i{animation:eq .6s infinite}
+#chatinputrow{display:flex;gap:8px;padding:10px 14px 18px;align-items:center}
+#chatinput{flex:1}
+.holdmic{background:var(--mint);color:#2e7a4d;font-weight:800;border:none;border-radius:12px;padding:0 16px;font-family:inherit;font-size:13px;cursor:pointer;user-select:none}
+/* ---------- 行情大厅 ---------- */
+#view-market{background:var(--inkpurple);color:#dfe6f2;padding-bottom:100px}
+#view-market .ljz-hd{padding:18px 4px 6px;display:flex;align-items:baseline;gap:8px}
+#view-market .ljz-hd h2{color:#fff;font-size:20px;letter-spacing:2px}
+#view-market .ljz-hd .live{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:3px}
+.ticker{overflow:hidden;background:#251d33;border-radius:12px;padding:8px 0;margin-bottom:12px;white-space:nowrap}
+.ticker .inner{display:inline-block;animation:tick 22s linear infinite;font-size:12px;font-weight:700}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.up{color:#ff8a7a}.down{color:#6fd39a}
+.idxrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+.idx{background:#251d33;border-radius:14px;padding:10px}
+.idx .n{font-size:10.5px;color:#9a8fb8}
+.idx .v{font-size:16px;font-weight:900;margin-top:2px}
+.idx .c{font-size:10.5px;font-weight:800}
+.stock{background:#251d33;border-radius:16px;padding:13px 14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.stock .info{flex:1;min-width:0}
+.stock .nm{font-weight:800;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stock .sb{font-size:10.5px;color:#9a8fb8;margin-top:2px}
+.stock .px{text-align:right}
+.stock .price{font-size:16px;font-weight:900}
+.stock .chg{font-size:11px;font-weight:800}
+.stock canvas{display:block}
+.balband{background:linear-gradient(135deg,var(--purple),#8d6cb8);border-radius:16px;padding:14px 16px;color:#fff;display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.balband .bv{font-size:22px;font-weight:900}
+.balband .bk{font-size:10.5px;opacity:.75}
+.sectortabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:10px}
+.sectortabs .sc{flex:none;background:#251d33;color:#9a8fb8;border-radius:99px;padding:7px 14px;font-size:11.5px;font-weight:800;cursor:pointer;white-space:nowrap;border:1px solid transparent}
+.sectortabs .sc.on{background:linear-gradient(135deg,var(--purple),#8d6cb8);color:#fff;border-color:var(--gold)}
+.sectorband{background:#251d33;border-radius:14px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sectorband .ev{font-size:11.5px;color:var(--gold);font-weight:800;line-height:1.5;flex:1}
+.sectorband .chgmini{font-size:11px;font-weight:800;white-space:nowrap}
+.sc-badge{display:inline-block;font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:99px;background:rgba(114,82,160,.25);color:var(--mistpurple);margin-left:2px;vertical-align:middle}
+.hot{box-shadow:inset 0 0 0 1px var(--gold)}
+/* ---------- 复盘室 ---------- */
+.handcard{background:#fff;border-radius:16px;padding:14px;box-shadow:var(--shadow);margin-bottom:10px;cursor:pointer}
+.handcard .hn{font-weight:900;color:var(--purple)}
+.handcard .hd2{font-size:12px;color:#9b93a8;margin-top:3px;line-height:1.5}
+.replaystage{background:var(--inkpurple);border-radius:16px;padding:16px;color:#fff;margin-bottom:12px;min-height:130px}
+.rp-step{background:var(--cream);border-radius:12px;padding:10px 12px;font-size:12.5px;margin-bottom:6px;line-height:1.5}
+.rp-step b{color:var(--purple)}
+.rp-step.bad{background:#f9e9e6}.rp-step.good{background:#e6f3ea}
+.scorebig{font-size:42px;font-weight:900;color:var(--purple)}
+/* ---------- 排行 ---------- */
+.rankrow{display:flex;align-items:center;gap:12px;background:#fff;border-radius:14px;padding:11px 14px;margin-bottom:8px;box-shadow:var(--shadow)}
+.rankrow .pos{width:26px;font-weight:900;font-size:16px;color:var(--warmorange)}
+.rankrow .nm{flex:1;font-weight:800}
+.rankrow .pts{font-weight:900;color:var(--purple)}
+.ach{display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:12px 14px;margin-bottom:8px;box-shadow:var(--shadow)}
+.ach.locked{opacity:.4;filter:grayscale(1)}
+.ach .ai{font-size:26px}
+/* ---------- 音乐条 ---------- */
+#musicbar{position:absolute;left:14px;bottom:196px;z-index:8;display:none;align-items:center;gap:8px;background:rgba(50,40,63,.85);color:#fff;border-radius:99px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer}
+#musicbar.on{display:flex}
+#musicbar .disc{animation:spin 2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.toast{position:absolute;left:50%;top:80px;transform:translateX(-50%);background:var(--inkpurple);color:#fff;padding:10px 20px;border-radius:99px;font-size:13px;font-weight:700;z-index:50;animation:pop .2s;box-shadow:0 8px 30px rgba(0,0,0,.4);max-width:85%;text-align:center}
+::-webkit-scrollbar{display:none}
+
+/* ============================================================
+   LIQUID GLASS · 流体玻璃主题（iOS 风格）
+   半透明多层折射 + 极光流体背景 + 内高光描边；浅色页与陆家嘴深色页分别处理
+   ============================================================ */
+:root{
+  --g-bg:rgba(255,255,255,.52);
+  --g-bg2:rgba(255,255,255,.72);
+  --g-line:rgba(255,255,255,.82);
+  --g-blur:blur(24px) saturate(190%);
+  --g-shadow:0 12px 34px rgba(52,36,80,.10),0 2px 8px rgba(52,36,80,.05);
+  --g-inner:inset 0 1px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.20),inset 0 -1px 0 rgba(255,255,255,.34);
+  --dg-bg:rgba(38,29,56,.44);
+  --dg-line:rgba(255,255,255,.19);
+  --dg-inner:inset 0 1px 0 rgba(255,255,255,.20),inset 0 0 0 1px rgba(255,255,255,.05),inset 0 -1px 0 rgba(255,255,255,.06);
+}
+body{background:#d7d0e4}
+#phone{
+  background:linear-gradient(158deg,rgba(250,248,241,.80) 0%,rgba(245,238,251,.72) 45%,rgba(234,243,251,.78) 100%);
+  box-shadow:0 0 0 1px rgba(255,255,255,.62),0 30px 90px rgba(70,48,110,.30);
+}
+/* 流体极光底层：让玻璃有东西可折射 */
+#phone>.aurora{position:absolute;inset:-28%;z-index:0;pointer-events:none;filter:blur(48px);opacity:.92}
+#phone>.aurora i{position:absolute;display:block;border-radius:50%;animation:drift 26s ease-in-out infinite alternate}
+#phone>.aurora i:nth-child(1){width:62%;height:44%;left:-6%;top:0%;background:radial-gradient(circle at 45% 45%,rgba(158,120,205,.78),rgba(158,120,205,0) 70%);animation-duration:29s}
+#phone>.aurora i:nth-child(2){width:56%;height:40%;right:-8%;top:14%;background:radial-gradient(circle at 50% 50%,rgba(190,209,235,.82),rgba(190,209,235,0) 70%);animation-duration:34s;animation-delay:-8s}
+#phone>.aurora i:nth-child(3){width:54%;height:42%;left:8%;bottom:6%;background:radial-gradient(circle at 50% 50%,rgba(201,131,88,.52),rgba(201,131,88,0) 70%);animation-duration:31s;animation-delay:-14s}
+#phone>.aurora i:nth-child(4){width:46%;height:38%;right:2%;bottom:20%;background:radial-gradient(circle at 50% 50%,rgba(207,232,216,.70),rgba(207,232,216,0) 70%);animation-duration:37s;animation-delay:-5s}
+#phone>.aurora i:nth-child(5){width:42%;height:34%;left:34%;top:34%;background:radial-gradient(circle at 50% 50%,rgba(243,242,203,.58),rgba(243,242,203,0) 70%);animation-duration:41s;animation-delay:-20s}
+@keyframes drift{0%{transform:translate(0,0) scale(1)}50%{transform:translate(7%,-9%) scale(1.16)}100%{transform:translate(-6%,8%) scale(.9)}}
+/* 极细科技网格 */
+#phone::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(114,82,160,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(114,82,160,.045) 1px,transparent 1px);
+  background-size:30px 30px;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 82%);mask-image:linear-gradient(180deg,rgba(0,0,0,.75),transparent 82%)}
+.view{position:relative;z-index:1;background:transparent}
+#topbar{position:relative;z-index:5;background:linear-gradient(180deg,rgba(250,248,241,.55),rgba(250,248,241,0))}
+/* --- 图标通用 --- */
+.gic{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;vertical-align:middle;color:currentColor}
+.gic svg{width:100%;height:100%;display:block}
+.eico{display:inline-flex;width:1.05em;height:1.05em;vertical-align:-.19em;margin-right:.14em;opacity:.92}
+.eico svg{width:100%;height:100%}
+.brandwrap{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:34px;height:34px;border-radius:11px;
+  box-shadow:0 6px 18px rgba(90,60,140,.28),inset 0 1px 0 rgba(255,255,255,.5);vertical-align:middle}
+.brandwrap svg{display:block;border-radius:11px}
+.brandwrap.lg{width:76px;height:76px;border-radius:22px;box-shadow:0 14px 36px rgba(90,60,140,.32),inset 0 1px 0 rgba(255,255,255,.5);margin:0 auto 8px}
+.brandwrap.lg svg{border-radius:22px}
+#topbar .logo{display:flex;align-items:center;gap:9px;letter-spacing:.5px}
+.avbadge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:10px;flex-shrink:0;vertical-align:middle;overflow:hidden;
+  background:linear-gradient(140deg,var(--a),var(--b));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62),inset 0 -1px 0 rgba(0,0,0,.06),0 3px 10px rgba(50,40,63,.20)}
+.avbadge svg{width:72%;height:72%;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.12))}
+.avbadge{font-size:18px}
+.avbadge .avem{font-style:normal;font-weight:400;line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.18))}
+.avbadge img{width:100%;height:100%;object-fit:cover;display:block}
+.avbig .avbadge,.avatar-grid .av .avbadge,.rm-av .avbadge{font-size:30px}
+/* --- 浅色玻璃组 --- */
+.card,.menu .m,.roster .p,.stat,.input,.chipsel .c,.addbtn,.handcard,.rankrow,.ach,.resrow,
+.cmsg.them,.rp-step,.sheet,#advisorbox,#actionbar,#tabbar,#chatdrawer,.holdmic,.toast,
+.avbig,.avatar-grid .av,.delbtn,.btn.ghost,.btn.soft{
+  background:var(--g-bg);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);
+  border:1px solid var(--g-line);
+  box-shadow:var(--g-shadow),var(--g-inner);
+}
+.card,.menu .m,.handcard{position:relative;overflow:hidden}
+.sheet,.rankrow,.ach{position:relative}
+.card::before,.menu .m::before,.sheet::before,.handcard::before,.rankrow::before,.ach::before{
+  content:"";position:absolute;left:8%;right:8%;top:0;height:1px;pointer-events:none;z-index:2;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent)}
+.sheet{background:var(--g-bg2);overflow-y:auto}
+.input{background:rgba(255,255,255,.60)}
+.input:focus{border-color:rgba(114,82,160,.75);box-shadow:0 0 0 4px rgba(114,82,160,.12),var(--g-inner)}
+.stat{background:rgba(255,255,255,.46)}
+.chipsel .c{background:rgba(255,255,255,.56)}
+.chipsel .c.on{background:linear-gradient(135deg,rgba(214,201,234,.85),rgba(255,255,255,.6));border:2px solid rgba(114,82,160,.7)}
+.addbtn{background:rgba(255,255,255,.34);border:1.5px dashed rgba(114,82,160,.5)}
+.tag{background:rgba(214,201,234,.72);border:1px solid rgba(255,255,255,.8);backdrop-filter:blur(10px)}
+.tag.o{background:rgba(243,242,203,.78)}
+.title-chip{background:linear-gradient(135deg,rgba(50,40,63,.9),rgba(114,82,160,.86));border:1px solid rgba(232,196,122,.55);
+  box-shadow:0 8px 22px rgba(50,40,63,.28),inset 0 1px 0 rgba(255,255,255,.28);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.btn{backdrop-filter:blur(14px) saturate(160%);border:1px solid rgba(255,255,255,.35)}
+.btn.primary{background:linear-gradient(135deg,rgba(114,82,160,.94),rgba(141,108,184,.86));color:#fff;
+  border-color:rgba(255,255,255,.38);box-shadow:0 10px 26px rgba(100,66,155,.34),inset 0 1px 0 rgba(255,255,255,.45);position:relative;overflow:hidden}
+.btn.orange{background:linear-gradient(135deg,rgba(201,131,88,.94),rgba(216,164,116,.86));color:#fff;
+  border-color:rgba(255,255,255,.4);box-shadow:0 10px 26px rgba(180,110,70,.3),inset 0 1px 0 rgba(255,255,255,.45)}
+.btn.ghost{color:var(--purple)}
+.btn.soft{background:rgba(214,201,234,.62);color:var(--inkpurple)}
+.btn.primary::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(110deg,transparent 32%,rgba(255,255,255,.30) 48%,transparent 64%);
+  background-size:260% 100%;animation:shimmer 5s linear infinite}
+@keyframes shimmer{to{background-position:-260% 0}}
+/* 首页菜单图标徽章 */
+.menu .m .ico{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  color:var(--purple);margin-bottom:6px;
+  background:linear-gradient(140deg,rgba(214,201,234,.85),rgba(255,255,255,.55));
+  border:1px solid rgba(255,255,255,.9);box-shadow:inset 0 1px 0 #fff,0 5px 14px rgba(114,82,160,.16)}
+.menu .m .ico svg{width:24px;height:24px}
+.menu .m[data-k="chart"] .ico{color:#B06A3C;background:linear-gradient(140deg,rgba(243,242,203,.95),rgba(255,255,255,.6))}
+.menu .m[data-k="user"] .ico{color:#5E82B8;background:linear-gradient(140deg,rgba(190,209,235,.9),rgba(255,255,255,.6))}
+.menu .m[data-k="replay"] .ico{color:#7FAF94;background:linear-gradient(140deg,rgba(207,232,216,.92),rgba(255,255,255,.6))}
+.menu .m[data-k="trophy"] .ico{color:#C98358;background:linear-gradient(140deg,rgba(240,217,168,.92),rgba(255,255,255,.6))}
+.menu .m[data-k="music"] .ico{color:#B57BA8;background:linear-gradient(140deg,rgba(224,194,236,.9),rgba(255,255,255,.6))}
+.menu .m.wide{background:linear-gradient(135deg,rgba(114,82,160,.90),rgba(157,124,199,.82));color:#fff;
+  border-color:rgba(255,255,255,.4);box-shadow:0 16px 38px rgba(90,60,140,.32),inset 0 1px 0 rgba(255,255,255,.42);position:relative;overflow:hidden}
+.menu .m.wide::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.22) 48%,transparent 66%);background-size:260% 100%;animation:shimmer 6s linear infinite}
+.menu .m.wide .ico{color:#fff;background:rgba(255,255,255,.20);border-color:rgba(255,255,255,.42);box-shadow:inset 0 1px 0 rgba(255,255,255,.34)}
+.menu .m.wide .ico svg{width:26px;height:26px}
+.suits{display:flex;gap:10px;justify-content:center;align-items:center;letter-spacing:0;margin-top:12px}
+.suits .su{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+  background:var(--g-bg);border:1px solid var(--g-line);box-shadow:var(--g-shadow),var(--g-inner);
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur)}
+.suits .su svg{width:15px;height:15px}
+.suits .su:nth-child(1),.suits .su:nth-child(4){color:var(--inkpurple)}
+.suits .su:nth-child(2),.suits .su:nth-child(3){color:var(--coral)}
+.hero .big{text-shadow:0 2px 18px rgba(114,82,160,.18)}
+.hero .sub{color:#7d7291}
+/* 档案 / 名册头像容器 */
+.avbig{padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.avbig .avbadge{width:100%;height:100%;border-radius:26px}
+.avbig .avbadge svg{width:64%;height:64%}
+.avatar-grid .av{padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,.5)}
+.avatar-grid .av .avbadge{width:100%;height:100%;border-radius:14px}
+.avatar-grid .av.on{border-color:var(--purple);box-shadow:0 0 0 3px rgba(114,82,160,.18),var(--g-shadow),var(--g-inner)}
+.roster .p .pav{padding:0;overflow:hidden;background:transparent;box-shadow:none}
+.roster .p .pav .avbadge{width:100%;height:100%;border-radius:14px}
+/* 顶栏状态 / 导航 */
+#netbadge{background:rgba(207,232,216,.72);border:1px solid rgba(255,255,255,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+#netbadge.off{background:rgba(238,233,242,.72)}
+#tabbar{background:rgba(255,255,255,.56);border-top:1px solid rgba(255,255,255,.8);
+  -webkit-backdrop-filter:blur(28px) saturate(200%);backdrop-filter:blur(28px) saturate(200%);
+  box-shadow:0 -8px 34px rgba(52,36,80,.12),inset 0 1px 0 rgba(255,255,255,.9)}
+#tabbar .tab .ico{width:23px;height:23px;font-size:0;filter:none;color:#a79dbb;margin-bottom:2px}
+#tabbar .tab.on .ico{color:var(--purple);filter:drop-shadow(0 2px 6px rgba(114,82,160,.45))}
+#tabbar .tab.on{color:var(--purple)}
+/* 牌桌：深色流体玻璃 */
+#tablearea{
+  background:
+   radial-gradient(ellipse 70% 48% at 18% 10%,rgba(186,146,231,.46),transparent 66%),
+   radial-gradient(ellipse 62% 46% at 88% 80%,rgba(201,131,88,.34),transparent 66%),
+   radial-gradient(ellipse 95% 72% at 50% 34%,rgba(141,108,184,.88),rgba(93,66,133,.95) 60%,rgba(48,35,72,1));
+}
+#tablearea::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:34px 34px;-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 78%);mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 78%)}
+#handno,#stagechip{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;
+  -webkit-backdrop-filter:blur(16px) saturate(160%);backdrop-filter:blur(16px) saturate(160%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 4px 14px rgba(0,0,0,.15)}
+#stagechip{background:rgba(201,131,88,.55);border-color:rgba(255,255,255,.38)}
+.oval{background:linear-gradient(180deg,rgba(74,58,96,.58),rgba(42,32,60,.56));
+  border:1px solid rgba(243,242,203,.55);
+  box-shadow:0 22px 54px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.36),inset 0 -1px 0 rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%)}
+.pcard{background:rgba(255,255,255,.94);border:1px solid rgba(255,255,255,.92);
+  box-shadow:0 4px 12px rgba(0,0,0,.26),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.pcard.back{background:linear-gradient(140deg,rgba(114,82,160,.92),rgba(50,40,63,.94));border-color:rgba(255,255,255,.3);
+  box-shadow:0 4px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.38)}
+.seat .bubble{background:rgba(255,255,255,.76);border:1px solid rgba(255,255,255,.88);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:0 8px 22px rgba(0,0,0,.24),inset 0 1px 0 #fff}
+.seat .fav{padding:0;background:transparent;box-shadow:none;margin-bottom:3px;display:flex;justify-content:center}
+.seat .fav .avbadge{width:30px;height:30px;border-radius:10px}
+.dealerbtn{background:rgba(255,255,255,.9);border:1px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.3),inset 0 1px 0 #fff;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.seat .fb{background:rgba(201,131,88,.9);border:1px solid rgba(255,255,255,.4)}
+/* 操作区玻璃 */
+#actionbar{background:rgba(250,248,241,.62);border-top:1px solid rgba(255,255,255,.85);
+  -webkit-backdrop-filter:blur(26px) saturate(190%);backdrop-filter:blur(26px) saturate(190%);
+  box-shadow:0 -10px 36px rgba(50,40,63,.18),inset 0 1px 0 rgba(255,255,255,.9)}
+#advisorbox{background:rgba(255,255,255,.62)}
+.strat{background:linear-gradient(135deg,rgba(50,40,63,.86),rgba(114,82,160,.82));border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 6px 16px rgba(50,40,63,.24),inset 0 1px 0 rgba(255,255,255,.28);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.strat.used{background:rgba(221,214,230,.6);color:#8b8199}
+#newspaper{background:rgba(243,242,203,.62);border:1px solid rgba(255,255,255,.8);color:#7a6a3c;
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+#chatbtn,#voicebtn{background:rgba(255,255,255,.68);border:1px solid rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:0 8px 24px rgba(0,0,0,.28),inset 0 1px 0 #fff;color:var(--purple);font-size:0}
+#chatbtn .gic,#voicebtn .gic{width:22px;height:22px}
+#voicebtn{background:rgba(207,232,216,.78);color:#2e7a4d}
+#micstate{background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 6px 18px rgba(0,0,0,.2),inset 0 1px 0 #fff}
+#micstate .gic{width:14px;height:14px;color:#3c9a63;margin-right:2px}
+#musicbar{background:rgba(50,40,63,.68);border:1px solid rgba(255,255,255,.24);
+  -webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);
+  box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.22)}
+#musicbar .disc{display:inline-flex;width:16px;height:16px;color:var(--gold);animation:spin 3.4s linear infinite}
+.toast{background:rgba(50,40,63,.78);border:1px solid rgba(255,255,255,.26);
+  -webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);
+  box-shadow:0 12px 36px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.24)}
+.overlay{background:rgba(38,28,56,.48);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%)}
+#chatdrawer{background:rgba(250,248,241,.72);border-top:1px solid rgba(255,255,255,.9);
+  -webkit-backdrop-filter:blur(28px) saturate(190%);backdrop-filter:blur(28px) saturate(190%);
+  box-shadow:0 -14px 44px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.9)}
+.cmsg.me{background:linear-gradient(135deg,rgba(114,82,160,.92),rgba(141,108,184,.86));color:#fff;
+  border:1px solid rgba(255,255,255,.3);box-shadow:0 6px 18px rgba(90,60,140,.28),inset 0 1px 0 rgba(255,255,255,.35)}
+.cmsg.them{background:rgba(255,255,255,.66)}
+.holdmic{background:rgba(207,232,216,.72);border:1px solid rgba(255,255,255,.85);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+#coachBox,#rpReport{background:rgba(214,201,234,.55)!important;border:1px solid rgba(255,255,255,.8)!important;
+  -webkit-backdrop-filter:blur(14px)!important;backdrop-filter:blur(14px)!important;
+  box-shadow:var(--g-shadow),var(--g-inner)!important}
+.passicon{width:64px;height:64px;margin:6px auto 4px;border-radius:20px;display:flex;align-items:center;justify-content:center;color:var(--purple);
+  background:linear-gradient(140deg,rgba(214,201,234,.9),rgba(255,255,255,.65));border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 8px 22px rgba(90,60,140,.2),inset 0 1px 0 #fff}
+.passicon svg{width:32px;height:32px}
+/* --- 深色玻璃：陆家嘴行情中心 --- */
+#view-market{
+  background:
+   radial-gradient(ellipse 72% 40% at 10% 2%,rgba(132,92,196,.5),transparent 70%),
+   radial-gradient(ellipse 62% 38% at 94% 20%,rgba(70,132,196,.36),transparent 70%),
+   radial-gradient(ellipse 70% 42% at 46% 92%,rgba(201,131,88,.26),transparent 70%),
+   linear-gradient(170deg,#241c35,#2e2342 52%,#1c1730);
+  color:#e9e5f4}
+#view-market .ticker,#view-market .idx,#view-market .stock,#view-market .sectortabs .sc,#view-market .sectorband{
+  background:var(--dg-bg);border:1px solid var(--dg-line);
+  -webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);
+  box-shadow:0 12px 32px rgba(0,0,0,.24),var(--dg-inner)}
+#view-market .ticker{background:rgba(28,21,44,.55)}
+#view-market .sectortabs .sc{display:inline-flex;align-items:center;gap:5px;padding:7px 13px}
+#view-market .sectortabs .sc.on{background:linear-gradient(135deg,rgba(114,82,160,.9),rgba(157,124,199,.82));
+  color:#fff;border-color:rgba(232,196,122,.6);box-shadow:0 6px 18px rgba(90,60,140,.4),inset 0 1px 0 rgba(255,255,255,.34)}
+.secico{width:14px;height:14px;opacity:.9}
+#view-market .sectortabs .sc[data-k="pet"] .secico{color:#E9A877}
+#view-market .sectortabs .sc[data-k="cpg"] .secico{color:#F0DA9C}
+#view-market .sectortabs .sc[data-k="fash"] .secico{color:#E3B6D5}
+#view-market .sectortabs .sc[data-k="tech"] .secico{color:#A9C6F0}
+#view-market .sectortabs .sc[data-k="cult"] .secico{color:#E8A79A}
+#view-market .sectortabs .sc[data-k="helth"] .secico{color:#A9DEC0}
+#view-market .sectortabs .sc[data-k="life"] .secico{color:#CDBCEB}
+#view-market .sectortabs .sc[data-k="green"] .secico{color:#C4DEA2}
+#view-market .balband{background:linear-gradient(135deg,rgba(114,82,160,.72),rgba(157,124,199,.6));
+  border:1px solid rgba(255,255,255,.28);-webkit-backdrop-filter:blur(20px) saturate(170%);backdrop-filter:blur(20px) saturate(170%);
+  box-shadow:0 12px 32px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.3)}
+#view-market .stock.hot{border-color:rgba(232,196,122,.7);box-shadow:0 0 0 1px rgba(232,196,122,.35),0 12px 32px rgba(0,0,0,.24),var(--dg-inner)}
+#view-market .ljz-hd h2{color:#fff;text-shadow:0 2px 18px rgba(180,150,230,.4)}
+.stico{width:12px;height:12px;margin-right:3px;vertical-align:-2px}
+.rico{width:14px;height:14px;margin-left:3px;color:var(--gold);vertical-align:-2px}
+.acico{width:20px;height:20px;color:var(--purple)}
+#view-market .sc-badge{background:rgba(114,82,160,.3);color:#D6C9EA;border:1px solid rgba(214,201,234,.22)}
+#view-market .idx .n,#view-market .stock .sb{color:#ab9fc4}
+/* 复盘 / 排行 */
+.replaystage{background:linear-gradient(150deg,rgba(50,40,63,.86),rgba(80,60,115,.8));border:1px solid rgba(255,255,255,.2);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);box-shadow:0 12px 30px rgba(50,40,63,.26),inset 0 1px 0 rgba(255,255,255,.2)}
+.rp-step.bad{background:rgba(249,233,230,.72)!important}.rp-step.good{background:rgba(230,243,234,.72)!important}
+.ai-ico{width:26px;height:26px;color:var(--purple)}
+.rankmedal{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;
+  border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 3px 8px rgba(50,40,63,.18)}
+.rankmedal.m1{background:linear-gradient(140deg,#F6DE9C,#D5A64B);color:#6b4a12}
+.rankmedal.m2{background:linear-gradient(140deg,#E6E9F0,#AAB3C4);color:#4a5263}
+.rankmedal.m3{background:linear-gradient(140deg,#EFC5A6,#C98358);color:#6b3d20}
+.rankmedal.mn{background:rgba(214,201,234,.6);color:var(--purple)}
+.ach.locked{opacity:.42;filter:grayscale(.7)}
+.rankrow .avbadge{width:30px;height:30px}
+.resrow .rn .avbadge{width:22px;height:22px;border-radius:7px;margin-right:2px}
+
+/* ============================================================
+   指针高光折射 · 光斑跟随鼠标/手指滑动
+   ============================================================ */
+.roster .p,.stat,.resrow,.stock{position:relative}
+.card::after,.menu .m:not(.wide)::after,.roster .p::after,.handcard::after,
+.rankrow::after,.ach::after,.resrow::after,.stat::after,.stock::after{
+  content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;
+  background:radial-gradient(230px circle at var(--gx,-300px) var(--gy,-300px),rgba(255,255,255,.46),rgba(255,255,255,.12) 45%,transparent 70%);
+}
+body.night .card::after,body.night .menu .m:not(.wide)::after,body.night .roster .p::after,
+body.night .handcard::after,body.night .rankrow::after,body.night .ach::after,
+body.night .resrow::after,body.night .stat::after,body.night .stock::after{
+  background:radial-gradient(230px circle at var(--gx,-300px) var(--gy,-300px),rgba(212,192,255,.20),rgba(212,192,255,.05) 45%,transparent 70%);
+}
+/* 顶栏主题切换钮 */
+#themebtn{width:34px;height:34px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--g-line);background:var(--g-bg);color:var(--inkpurple);cursor:pointer;flex-shrink:0;padding:0;
+  -webkit-backdrop-filter:var(--g-blur);backdrop-filter:var(--g-blur);box-shadow:var(--g-shadow),var(--g-inner)}
+#themebtn svg{width:17px;height:17px}
+
+/* ============================================================
+   夜间模式 · 深色液态玻璃
+   ============================================================ */
+body.night{
+  --cream:#211A2E;--inkpurple:#EFE9F8;--purple:#B295E0;--brand2:#C9A9EE;--mistpurple:#3B3052;
+  --butter:#2B2342;--iceblue:#33415E;--mint:#2F4839;--coral:#E8897C;--warmorange:#D89A72;
+  --g-bg:rgba(44,35,62,.55);--g-bg2:rgba(50,40,70,.80);--g-line:rgba(178,149,224,.26);
+  --g-shadow:0 12px 34px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.30);
+  --g-inner:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.05),inset 0 -1px 0 rgba(255,255,255,.07);
+  background:#0F0B17;
+}
+body.night #phone{background:linear-gradient(158deg,rgba(33,26,46,.92),rgba(24,18,36,.94) 55%,rgba(19,22,38,.92));box-shadow:0 0 0 1px rgba(255,255,255,.07),0 30px 90px rgba(0,0,0,.65)}
+body.night #phone>.aurora{opacity:.4;filter:blur(56px) saturate(150%)}
+body.night #phone::before{background-image:linear-gradient(rgba(178,149,224,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(178,149,224,.05) 1px,transparent 1px)}
+body.night #topbar{background:linear-gradient(180deg,rgba(33,26,46,.55),rgba(33,26,46,0))}
+body.night #tabbar{background:rgba(30,24,44,.62);border-top-color:rgba(255,255,255,.10);box-shadow:0 -8px 34px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.08)}
+body.night #tabbar .tab{color:#8A7BAB}
+body.night #netbadge{background:rgba(46,58,50,.60);border-color:rgba(255,255,255,.12)}
+body.night #netbadge.off{background:rgba(50,42,64,.60)}
+body.night .input{background:rgba(255,255,255,.07)}
+body.night .input::placeholder{color:#8A7BAB}
+body.night .stat{background:rgba(255,255,255,.05)}
+body.night .chipsel .c{background:rgba(255,255,255,.06)}
+body.night .chipsel .c.on{background:linear-gradient(135deg,rgba(59,48,82,.9),rgba(44,35,62,.7));border-color:rgba(178,149,224,.7)}
+body.night .addbtn{background:rgba(255,255,255,.04);border-color:rgba(178,149,224,.45)}
+body.night .tag{background:rgba(59,48,82,.72);border-color:rgba(178,149,224,.30)}
+body.night .tag.o{background:rgba(59,50,44,.72)}
+body.night .btn.ghost{background:rgba(255,255,255,.06);border-color:rgba(178,149,224,.35)}
+body.night .btn.soft{background:rgba(59,48,82,.62)}
+body.night .hero .sub{color:#A99BC7}
+body.night .dealerbtn{background:#2A2138}
+body.night .avatar-grid .av{background:rgba(255,255,255,.06)}
+body.night .menu .m .ico{background:linear-gradient(140deg,rgba(59,48,82,.85),rgba(255,255,255,.07));border-color:rgba(178,149,224,.25);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 5px 14px rgba(0,0,0,.30)}
+body.night .menu .m[data-k="chart"] .ico{background:linear-gradient(140deg,rgba(43,35,66,.95),rgba(255,255,255,.05))}
+body.night .menu .m[data-k="user"] .ico,
+body.night .menu .m[data-k="replay"] .ico{background:linear-gradient(140deg,rgba(38,42,60,.9),rgba(255,255,255,.05))}
+body.night .pcard{color:#32283F} /* 牌面保持白底墨字 */
+body.night .seat .bubble{background:rgba(42,33,56,.94)}
+body.night #chatbtn{background:rgba(44,35,62,.9);border:1px solid rgba(178,149,224,.3)}
+body.night #micstate{background:rgba(42,33,56,.92);color:#7FC8A0}
+body.night .cmsg.them{background:rgba(255,255,255,.08)}
+/* ---------- 手机浏览器安全区适配 ---------- */
+@supports(padding:env(safe-area-inset-bottom)){
+  #phone{height:100dvh}
+  #topbar{padding-top:calc(14px + env(safe-area-inset-top))}
+  #tabbar{height:calc(76px + env(safe-area-inset-bottom));padding-bottom:calc(6px + env(safe-area-inset-bottom))}
+  #chatdrawer{padding-bottom:env(safe-area-inset-bottom)}
+}
+
+/* ==========================================================================
+   性能分层（Perf Tiering）
+   微信内置浏览器 / 低端机走 body.lite：干掉实时毛玻璃、位移动画、流光重绘。
+   完整模式也把「大面积 filter:blur」换成静态渐变，视觉效果几乎无损，GPU 负载大降。
+   ========================================================================== */
+
+/* 1) 极光层：不再用 filter:blur 做模糊（大面积滤镜是卡顿第一元凶），
+      改为渐变自带柔和边缘 + 只做 transform 位移（合成层，不重绘） */
+#phone>.aurora{filter:none!important;opacity:.86}
+#phone>.aurora i:nth-child(1){background:radial-gradient(circle at 45% 45%,rgba(158,120,205,.62),rgba(158,120,205,.30) 32%,rgba(158,120,205,0) 66%)}
+#phone>.aurora i:nth-child(2){background:radial-gradient(circle at 50% 50%,rgba(190,209,235,.66),rgba(190,209,235,.30) 34%,rgba(190,209,235,0) 68%)}
+#phone>.aurora i:nth-child(3){background:radial-gradient(circle at 50% 50%,rgba(201,131,88,.42),rgba(201,131,88,.20) 34%,rgba(201,131,88,0) 68%)}
+#phone>.aurora i:nth-child(4){background:radial-gradient(circle at 50% 50%,rgba(207,232,216,.56),rgba(207,232,216,.26) 34%,rgba(207,232,216,0) 68%)}
+#phone>.aurora i:nth-child(5){background:radial-gradient(circle at 50% 50%,rgba(243,242,203,.48),rgba(243,242,203,.22) 34%,rgba(243,242,203,0) 68%)}
+#phone>.aurora i{will-change:transform;backface-visibility:hidden}
+
+/* 2) lite 档：静态氛围底图替代 5 个位移光斑 */
+body.lite #phone>.aurora{display:none}
+body.lite #phone{background:
+  radial-gradient(58% 34% at 14% 6%,rgba(158,120,205,.52),transparent 72%),
+  radial-gradient(52% 32% at 90% 16%,rgba(190,209,235,.58),transparent 72%),
+  radial-gradient(48% 30% at 18% 96%,rgba(201,131,88,.28),transparent 72%),
+  radial-gradient(46% 30% at 78% 88%,rgba(207,232,216,.42),transparent 72%),
+  linear-gradient(168deg,#FAF8F1 0%,#F5F0F9 52%,#FAF8F1 100%)}
+body.lite.night #phone{background:
+  radial-gradient(58% 34% at 14% 6%,rgba(122,88,178,.42),transparent 72%),
+  radial-gradient(52% 32% at 90% 16%,rgba(70,96,140,.5),transparent 72%),
+  radial-gradient(48% 30% at 18% 96%,rgba(150,96,60,.3),transparent 72%),
+  linear-gradient(168deg,#171422 0%,#1D1A2B 52%,#14111C 100%)}
+
+/* 3) lite 档：全局关掉实时模糊，用更高不透明度换回可读性与质感 */
+body.lite *{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+body.lite #tabbar{background:rgba(252,250,245,.97)}
+body.lite .card,
+body.lite .menu .m:not(.wide),
+body.lite .stat,
+body.lite .rankrow,
+body.lite .ach,
+body.lite .stock,
+body.lite .handcard,
+body.lite .sheet{background:rgba(255,255,255,.94)}
+body.lite.night #tabbar{background:rgba(26,22,38,.97)}
+body.lite.night .card,
+body.lite.night .menu .m:not(.wide),
+body.lite.night .stat,
+body.lite.night .rankrow,
+body.lite.night .ach,
+body.lite.night .stock,
+body.lite.night .handcard,
+body.lite.night .sheet{background:rgba(34,28,48,.95)}
+/* 座位气泡在深色底上必须用浅色文字，否则名字和余额直接看不见 */
+body.night .seat .fn{color:#EFE9F8}
+body.night .seat .fs{color:#C9B6E8}
+body.lite .seat .bubble{background:rgba(255,255,255,.96)}
+/* 流光/位移类装饰在 lite 下静止 */
+body.lite .btn,
+body.lite .menu .m::after,
+body.lite .ticker .inner,
+body.lite #musicbar .disc{animation:none!important}
+/* 语音/话筒的均衡器动画改的是 height（会触发布局），微信里直接静态化 */
+body.lite #micstate .eqbars i,body.lite .cmsg.voice.playing .bars i{animation:none!important;height:8px!important}
+body.lite .ticker .inner{transform:none}
+body.lite .toast{animation:none}
+
+/* 4) 动效降级：入场动画保留但更短，避免连续帧合成 */
+body.lite .pcard{animation-duration:.16s}
+body.lite .sheet{animation-duration:.14s}
+
+/* 5) 减少层：牌桌区域的圆角/阴影在 lite 下压平，减少每帧重绘成本 */
+body.lite .seat .bubble,
+body.lite .pcard,
+body.lite .holdmic,
+body.lite .strat{box-shadow:none!important}
+
+/* ===== 联机（房间）页面样式 ===== */
+#view-room,#view-lobby{padding:14px 16px 96px}
+.rm-card{background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.9);border-radius:22px;padding:18px;box-shadow:0 10px 30px rgba(50,40,63,.1);margin-bottom:12px}
+body.night .rm-card{background:rgba(36,29,50,.9);border-color:rgba(255,255,255,.1)}
+.rm-code{font-size:34px;font-weight:900;letter-spacing:.22em;color:var(--purple);text-align:center;font-variant-numeric:tabular-nums}
+body.night .rm-code{color:#C9A9EE}
+#qrbox{display:flex;justify-content:center;margin:12px 0}
+#qrbox canvas,#qrbox svg{width:186px;height:186px;border-radius:14px;background:#fff;padding:8px;box-shadow:0 6px 18px rgba(50,40,63,.14)}
+.rm-seats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:6px}
+.rm-seat{background:rgba(214,201,234,.34);border-radius:16px;padding:10px 6px;text-align:center;border:1px dashed rgba(114,82,160,.28);min-height:86px}
+.rm-seat.filled{background:rgba(255,255,255,.9);border-style:solid;border-color:rgba(114,82,160,.2)}
+body.night .rm-seat.filled{background:rgba(48,38,66,.9)}
+.rm-seat .nm{font-size:11px;font-weight:800;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rm-seat .host{font-size:9px;color:var(--warmorange);font-weight:900}
+.rm-seat.empty .nm{color:#b3a9c6;font-weight:700}
+.rm-hint{text-align:center;font-size:12px;color:#8b80a0;margin:10px 0 2px;font-weight:700}
+.rm-link{display:flex;gap:8px;margin-top:10px}
+.rm-link input{flex:1;min-width:0;border:1px solid rgba(114,82,160,.25);border-radius:12px;padding:10px;font-size:12px;background:rgba(255,255,255,.85);color:#32283F}
+body.night .rm-link input{background:rgba(255,255,255,.08);color:#EDE6F6;border-color:rgba(255,255,255,.14)}
+.rm-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:900;padding:4px 10px;border-radius:99px;background:rgba(207,232,216,.7);color:#2f7d55}
+.rm-badge.wait{background:rgba(243,242,203,.8);color:#8a7a2c}
+.rm-badge.err{background:rgba(255,214,204,.85);color:#a1483a}
+</style>
+</head>
+<body>
+<div id="phone">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+  <!-- 顶栏 -->
+  <div id="topbar">
+    <div class="logo"><span data-brand="sm"></span>好好学习 <em>天天德扑</em></div>
+    <div class="spacer"></div>
+    <button id="themebtn" aria-label="切换夜间模式" title="夜间模式"></button>
+    <div id="netbadge" class="off"><span class="dot"></span><span id="nettext">未连麦</span></div>
+  </div>
+
+  <!-- ============ 首页 ============ -->
+  <div class="view on" id="view-home">
+    <div class="hero">
+      <div data-brand="lg"></div>
+      <div class="big">好好学习<br><em>天天德扑</em></div>
+      <div class="sub">德扑 × 投资 · 情景博弈</div>
+      <div class="suits"><span class="su" data-icon="spade"></span><span class="su" data-icon="heart"></span><span class="su" data-icon="diamond"></span><span class="su" data-icon="club"></span></div>
+    </div>
+    <div class="menu">
+      <div class="m wide" onclick="openRoom()">
+        <div class="ico" data-icon="globe"></div><div class="t">微信群联机开局</div>
+        <div class="d">开房 → 二维码发群 → 好友扫码入座 → 人齐开打</div>
+      </div>
+      <div class="m" onclick="openSetup()">
+        <div class="ico" data-icon="cards"></div><div class="t">同机开局</div>
+        <div class="d">一台设备轮流打 · 2–8 人</div>
+      </div>
+      <div class="m" data-k="chart" onclick="go('market')">
+        <div class="ico" data-icon="chart"></div><div class="t">行情大厅</div><div class="d">8 大板块 · 28 个跨行业创业标的</div>
+      </div>
+      <div class="m" data-k="user" onclick="go('profile')">
+        <div class="ico" data-icon="user"></div><div class="t">我的档案</div><div class="d">头像 · 银行账户 · 等级</div>
+      </div>
+      <div class="m" data-k="replay" onclick="go('replay')">
+        <div class="ico" data-icon="replay"></div><div class="t">复盘室</div><div class="d">牌局回放 · 决策报告</div>
+      </div>
+      <div class="m" data-k="trophy" onclick="go('rank')">
+        <div class="ico" data-icon="trophy"></div><div class="t">赛季排行</div><div class="d">头衔 · 成就 · 积分</div>
+      </div>
+      <div class="m" data-k="music" onclick="toggleMusic()">
+        <div class="ico" id="homeMusicIco" data-icon="music"></div><div class="t">氛围音乐</div><div class="d" id="homeMusicState">摇滚 / Techno · 点击开关</div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px;background:var(--butter)">
+      <div style="font-weight:900;color:#9a7a2e;font-size:13px">💡 玩法速览</div>
+      <div style="font-size:12px;color:#8a7440;margin-top:6px;line-height:1.7">
+        底牌=你的启动资金 · 保证金(盲注)下场 · 观望=按兵不动 · 跟投=跟进 · 加注融资=领投抬价 · 止损退出=弃牌 · 全押=All-in。每局穿插真实沪上创业项目行情，牌桌之外还能炒项目。
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 档案 ============ -->
+  <div class="view" id="view-profile">
+    <div class="row" style="gap:16px;margin-top:8px">
+      <div class="avbig" id="profAv"></div>
+      <div style="flex:1;min-width:0">
+        <div class="title-chip" id="profTitle">实习分析员</div>
+        <input class="input" id="profName" style="margin-top:10px;font-weight:800" placeholder="写上你的大名" maxlength="10">
+      </div>
+    </div>
+    <div style="font-weight:800;font-size:13px;margin:16px 0 4px">选一个微信风格头像</div>
+    <div class="avatar-grid" id="avGrid"></div>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:12px">
+      <button class="btn soft" style="flex:1;padding:12px;font-size:13px" onclick="document.getElementById('avUpload').click()">📷 用微信头像照片（从相册选）</button>
+      <input type="file" id="avUpload" accept="image/*" style="display:none">
+    </div>
+    <div class="muted" style="font-size:11px;margin-top:6px">微信没有开放网页版头像接口，选好照片后，牌桌上显示的就是你真实的微信头像；昵称直接用你群里的名字。</div>
+    <div class="card" style="margin-top:16px">
+      <div style="font-weight:900;font-size:14px;margin-bottom:4px">🏦 银行账户（虚拟货币）</div>
+      <div class="statgrid">
+        <div class="stat"><div class="v" id="stCash">¥100,000</div><div class="k">存款余额</div></div>
+        <div class="stat"><div class="v" id="stHold">¥0</div><div class="k">持仓市值</div></div>
+        <div class="stat"><div class="v" id="stNet">¥100,000</div><div class="k">总资产</div></div>
+        <div class="stat"><div class="v" id="stPL">±¥0</div><div class="k">累计盈亏</div></div>
+      </div>
+      <div class="muted" style="margin-top:10px">* 虚拟货币仅用于游戏内体验，不可充值、不可提现、不可兑换任何实物或现金。</div>
+    </div>
+    <button class="btn ghost" style="width:100%;margin-top:4px" onclick="resetAll()">清空本地存档</button>
+  </div>
+
+  <!-- ============ 联机：开房设置 ============ -->
+  <div class="view" id="view-room">
+    <h2 style="color:var(--purple)">微信群联机开局</h2>
+    <div class="muted" style="margin:4px 0 14px">生成房间码和二维码，发到微信群；好友扫码进同一桌，人齐自动/手动开局。每人用自己手机操作，底牌只有自己看得见。</div>
+    <div class="rm-card">
+      <div style="font-weight:800;font-size:13px">本局人数</div>
+      <div class="chipsel" id="roomSize"></div>
+      <div style="font-weight:800;font-size:13px;margin-top:6px">入场资金（每人）</div>
+      <div class="chipsel" id="roomBuyin"></div>
+      <div style="font-weight:800;font-size:13px;margin-top:6px">保证金（小盲/大盲）</div>
+      <div class="chipsel" id="roomBlind"></div>
+    </div>
+    <div class="rm-card" style="background:rgba(243,242,203,.5)">
+      <div style="font-weight:900;font-size:12px;color:#8a7a2c">玩法说明</div>
+      <div style="font-size:12px;line-height:1.65;color:#6b6275;margin-top:4px">房主点「开局」后自动发牌；轮到你时按钮才会亮。房主负责结算，其余人只上报操作，所以不会出现两张牌桌不同步。</div>
+    </div>
+    <button class="btn primary" style="width:100%;padding:16px;font-size:16px" onclick="hostCreate()">生成房间 · 邀请好友</button>
+  </div>
+
+  <!-- ============ 联机：等候厅 ============ -->
+  <div class="view" id="view-lobby">
+    <h2 style="color:var(--purple)" id="lbTitle">等候厅</h2>
+    <div class="rm-card">
+      <div style="text-align:center;font-size:11.5px;color:#8b80a0;font-weight:800;letter-spacing:.1em">房间号</div>
+      <div class="rm-code" id="lbCode">----</div>
+      <div style="text-align:center;margin-top:2px"><span class="rm-badge wait" id="lbStatus">连接中…</span></div>
+      <div id="qrbox"></div>
+      <div class="rm-hint" id="lbHint">把这个二维码发到微信群，好友扫码即可加入</div>
+      <div class="rm-seats" id="lbSeats"></div>
+      <div class="rm-link">
+        <input id="lbLink" readonly value="">
+        <button class="btn small soft" onclick="copyRoomLink()">复制链接</button>
+      </div>
+    </div>
+
+    <div class="rm-card" id="lbJoinCard" style="display:none">
+      <div style="font-weight:900;font-size:14px;margin-bottom:8px">先报个名</div>
+      <input class="input" id="joinName" maxlength="8" placeholder="你的昵称（牌桌上显示）">
+      <div style="font-weight:800;font-size:12px;margin:10px 0 6px">挑个头像</div>
+      <div class="avatar-grid" id="joinAvGrid"></div>
+      <button class="btn primary" style="width:100%;margin-top:12px" onclick="guestJoin()">加入这桌</button>
+    </div>
+
+    <button class="btn primary" id="lbStart" style="width:100%;padding:16px;font-size:16px;display:none" onclick="hostStart()">开局（2 人起）</button>
+    <button class="btn ghost" style="width:100%;margin-top:8px" onclick="leaveRoom()">退出房间</button>
+  </div>
+
+  <!-- ============ 开局设置 ============ -->
+  <div class="view" id="view-setup">
+    <h2 style="color:var(--purple)">组建牌桌</h2>
+    <div class="muted" style="margin:4px 0 14px">同一台设备轮流操作（2–8 人）。想让每个人用自己手机打，回到首页点「微信群联机开局」。</div>
+    <div class="roster" id="rosterList"></div>
+    <button class="addbtn" style="margin-top:12px" onclick="addPlayer()">＋ 添加玩家</button>
+    <div style="font-weight:800;font-size:13px;margin:18px 0 0">入场资金（每人）</div>
+    <div class="chipsel" id="buyinSel"></div>
+    <div style="font-weight:800;font-size:13px;margin:6px 0 0">保证金（小盲/大盲）</div>
+    <div class="chipsel" id="blindSel"></div>
+    <button class="btn primary" style="width:100%;padding:16px;font-size:16px" onclick="startGame()">🚀 开局！进入资本牌桌</button>
+  </div>
+
+  <!-- ============ 游戏桌 ============ -->
+  <div class="view" id="view-game">
+    <div id="gamewrap">
+      <div id="tablearea">
+        <div id="handno"></div>
+        <div id="stagechip">天使轮</div>
+        <div class="oval">
+          <div id="potline">资金池 ¥0</div>
+          <div id="board"></div>
+        </div>
+        <div id="seats"></div>
+        <button id="voicebtn" title="按住说话"><span class="gic" data-icon="mic"></span></button>
+        <button id="chatbtn"><span class="gic" data-icon="chat"></span></button>
+        <div id="micstate"><span class="gic" data-icon="phone"></span> 连麦中<span class="eqbars"><i></i><i></i><i></i></span></div>
+        <div id="musicbar" onclick="toggleMusic()"><span class="disc" data-icon="disc"></span><span id="musicTrack">Techno · Lujiazui Nights</span></div>
+      </div>
+      <div id="actionbar">
+        <div id="newspaper">📰 …</div>
+        <div id="advisorrow">
+          <div id="advisorbox">
+            <div class="eq"><span id="eqVal">--%</span> <small>当前胜率估算</small></div>
+            <div id="advisortip">等待发牌…</div>
+          </div>
+          <div id="stratcards"></div>
+        </div>
+        <div id="actions">
+          <button class="btn soft" id="btnFold" onclick="act('fold')">止损退出</button>
+          <button class="btn ghost" id="btnCheck" onclick="act('check')">观望</button>
+          <button class="btn orange" id="btnCall" onclick="act('call')">跟投</button>
+          <button class="btn primary" id="btnRaise" onclick="showRaise()">加注融资</button>
+        </div>
+        <div id="raiseRow">
+          <input type="range" id="raiseSlider" min="0" max="100" value="0">
+          <div id="raiseVal">¥0</div>
+          <button class="btn orange small" onclick="act('raise')">确认加注</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 行情大厅 ============ -->
+  <div class="view" id="view-market">
+    <div class="ljz-hd"><h2>浦江行情中心</h2><span class="live">LIVE · 陆家嘴</span></div>
+    <div class="balband">
+      <div><div class="bk">账户总资产</div><div class="bv" id="mkNet">¥100,000</div></div>
+      <div class="spacer"></div>
+      <div style="text-align:right"><div class="bk">存款</div><div style="font-weight:800" id="mkCash">¥100,000</div></div>
+      <div style="text-align:right"><div class="bk">持仓</div><div style="font-weight:800" id="mkHold">¥0</div></div>
+    </div>
+    <div class="ticker"><div class="inner" id="tickerInner"></div></div>
+    <div class="idxrow" id="idxRow"></div>
+    <div class="sectortabs" id="sectorTabs"></div>
+    <div class="sectorband" id="sectorBand"></div>
+    <div id="stockList"></div>
+    <div class="muted" style="color:#9a8fb8;text-align:center;padding:8px 0 20px">项目标的取材于真实沪上 AI+消费创业赛道，价格为虚拟模拟，仅供娱乐。</div>
+  </div>
+
+  <!-- ============ 复盘室 ============ -->
+  <div class="view" id="view-replay">
+    <h2 style="color:var(--purple)">复盘室</h2>
+    <div class="muted" style="margin:4px 0 14px">每一手牌都值得复盘。点开看回放与教练报告。</div>
+    <div id="handList"></div>
+  </div>
+
+  <!-- ============ 排行/成就 ============ -->
+  <div class="view" id="view-rank">
+    <h2 style="color:var(--purple)">赛季排行榜</h2>
+    <div class="muted" style="margin:4px 0 14px">积分 = 盈利÷100 + 单场获胜×5 · 赛季每周一重置</div>
+    <div id="rankList"></div>
+    <h2 style="color:var(--purple);margin:18px 0 10px">成就墙</h2>
+    <div id="achList"></div>
+  </div>
+
+  <!-- ============ 底部导航 ============ -->
+  <div id="tabbar">
+    <div class="tab on" data-v="home" onclick="go('home')"><span class="ico" data-icon="home"></span>大厅</div>
+    <div class="tab" data-v="market" onclick="go('market')"><span class="ico" data-icon="chart"></span>行情</div>
+    <div class="tab" data-v="profile" onclick="go('profile')"><span class="ico" data-icon="user"></span>档案</div>
+    <div class="tab" data-v="replay" onclick="go('replay')"><span class="ico" data-icon="replay"></span>复盘</div>
+    <div class="tab" data-v="rank" onclick="go('rank')"><span class="ico" data-icon="trophy"></span>排行</div>
+  </div>
+
+  <!-- ============ 弹层们 ============ -->
+  <!-- 交接设备 -->
+  <div class="overlay" id="ovPass"><div class="sheet" style="text-align:center">
+    <div class="passicon" data-icon="pass"></div>
+    <div class="muted" style="margin-top:8px">请把设备交给</div>
+    <div id="passname"></div>
+    <div class="muted" style="font-size:11.5px;margin-bottom:14px">其他人请移开视线，隐私第一</div>
+    <button class="btn primary" style="width:100%" onclick="revealHand()">亮出我的底牌 💳</button>
+  </div></div>
+
+  <!-- 结算 -->
+  <div class="overlay" id="ovResult"><div class="sheet">
+    <h3 id="resTitle">交割完成</h3>
+    <div id="resultcards"></div>
+    <div id="resRows"></div>
+    <div id="coachBox" style="background:var(--mistpurple);border-radius:14px;padding:14px;margin-top:10px"></div>
+    <div class="row" style="margin-top:14px;gap:10px">
+      <button class="btn ghost" style="flex:1" onclick="openReplayOf(lastHandIndex)"><span class="eico" data-icon="play"></span>回放这手</button>
+      <button class="btn primary" style="flex:1" onclick="closeResult();nextHandBtn()">下一局 →</button>
+    </div>
+  </div></div>
+
+  <!-- 回放 -->
+  <div class="overlay" id="ovReplay"><div class="sheet">
+    <h3 id="rpTitle">牌局回放</h3>
+    <div class="replaystage" id="rpStage"></div>
+    <div id="rpSteps"></div>
+    <div id="rpReport" style="background:var(--mistpurple);border-radius:14px;padding:14px;margin-top:10px"></div>
+    <button class="btn primary" style="width:100%;margin-top:14px" onclick="ui.ovReplay.classList.remove('on')">关闭</button>
+  </div></div>
+
+  <!-- 交易 -->
+  <div class="overlay" id="ovTrade"><div class="sheet">
+    <h3 id="trTitle">买入</h3>
+    <div style="font-size:13px;color:#9b93a8" id="trInfo"></div>
+    <input class="input" id="trQty" type="number" min="1" value="100" style="margin:14px 0">
+    <div id="trEst" style="font-weight:900;color:var(--purple);margin-bottom:14px"></div>
+    <div class="row" style="gap:10px">
+      <button class="btn ghost" style="flex:1" onclick="ui.ovTrade.classList.remove('on')">取消</button>
+      <button class="btn primary" style="flex:1" id="trGo" onclick="doTrade()">确认</button>
+    </div>
+  </div></div>
+
+  <!-- 聊天 -->
+  <div id="chatdrawer">
+    <div class="hd"><h3 style="flex:1;color:var(--purple)">牌桌聊天</h3><span class="muted" id="chatMode">文字 / 语音</span><button class="btn soft small" style="margin-left:8px" onclick="toggleMic()" id="micToggleBtn">连麦</button><button class="btn soft small" onclick="closeChat()">收起</button></div>
+    <div id="chatmsgs"></div>
+    <div id="chatinputrow">
+      <button class="holdmic" id="holdmic" onpointerdown="micDown()" onpointerup="micUp()"><span class="gic" style="width:15px;height:15px" data-icon="mic"></span> 按住说话</button>
+      <input class="input" id="chatinput" placeholder="说点什么…" onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="btn primary small" onclick="sendChat()">发送</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ================================================================
+   好好学习 天天德扑 —— 单文件可玩原型
+   德扑引擎 + 投资情景 + AI建议 + 复盘 + 行情 + 排行成就
+================================================================ */
+'use strict';
+
+/* ================= 设计图标系统 · Designed Icon System =================
+   统一线性 SVG（SF Symbols / Lucide 风格），替换所有 emoji 作为的功能图标。
+   文案里零散的 emoji 由 EMOJI_MAP + MutationObserver 自动转成同款小图标。 */
+const SVG_ATTR='viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+const ICONS={
+  home:'<path d="M3.4 10.6 12 3.7l8.6 6.9"/><path d="M5.6 9.6V20a1 1 0 0 0 1 1h3.6v-5.6h3.6V21h3.6a1 1 0 0 0 1-1V9.6"/>',
+  chart:'<path d="M3.2 20.2h17.6M3.2 4v16.2"/><path d="m5.6 15.6 4-4.4 3.2 2.8 4.8-6"/><path d="M17.6 7.8h-2.2m2.2 0v2.2"/>',
+  user:'<circle cx="12" cy="8.2" r="3.6"/><path d="M4.6 20.4c.7-3.9 3.5-6 7.4-6s6.7 2.1 7.4 6"/>',
+  replay:'<path d="M20.4 12a8.4 8.4 0 1 1-2.5-6"/><path d="M20.4 4.4v4.3h-4.3"/><path d="M12 7.8v4.5l3 1.8"/>',
+  trophy:'<path d="M7 3.8h10v5.6a5 5 0 0 1-10 0z"/><path d="M7 5.3H4.4v2.1A3.4 3.4 0 0 0 8 10.8M17 5.3h2.6v2.1A3.4 3.4 0 0 1 16 10.8"/><path d="M12 14.4v3.4M8.4 20.6h7.2M10.1 17.8h3.8"/>',
+  music:'<path d="M9 17.4V6.1l10-2v11.2"/><ellipse cx="6.4" cy="17.7" rx="2.6" ry="2.2"/><ellipse cx="16.4" cy="15.6" rx="2.6" ry="2.2"/>',
+  cards:'<rect x="3.6" y="4.6" width="11.4" height="15.6" rx="2.4" transform="rotate(-10 9.3 12.4)"/><rect x="10" y="3.6" width="11" height="16" rx="2.4"/><path d="m12.6 13.8 2-2.1 1.7 1.7 3.2-3.6"/><path d="M12.6 9.2h4.8"/>',
+  card:'<rect x="5.2" y="2.8" width="13.6" height="18.4" rx="2.6"/><path d="m12 7.4 1.5 3.1 3.4.5-2.5 2.4.6 3.4L12 15.2l-3 1.6.6-3.4-2.5-2.4 3.4-.5z"/>',
+  paw:'<ellipse cx="6.8" cy="9.4" rx="1.65" ry="2.15"/><ellipse cx="10.7" cy="6.9" rx="1.65" ry="2.15"/><ellipse cx="15.1" cy="6.9" rx="1.65" ry="2.15"/><ellipse cx="19" cy="9.7" rx="1.65" ry="2.15"/><path d="M12.8 12.3c2.9 0 5.1 2.1 5.1 4.2 0 1.8-1.6 3-3.3 2.5-1.1-.4-2.5-.4-3.6 0-1.7.5-3.3-.7-3.3-2.5 0-2.1 2.2-4.2 5.1-4.2z"/>',
+  bag:'<path d="M4.6 8h14.8l-1 12H5.6z"/><path d="M9 8V6.1a3 3 0 0 1 6 0V8"/><path d="M9.2 11.6v.01M14.8 11.6v.01"/>',
+  hanger:'<path d="M12 6.6a2 2 0 1 1 2-2c0 1.1-.9 2-2 2zm0 0v2.1l-8.4 7.3a1.4 1.4 0 0 0 .9 2.5h15a1.4 1.4 0 0 0 .9-2.5L12 8.7"/>',
+  chip:'<rect x="6.6" y="6.6" width="10.8" height="10.8" rx="2.2"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx="1"/><path d="M9.4 3.2v3.4M14.6 3.2v3.4M9.4 17.4v3.4M14.6 17.4v3.4M3.2 9.4h3.4M3.2 14.6h3.4M17.4 9.4h3.4M17.4 14.6h3.4"/>',
+  knot:'<path d="M12 3 21 12l-9 9-9-9z"/><path d="M12 6.8 17.2 12 12 17.2 6.8 12z"/><path d="M12 3v18M3 12h18"/>',
+  health:'<rect x="3.2" y="5.4" width="17.6" height="14" rx="3.2"/><path d="M3.6 12.6h3.3l1.7-3.1 2.5 6.2 2-3.6h7.3"/>',
+  sofa:'<path d="M4.6 12V8.7a2.6 2.6 0 0 1 2.6-2.6h9.6a2.6 2.6 0 0 1 2.6 2.6V12"/><path d="M3 12.6a2 2 0 0 1 4 0v3h10v-3a2 2 0 0 1 4 0V19H3z"/><path d="M6 19v1.6M18 19v1.6"/>',
+  leaf:'<path d="M20 3.8C10 3.8 4.4 8 4.4 14.6A5.6 5.6 0 0 0 10 20.2C16.6 20.2 20 14 20 3.8z"/><path d="M3.6 20.6c3.2-6.2 7.2-9.8 12.4-12.4"/>',
+  globe:'<circle cx="12" cy="12" r="8.8"/><path d="M3.2 12h17.6"/><path d="M12 3.2c2.6 2.4 4 5.4 4 8.8s-1.4 6.4-4 8.8c-2.6-2.4-4-5.4-4-8.8s1.4-6.4 4-8.8z"/>',
+  mic:'<rect x="9" y="2.8" width="6" height="11" rx="3"/><path d="M5.6 11.4a6.4 6.4 0 0 0 12.8 0M12 17.8v3.2M8.6 21h6.8"/>',
+  chat:'<path d="M20.4 11.6c0 4.3-3.8 7.8-8.4 7.8-1 0-2-.2-2.9-.5L4 20.4l1.4-3.9a7.4 7.4 0 0 1-1.8-4.9c0-4.3 3.8-7.8 8.4-7.8s8.4 3.5 8.4 7.8z"/><path d="M8.4 11.6h.01M12 11.6h.01M15.6 11.6h.01"/>',
+  disc:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.1"/><circle cx="12" cy="12" r=".9" fill="currentColor" stroke="none"/><path d="M12 3a9 9 0 0 1 8.5 6.2"/>',
+  bank:'<path d="M2.8 9.4 12 3.7l9.2 5.7M4.6 10.5v8M9.5 10.5v8M14.5 10.5v8M19.4 10.5v8M2.8 20.4h18.4"/>',
+  bulb:'<path d="M9 17.4h6M9.8 20.4h4.4"/><path d="M12 3.2a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2h5c0-.8.4-1.5 1-2A6 6 0 0 0 12 3.2z"/>',
+  rocket:'<path d="M12 3c3.4 2.1 5.5 5.6 5.5 9.5L14 16h-4l-3.5-3.5C6.5 8.6 8.6 5.1 12 3z"/><circle cx="12" cy="9.8" r="1.8"/><path d="m9 16.5-2 3.5 3.2-1M15 16.5l2 3.5-3.2-1M11 19.6l1 1.6 1-1.6"/>',
+  news:'<rect x="3.2" y="5" width="17.6" height="14" rx="2.2"/><path d="M6.5 8.5h7v5h-7zM15 8.5h3M15 11h3M15 13.5h3M6.5 16h11"/>',
+  robot:'<rect x="4.4" y="7.6" width="15.2" height="11.6" rx="3.2"/><circle cx="9" cy="13" r="1.15" fill="currentColor" stroke="none"/><circle cx="15" cy="13" r="1.15" fill="currentColor" stroke="none"/><path d="M12 7.6V4.4"/><circle cx="12" cy="3.5" r="1.1"/><path d="M2.4 11v3.4M21.6 11v3.4"/>',
+  pass:'<rect x="2.6" y="3.4" width="12.4" height="17.2" rx="2.4"/><path d="M7.2 17.8h3.2M15.4 9h5.8M18.6 6.2 21.4 9l-2.8 2.8"/><path d="M15.4 15h5.8M18.6 12.2 21.4 15l-2.8 2.8"/>',
+  shield:'<path d="M12 2.8 20 6v5.5c0 5-3.4 8.3-8 9.7-4.6-1.4-8-4.7-8-9.7V6z"/><path d="m8.8 12.1 2.2 2.2 4.2-4.4"/>',
+  scale:'<path d="M12 3.4v17.2M5 20.6h14M3.2 7.8h17.6M6.6 7.8 3.4 14.6h6.4zM17.4 7.8l-3.2 6.8h6.4z"/><path d="M12 4.4 9.6 7.8h4.8z"/>',
+  search:'<circle cx="10.7" cy="10.7" r="6.5"/><path d="m15.5 15.5 5.4 5.4M8.4 10.7h4.6"/>',
+  medal:'<circle cx="12" cy="14.4" r="6.1"/><path d="M8.6 9.2 6.2 3h11.6l-2.4 6.2"/><path d="m12 11.3 1.2 2.4 2.6.4-1.9 1.8.5 2.6-2.4-1.2-2.4 1.2.5-2.6-1.9-1.8 2.6-.4z"/>',
+  fire:'<path d="M12 21c4 0 6.5-2.7 6.5-6.1 0-4.2-3.5-6-4.5-10-1 1.5-1.5 2.8-1.5 4-1.5-1-2-2.5-2-4C7.5 8 5.5 10.5 5.5 14.9 5.5 18.3 8 21 12 21z"/><path d="M12 21c1.9 0 3-1.3 3-3 0-1.9-1.4-2.9-2-4.6-.6 1.7-2.5 2.4-2.5 4.6 0 1.7 1.2 3 1.5 3z"/>',
+  coin:'<circle cx="12" cy="12" r="8.8"/><path d="M12 6.6v10.8M14.9 9.1c-.6-.8-1.7-1.2-2.9-1.2-1.7 0-2.9.9-2.9 2.2 0 3 5.8 1.2 5.8 4.2 0 1.3-1.2 2.2-2.9 2.2-1.2 0-2.3-.4-2.9-1.2"/>',
+  cart:'<path d="M2.8 4h2.5l2.3 10.5h9.2l2.3-7.5H6.1"/><circle cx="9" cy="19" r="1.4"/><circle cx="17.2" cy="19" r="1.4"/>',
+  wallet:'<rect x="3" y="6" width="18" height="13" rx="2.6"/><path d="M3 9.6h18M16 14.2h2.6"/>',
+  check:'<path d="m4.6 12.4 5 5 9.8-11"/>',
+  close:'<path d="M6 6 18 18M18 6 6 18"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  play:'<path d="M8 5.4 19 12 8 18.6z"/>',
+  arrow:'<path d="M4 12h15M13.6 6.4 19.6 12l-6 5.6"/>',
+  phone:'<path d="M5 3.5h3l1.5 4-2 1.4a12 12 0 0 0 7.6 7.6l1.4-2 4 1.5v3a1.5 1.5 0 0 1-1.6 1.5C10.2 19.6 4.4 13.8 3.5 5.1A1.5 1.5 0 0 1 5 3.5z"/>',
+  sparkle:'<path d="M12 3.2 13.9 9l5.9 1.9-5.9 1.9L12 18.7l-1.9-5.9L4.2 10.9 10.1 9z"/><path d="m18.8 17.2.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>',
+  wave:'<path d="M3 12h2.2l1.6-5 2.6 10 2.4-8 2.2 5 1.8-3H21"/>',
+  lock:'<rect x="5" y="10.4" width="14" height="10.2" rx="2.4"/><path d="M8 10.4V7.4a4 4 0 0 1 8 0v3"/>',
+  warn:'<path d="M12 3.6 21.2 19H2.8z"/><path d="M12 9.4v4.6M12 16.6h.01"/>',
+  spade:'<path d="M12 2.6C8 7 4.6 10 4.6 13.4a4.2 4.2 0 0 0 7.4 2.7V19l-1.6 1.6h4L13 19v-2.9a4.2 4.2 0 0 0 7.4-2.7C19.4 10 16 7 12 2.6z" fill="currentColor" stroke="none"/>',
+  heart:'<path d="M12 20.6 4.2 13.1a4.8 4.8 0 0 1 6.8-6.8l1 1 1-1a4.8 4.8 0 0 1 6.8 6.8z" fill="currentColor" stroke="none"/>',
+  diamond:'<path d="M12 2.4 21 12l-9 9.6L3 12z" fill="currentColor" stroke="none"/>',
+  club:'<circle cx="12" cy="7.4" r="3.4" fill="currentColor" stroke="none"/><circle cx="7" cy="14" r="3.4" fill="currentColor" stroke="none"/><circle cx="17" cy="14" r="3.4" fill="currentColor" stroke="none"/><path d="M10.4 17.6h3.2l1.4 3.8H9z" fill="currentColor" stroke="none"/>',
+  moon:'<path d="M20.6 13.4A8.6 8.6 0 1 1 10.6 3.4a6.8 6.8 0 0 0 10 10z"/>',
+  sun:'<circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.2M12 19.2v2.2M4.4 4.4l1.6 1.6M18 18l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.4 19.6 6 18M18 6l1.6-1.6"/>'
+};
+const EMOJI_MAP={
+ '🃏':'cards','📈':'chart','📉':'chart','👤':'user','🧠':'replay','🏆':'trophy','🎸':'music','🎵':'music','🎶':'music',
+ '💡':'bulb','🏦':'bank','🚀':'rocket','🎙️':'mic','🎤':'mic','💬':'chat','🔴':'phone','💿':'disc','📰':'news',
+ '🏠':'home','🤝':'pass','💳':'card','▶':'play','→':'arrow','🎬':'sparkle','🔥':'fire','💼':'bag',
+ '⚠️':'warn','⚠':'warn','💸':'coin','✅':'check','📌':'bulb','🤖':'robot','🎉':'sparkle','📊':'chart',
+ '🛒':'cart','💰':'coin','🥇':'medal','🥈':'medal','🥉':'medal','🏅':'medal','🔒':'lock','✕':'close',
+ '📞':'phone','👋':'sparkle','🎯':'sparkle','⭐':'sparkle','✨':'sparkle','🌟':'sparkle','⚡':'sparkle',
+ '🌐':'globe','🐾':'paw','🍰':'bag','👗':'hanger','🎎':'knot','🏥':'health','🏡':'sofa','🌱':'leaf',
+ '🛟':'shield','⚖️':'scale','⚖':'scale','🔍':'search','🎲':'cards','🔔':'bulb',
+ '🐱':'paw','🦊':'paw','🐼':'paw','🐸':'paw','🦁':'paw','🐵':'paw','🐰':'paw','🐯':'paw','🐨':'paw','🦄':'paw',
+ '🐷':'paw','🐻':'paw','🐺':'paw','🦉':'paw','🐙':'paw','🦖':'paw','🐧':'paw','🐥':'paw','🦋':'paw','🐳':'paw'
+};
+const EMOJI_RE=/(?:[\u{1F000}-\u{1FAFF}]|[\u{2700}-\u{27BF}]|[\u{2B00}-\u{2BFF}]|[\u{2190}-\u{21FF}]|[\u{26A0}\u{2696}\u{26D4}])\u{FE0F}?/gu;
+function svgInner(n){return '<svg '+SVG_ATTR+'>'+(ICONS[n]||ICONS.sparkle)+'</svg>';}
+function icon(n,cls){return '<span class="gic '+(cls||'')+'">'+svgInner(n)+'</span>';}
+let __bmSeq=0;
+function brandMark(size){
+  const id='hhbm'+(++__bmSeq);
+  return '<svg viewBox="0 0 48 48" width="100%" height="100%" aria-label="好好学习 天天德扑">'+
+   '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1">'+
+   '<stop offset="0" stop-color="#9A76CC"/><stop offset=".52" stop-color="#7252A0"/><stop offset="1" stop-color="#32283F"/>'+
+   '</linearGradient></defs>'+
+   '<rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="url(#'+id+')"/>'+
+   '<rect x="1.5" y="1.5" width="45" height="45" rx="14" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/>'+
+   '<path d="M7 12c9-5 22-5 34 0" stroke="rgba(255,255,255,.35)" stroke-width="1.6" fill="none" stroke-linecap="round"/>'+
+   '<rect x="11.4" y="11.5" width="16.5" height="23" rx="3" fill="#fff" opacity=".93" transform="rotate(-11 19.6 23)"/>'+
+   '<rect x="19.4" y="12.4" width="16.8" height="23" rx="3" fill="#fff" opacity=".22" stroke="#fff" stroke-width="1.5"/>'+
+   '<path d="m22.2 28.4 3.2-3.7 2.4 2.2 4.6-5.4" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>'+
+   '<circle cx="33.6" cy="17.6" r="1.7" fill="#F3F2CB"/>'+
+   '<path d="M8 38c8 3 22 3 32-1" stroke="rgba(255,255,255,.28)" stroke-width="1.4" fill="none" stroke-linecap="round"/>'+
+   '</svg>';
+}
+/* 20 组渐变 + 12 个几何符号 → 稳定、可区分、无 emoji 的抽象头像 */
+const AV_GRADS=[
+ ['#8B6FC0','#C98358'],['#6E8FC7','#B9C9EE'],['#C98358','#EBC98A'],['#7FAF94','#CFE8D8'],
+ ['#B57BA8','#D6C9EA'],['#C97F72','#F3C9B8'],['#5E82B8','#BED1EB'],['#9C7BC4','#F3F2CB'],
+ ['#D39A5E','#F0D9A8'],['#6BA8A0','#BEE3DC'],['#A588C9','#E2D2F2'],['#C87F95','#F0C8D6'],
+ ['#7089B5','#C6D6F0'],['#8FA96B','#DDE9BF'],['#B8755A','#EFC5A6'],['#6D7FB8','#C3CAEE'],
+ ['#A06FB2','#E0C4EC'],['#5F9E8C','#B9E2D4'],['#C09A62','#F2E0B4'],['#7E7BAE','#C9C6E6']
+];
+const AV_SHAPES=[
+ '<circle cx="24" cy="24" r="10"/>',
+ '<rect x="15" y="15" width="18" height="18" rx="5"/>',
+ '<path d="M24 12 35 30H13z"/>',
+ '<path d="m24 11 3.6 8.2 9 .8-6.8 5.9 2 8.9L24 30.3l-7.8 4.5 2-8.9-6.8-5.9 9-.8z"/>',
+ '<path d="M14 23a10 10 0 0 1 20 0z"/><path d="M13 27h22"/>',
+ '<rect x="14" y="14" width="20" height="20" rx="4" transform="rotate(45 24 24)"/>',
+ '<circle cx="24" cy="24" r="9" fill="none" stroke="#fff" stroke-width="4.5"/>',
+ '<path d="M12 31c3-9 8-14 12-14s9 5 12 14z"/>',
+ '<circle cx="24" cy="19" r="6"/><path d="M12 36c1-7 5-10 12-10s11 3 12 10z"/>',
+ '<path d="M24 11 36 24 24 37 12 24z"/>',
+ '<path d="M13 18h22M13 24h22M13 30h22" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/>',
+ '<path d="M24 12a12 12 0 0 1 0 24 12 12 0 0 1 0-24zm0 6v12M18 24h12" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>'
+];
+function avatarHTML(v,cls){
+  const str=String(v||'\u{1F431}');
+  // 真实头像（微信 chooseAvatar / 手机相册上传回来的是一个 URL）：直接展示图片
+  if(/^(https?:|blob:|wxfile:|data:image)/.test(str)){
+    return '<span class="avbadge '+(cls||'')+'" style="--a:#EDE7F6;--b:#D9CCEF"><img src="'+str.replace(/"/g,'&quot;')+'" alt=""></span>';
+  }
+  // 微信风格默认头像：色块 + 表情（头像选择器里那批动物 emoji）
+  let code=0;
+  for(const ch of str)code=(code*31+ch.codePointAt(0))>>>0;
+  const g=AV_GRADS[code%AV_GRADS.length];
+  return '<span class="avbadge '+(cls||'')+'" style="--a:'+g[0]+';--b:'+g[1]+'"><b class="avem">'+str+'</b></span>';
+}
+function hydrateIcons(root){
+  if(!root||!root.querySelectorAll)return;
+  const own=(attr)=>(root.hasAttribute&&root.hasAttribute(attr)?[root]:[]);
+  own('data-icon').concat([...root.querySelectorAll('[data-icon]')]).forEach(el=>{
+    const n=el.getAttribute('data-icon');if(!n)return;
+    el.innerHTML=svgInner(n);el.classList.add('gic');el.removeAttribute('data-icon');
+  });
+  own('data-brand').concat([...root.querySelectorAll('[data-brand]')]).forEach(el=>{
+    const big=el.getAttribute('data-brand')==='lg';
+    el.innerHTML=brandMark(big?76:34);el.classList.add('brandwrap');
+    if(big)el.classList.add('lg');el.removeAttribute('data-brand');
+  });
+}
+function emojify(root){
+  if(!root)return;
+  const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
+  const ns=[];while(w.nextNode())ns.push(w.currentNode);
+  for(const n of ns){
+    const t=n.nodeValue;
+    if(!t)continue;
+    EMOJI_RE.lastIndex=0;
+    if(!EMOJI_RE.test(t))continue;
+    EMOJI_RE.lastIndex=0;
+    const parts=[];let last=0,m;
+    while((m=EMOJI_RE.exec(t))){
+      if(m.index>last)parts.push(document.createTextNode(t.slice(last,m.index)));
+      const key=m[0],name=EMOJI_MAP[key]||EMOJI_MAP[key.replace(/\uFE0F/g,'')]||'sparkle';
+      const sp=document.createElement('span');sp.className='eico';sp.innerHTML=svgInner(name);
+      parts.push(sp);last=m.index+key.length;
+    }
+    if(last<t.length)parts.push(document.createTextNode(t.slice(last)));
+    const f=document.createDocumentFragment();parts.forEach(x=>f.appendChild(x));
+    if(n.parentNode)n.parentNode.replaceChild(f,n);
+  }
+  EMOJI_RE.lastIndex=0;
+}
+function upgradeDom(){const root=document.getElementById('phone');hydrateIcons(root);emojify(root);}
+
+/* ---------------- 性能分层：微信内置浏览器 / 弱机自动降级 ----------------
+   之前这里每次 DOM 变动都全树 walk 两遍，而 emojify 自己又改 DOM，
+   等于每帧触发反馈循环——这是微信里「卡」的主因之一。
+   现在只处理「新增的那几个节点」，并且合并到一帧里跑。 */
+const PERF=(function(){
+  const ua=navigator.userAgent||'';
+  const wx=/MicroMessenger/i.test(ua);
+  const mem=navigator.deviceMemory||0;
+  const cores=navigator.hardwareConcurrency||0;
+  const narrow=(window.innerWidth||390)<380;
+  const forced=localStorage.getItem('hhdd_perf');   // 'lite' | 'full' 手动覆盖
+  const lite = forced? forced==='lite' : (wx||(mem&&mem<=4)||(cores&&cores<=4)||narrow);
+  if(lite)document.body.classList.add('lite');
+  return {lite,wx};
+})();
+window.__perf=PERF;
+
+(function(){
+  const root=document.getElementById('phone');
+  if(!root)return;
+  let queue=[],raf=0,busy=false;
+  const flush=()=>{
+    raf=0;
+    if(busy)return;
+    busy=true;
+    const list=queue;queue=[];
+    try{
+      for(const n of list){
+        if(!n||!n.isConnected)continue;
+        try{hydrateIcons(n);emojify(n);}catch(e){}
+      }
+    }finally{
+      ob.takeRecords();   // 丢掉自己造成的变动，避免反馈循环
+      busy=false;
+    }
+  };
+  const ob=new MutationObserver(recs=>{
+    for(const r of recs){
+      if(r.type==='childList'){
+        for(const n of r.addedNodes){
+          if(n.nodeType===1&&!n.classList.contains('gic')&&!n.classList.contains('eico'))queue.push(n);
+        }
+      }else if(r.type==='characterData'&&r.target.parentNode){
+        queue.push(r.target.parentNode);
+      }
+    }
+    if(queue.length&&!raf)raf=requestAnimationFrame(flush);
+  });
+  ob.observe(root,{childList:true,subtree:true,characterData:true});
+  upgradeDom();
+})();
+
+const $=id=>document.getElementById(id);
+const ui={};
+['ovPass','ovResult','ovReplay','ovTrade','chatdrawer'].forEach(k=>ui[k]=$(k));
+
+/* ---------------- 常量与术语映射 ---------------- */
+const STAGE_NAMES={preflop:'天使轮 · 底牌',flop:'A轮 · 翻牌',turn:'B轮 · 转牌',river:'IPO · 河牌',showdown:'清算交割'};
+const CAT_NAMES=['高牌(垃圾时间)','一对(小胜一筹)','两对(双轮驱动)','三条(三倍杠杆)','顺子(一路高歌)','同花(色艺双绝)','葫芦(满堂喝彩)','四条(垄断级)','同花顺(史诗级)','皇家同花顺(IPO敲钟级)'];
+const SUITS=['♠','♥','♦','♣'],SUITS_RED=[1,2];
+const RANKS=['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+const AVATARS=['🐱','🦊','🐼','🐸','🦁','🐵','🐰','🐯','🐨','🦄','🐷','🐻','🐺','🦉','🐙','🦖','🐧','🐥','🦋','🐳'];
+
+/* ---------------- 持久化 ---------------- */
+let SAVE=JSON.parse(localStorage.getItem('hhdd_v1')||'null')||{
+  me:{name:'',avatar:'🐱'},
+  market:{cash:100000,positions:{},prices:null,sent:0},
+  hands:[],ach:{},wins:0,seasonPts:0,theme:'day'
+};
+if(!SAVE.theme)SAVE.theme='day';
+const save=()=>localStorage.setItem('hhdd_v1',JSON.stringify(SAVE));
+
+/* ---------------- 夜间模式 ---------------- */
+function applyTheme(){
+  const night=SAVE.theme==='night';
+  document.body.classList.toggle('night',night);
+  const b=$('themebtn');
+  if(b)b.innerHTML=svgInner(night?'sun':'moon');
+}
+function toggleTheme(){SAVE.theme=SAVE.theme==='night'?'day':'night';save();applyTheme();}
+
+/* ---------------- 指针高光折射（lite 档关闭：每帧改上百个元素的 CSS 变量太贵） ---------------- */
+const LENS_SEL='.card,.menu .m:not(.wide),.roster .p,.handcard,.rankrow,.ach,.resrow,.stat,.stock';
+let __lensRAF=0,__lensLast=0;
+function lensAt(x,y){
+  const els=document.querySelectorAll(LENS_SEL);
+  for(let i=0;i<els.length;i++){
+    const el=els[i],r=el.getBoundingClientRect();
+    if(!r.width||r.bottom<-40||r.top>innerHeight+40)continue;
+    el.style.setProperty('--gx',(x-r.left).toFixed(0)+'px');
+    el.style.setProperty('--gy',(y-r.top).toFixed(0)+'px');
+  }
+}
+if(!PERF.lite){
+  addEventListener('pointermove',e=>{
+    if(__lensRAF)return;
+    __lensRAF=requestAnimationFrame(()=>{
+      __lensRAF=0;
+      const now=performance.now();
+      if(now-__lensLast<70)return;   // 约 14fps 足够，不必跟着 120Hz 刷
+      __lensLast=now;
+      lensAt(e.clientX,e.clientY);
+    });
+  },{passive:true});
+  addEventListener('pointerdown',e=>lensAt(e.clientX,e.clientY),{passive:true});
+}
+$('themebtn').onclick=toggleTheme;
+applyTheme();
+
+/* ---------------- 牌引擎 ---------------- */
+function newDeck(){const d=[];for(let s=0;s<4;s++)for(let r=0;r<13;r++)d.push({r,s});for(let i=d.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[d[i],d[j]]=[d[j],d[i]];}return d;}
+const cardStr=c=>RANKS[c.r]+SUITS[c.s];
+/* 7选5 评分: 返回 [cat, k1,k2,...] 可直接比较 */
+function evaluate7(cards){
+  const rs=cards.map(c=>c.r).sort((a,b)=>b-a);
+  const bySuit={},byRank={};
+  cards.forEach(c=>{(bySuit[c.s]=bySuit[c.s]||[]).push(c);byRank[c.r]=(byRank[c.r]||0)+1;});
+  // 同花顺检测
+  let flushStraight=null;
+  for(const s in bySuit){const cs=bySuit[s];if(cs.length>=5){
+    const rs2=[...new Set(cs.map(c=>c.r))].sort((a,b)=>b-a);
+    // A-5
+    if(rs2.includes(12)&&rs2.includes(3)&&rs2.includes(2)&&rs2.includes(1)&&rs2.includes(0))flushStraight=[8,-1];
+    for(let i=0;i+4<rs2.length;i++)if(rs2[i]-rs2[i+4]===4){flushStraight=[8,rs2[i]];if(rs2[i]===12)flushStraight=[9,-1];}
+    if(flushStraight)return flushStraight.concat([0,0,0]);
+  }}
+  const groups=Object.entries(byRank).map(([r,n])=>[+r,n]).sort((a,b)=>b[1]-a[1]||b[0]-a[0]);
+  if(groups[0][1]===4)return[7,groups[0][0],groups[1][0],0];
+  if(groups[0][1]===3&&groups[1]&&groups[1][1]>=2)return[6,groups[0][0],groups[1][0],0];
+  // 顺子
+  const uniq=[...new Set(rs)];
+  let straightHigh=-1;
+  if(uniq.includes(12)&&uniq.includes(3)&&uniq.includes(2)&&uniq.includes(1)&&uniq.includes(0))straightHigh=3;
+  for(let i=0;i+4<uniq.length;i++)if(uniq[i]-uniq[i+4]===4)straightHigh=Math.max(straightHigh,uniq[i]);
+  // 同花：只要成同花就压过顺子（这里原来是拿最小同花高张去和顺子比，会误判成顺子）
+  let flushTop=null;
+  for(const s in bySuit){
+    if(bySuit[s].length>=5){
+      const fs=bySuit[s].map(c=>c.r).sort((a,b)=>b-a).slice(0,5);
+      if(!flushTop||fs[0]>flushTop[0])flushTop=fs;
+    }
+  }
+  if(flushTop)return[5,flushTop[0],flushTop[1],flushTop[2],flushTop[3],flushTop[4]];
+  if(straightHigh>=0)return[4,straightHigh,0,0,0,0];
+  if(groups[0][1]===3)return[3,groups[0][0],groups[1]?groups[1][0]:0,groups[2]?groups[2][0]:0,0,0];
+  if(groups[0][1]===2&&groups[1]&&groups[1][1]===2)return[2,groups[0][0],groups[1][0],groups[2]?groups[2][0]:0,0,0];
+  if(groups[0][1]===2)return[1,groups[0][0],groups[1]?groups[1][0]:0,groups[2]?groups[2][0]:0,groups[3]?groups[3][0]:0,0];
+  return[0,rs[0],rs[1],rs[2],rs[3]||0,rs[4]||0];
+}
+/* 比大小：逐位比较，位数不足按 0 补齐（原来只比 5 位，同花第 4/5 张没比） */
+const cmpEval=(a,b)=>{
+  const n=Math.max(a.length,b.length);
+  for(let i=0;i<n;i++){const x=a[i]||0,y=b[i]||0;if(x!==y)return x-y;}
+  return 0;
+};
+/* 蒙特卡洛胜率 */
+function equity(hole,board,nOpp,iters){
+  iters=iters||500;
+  const used=new Set(hole.concat(board).map(c=>c.r*4+c.s));
+  const pool=[];for(let r=0;r<13;r++)for(let s=0;s<4;s++)if(!used.has(r*4+s))pool.push({r,s});
+  let win=0;
+  for(let it=0;it<iters;it++){
+    const p=pool.slice();for(let i=p.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[p[i],p[j]]=[p[j],p[i]];}
+    let idx=0;const need=5-board.length,opp=2*nOpp;
+    const full=board.concat(p.slice(idx,idx+need));idx+=need;
+    const my=evaluate7(hole.concat(full));let best=true,tie=false;
+    for(let o=0;o<nOpp;o++){const oh=p.slice(idx+o*2,idx+o*2+2);const ev=evaluate7(oh.concat(full));const c=cmpEval(my,ev);if(c<0){best=false;break;}if(c===0)tie=true;}
+    if(best)win+=(tie?0.5:1);
+  }
+  return win/iters;
+}
+
+/* ---------------- 游戏状态 ---------------- */
+let G=null;
+function addPlayer(){
+  const n=G?0:0; // roster独立
+  if(window.__roster.length>=8)return toast('最多 8 位玩家');
+  window.__roster.push({name:'',avatar:AVATARS[(window.__roster.length*3)%AVATARS.length]});
+  renderRoster();
+}
+window.__roster=[
+  {name:SAVE.me.name||'',avatar:SAVE.me.avatar},
+  {name:'',avatar:'🦊'},{name:'',avatar:'🐼'}
+];
+const BUYINS=[1000,5000,10000,50000],BLINDS=[[10,20],[25,50],[50,100],[100,200]];
+window.__cfg={buyin:1,blind:1};
+
+function renderRoster(){
+  const el=$('rosterList');el.innerHTML='';
+  window.__roster.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='p';
+    d.innerHTML=`<div class="pav" onclick="pickRosterAv(${i})">${avatarHTML(p.avatar)}</div>
+      <input placeholder="玩家${i+1}昵称" value="${p.name}" maxlength="8" oninput="window.__roster[${i}].name=this.value">
+      ${window.__roster.length>2?`<button class="delbtn" onclick="window.__roster.splice(${i},1);renderRoster()">✕</button>`:''}`;
+    el.appendChild(d);
+  });
+  $('buyinSel').innerHTML=BUYINS.map((b,i)=>`<div class="c ${window.__cfg.buyin===i?'on':''}" onclick="window.__cfg.buyin=${i};renderRoster()">${b>=10000?(b/10000)+'万':b}</div>`).join('');
+  $('blindSel').innerHTML=BLINDS.map((b,i)=>`<div class="c ${window.__cfg.blind===i?'on':''}" onclick="window.__cfg.blind=${i};renderRoster()">${b[0]}/${b[1]}</div>`).join('');
+}
+function pickRosterAv(i){const cur=window.__roster[i].avatar;const idx=(AVATARS.indexOf(cur)+1)%AVATARS.length;window.__roster[i].avatar=AVATARS[idx];renderRoster();}
+function pickAv(i){SAVE.me.avatar=AVATARS[i];window.__roster[0].avatar=AVATARS[i];save();renderProfile();}
+/* 真实头像：从相册选微信头像照片，压到 128px 存本地（几 KB，不占空间） */
+document.addEventListener('change',e=>{
+  if(e.target.id!=='avUpload')return;
+  const f=e.target.files&&e.target.files[0];
+  if(!f)return;
+  const rd=new FileReader();
+  rd.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      const c=document.createElement('canvas');c.width=c.height=96;
+      const x=c.getContext('2d');
+      const s=Math.min(img.width,img.height);
+      x.drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,96,96);
+      try{
+        SAVE.me.avatar=c.toDataURL('image/jpeg',.8);
+        if(window.__roster)window.__roster[0].avatar=SAVE.me.avatar;
+        save();renderProfile();
+        toast('头像已换好，牌桌上见');
+      }catch(err){toast('照片太大，换一张试试');}
+    };
+    img.src=rd.result;
+  };
+  rd.readAsDataURL(f);
+  e.target.value='';
+});
+
+function openSetup(){go('setup');renderRoster();}
+
+function startGame(){
+  const ps=window.__roster.map(p=>({...p,name:(p.name||'匿名投资人').slice(0,8)}));
+  if(ps.length<2)return toast('至少需要 2 位玩家');
+  buildGame(ps,{buyin:window.__cfg.buyin,blind:window.__cfg.blind});
+}
+
+/* 创建牌局（本机 / 联机共用） */
+function buildGame(ps,cfg){
+  window.__cfg=cfg;
+  G={players:ps.map((p,i)=>({id:i,name:p.name,avatar:p.avatar,stack:BUYINS[cfg.buyin],bet:0,committed:0,folded:false,allin:false,cards:[],strat:{stop:1,hedge:1,insight:1},lastEq:null})),
+    deck:[],board:[],stage:'idle',dealer:Math.floor(Math.random()*ps.length),cur:0,curBet:0,minRaise:0,
+    handNo:0,handLog:null,chat:G?G.chat:[]};
+  window.__roster=ps.map(p=>({name:p.name,avatar:p.avatar}));
+  go('game');layoutSeats();dealHand();
+}
+
+/* ---------- 座位布局（椭圆桌排布） ---------- */
+function layoutSeats(){
+  const wrap=$('tablearea');if(!wrap||!G)return;
+  const W=wrap.clientWidth,H=wrap.clientHeight;
+  // 视图还没完成布局时尺寸可能为 0，此时排座位会全部叠在左上角
+  if(!W||!H){requestAnimationFrame(layoutSeats);return;}
+  let old=$('seats');if(old)old.remove();
+  const seats=document.createElement('div');seats.id='seats';wrap.appendChild(seats);
+  const n=G.players.length;
+  /* cy/ry 的取值让最上面的座位落在「资金池」条下面，而不是压在它身上 */
+  const cx=W/2,cy=H*0.50,rx=Math.max(60,Math.min(W/2-58,190)),ry=Math.max(52,H*0.30);
+  G.players.forEach((p,i)=>{
+    /* 从正下方开始逆时针排座：自己（0 号位）永远在屏幕下方，
+       「资金池」条上方的正中不再被座位压住 */
+    const ang=Math.PI/2+i*2*Math.PI/n;
+    const x=cx+rx*Math.cos(ang),y=cy+ry*Math.sin(ang);
+    const s=document.createElement('div');s.className='seat';s.id='seat'+i;
+    s.style.left=Math.max(2,Math.min(W-88,x-43))+'px';
+    s.style.top=Math.max(2,Math.min(H-80,y-38))+'px';
+    s.innerHTML=`<div class="bubble"><div class="fav">${avatarHTML(p.avatar)}</div><div class="fn">${p.name}</div><div class="fs" id="stack${i}">¥${p.stack}</div><div id="bet${i}"></div></div><div class="holecards" id="hole${i}"></div><div class="dealerbtn" id="dbtn${i}" style="display:none">D</div>`;
+    if(i===MY_SEAT)s.classList.add('me');
+    seats.appendChild(s);
+  });
+}
+addEventListener('resize',()=>{if(G&&$('view-game').classList.contains('on'))layoutSeats();});
+addEventListener('orientationchange',()=>setTimeout(()=>{if(G)layoutSeats();},260));
+
+/* ---------- 一手牌流程 ----------
+   注意：这里原来有两个同名 nextHand（一个发牌、一个推进庄位并递归调用自己），
+   后者覆盖前者且自我递归，导致点「开局」必然栈溢出崩溃。现在拆成 dealHand / nextHand。 */
+function dealHand(){
+  const alive=G.players.filter(p=>p.stack>0);
+  if(alive.length<2){endMatch();return;}
+  G.players.forEach(p=>{if(p.stack<=0){p.stack=BUYINS[window.__cfg.buyin];comment(p.name+' 账户补充了新弹药，重新入场——投资者永不认输！');}});
+  G.handNo++;
+  G.players.forEach(p=>{p.bet=0;p.committed=0;p.folded=false;p.allin=false;p.cards=[];p.strat={stop:1,hedge:1,insight:1};});
+  G.deck=newDeck();G.board=[];G.stage='preflop';
+  const sb=BLINDS[window.__cfg.blind][0],bb=BLINDS[window.__cfg.blind][1];
+  G.bb=bb;
+  const n=G.players.length;
+  G.players.forEach((p,i)=>{ $('dbtn'+i).style.display=i===G.dealer?'flex':'none'; });
+  const sbI=n===2?G.dealer:(G.dealer+1)%n, bbI=n===2?(G.dealer+1)%n:(G.dealer+2)%n;
+  post(sbI,sb);post(bbI,bb);
+  G.curBet=bb;G.minRaise=bb;G.lastAggr=bbI;G.acted=new Set();
+  G.players.forEach(p=>p.cards=[G.deck.pop(),G.deck.pop()]);
+  G.handLog={no:G.handNo,time:new Date().toLocaleString('zh-CN'),players:G.players.map(p=>({name:p.name,avatar:p.avatar})),steps:[],board:[],result:null,report:null};
+  G.roadshow=pick(STOCKS);
+  G.handLog.roadshow={nm:G.roadshow.nm,sector:sectorName(G.roadshow.sector),sym:G.roadshow.sym};
+  logStep(`🎤 本局路演项目：${G.roadshow.nm}（${sectorName(G.roadshow.sector)}），估值随牌局与板块情绪波动。`);
+  logStep(`第 ${G.handNo} 手开局。${G.players[sbI].name} 投入保证金 ¥${sb}，${G.players[bbI].name} 投入大保证金 ¥${bb}。`);
+  $('handno').textContent='第 '+G.handNo+' 手 · '+(n)+' 人';
+  renderAll();
+  G.cur=n===2?sbI:(G.dealer+3)%n;
+  beginTurn();
+}
+function post(i,amt){const p=G.players[i];const a=Math.min(amt,p.stack);p.stack-=a;p.bet=a;p.committed+=a;if(p.stack===0)p.allin=true;}
+function potTotal(){return G.players.reduce((s,p)=>s+p.committed,0);}
+
+function beginTurn(){
+  G.revealed=false; // 交接遮罩期间不显示底牌
+  renderAll();
+  const p=G.players[G.cur];
+  if(p.folded||p.allin||p.stack===0){return advanceTurn(false);}
+  if(NET.on){
+    $('ovPass').classList.remove('on');
+    if(G.cur===NET.seat){
+      G.revealed=true;
+      showAdvisor(p);
+    }else{
+      setWaiting(p);
+    }
+    renderAll();
+    updateActions(p);
+    return;
+  }
+  $('passname').innerHTML=avatarHTML(p.avatar)+' '+p.name;
+  $('ovPass').classList.add('on');
+  updateActions(p);          // 本地局也先把按钮状态摆正，别把上一家的「跟注 ¥xxx」留在屏幕上
+}
+/* 轮到我：算胜率 + 出建议 */
+function showAdvisor(p){
+  const nActive=G.players.filter(x=>!x.folded).length;
+  const eq=equity(p.cards,G.board,Math.max(1,nActive-1),PERF.lite?260:420);
+  p.lastEq=eq;
+  $('eqVal').textContent=Math.round(eq*100)+'%';
+  $('advisortip').innerHTML=advise(p,eq);
+  return eq;
+}
+/* 轮到别人：给出等待态，别让按钮看起来能点 */
+function setWaiting(p){
+  $('eqVal').textContent='--%';
+  $('advisortip').innerHTML=`<span style="font-weight:800">等待 ${p.name} 决策…</span> <span style="color:#9b93a8">（${G.players.filter(x=>!x.folded).length} 人在场 · 资金池 ¥${potTotal()}）</span>`;
+}
+function revealHand(){
+  $('ovPass').classList.remove('on');
+  G.revealed=true;
+  showAdvisor(G.players[G.cur]);
+  renderAll();
+  updateActions(G.players[G.cur]);
+}
+
+function advise(p,eq){
+  const toCall=G.curBet-p.bet;
+  const pot=potTotal();
+  const potOdds=toCall>0?toCall/(pot+toCall):0;
+  const st=STAGE_NAMES[G.stage].split(' ')[0];
+  let s;
+  if(toCall===0){
+    if(eq>0.55)s=`💡 <b>建议：加注融资</b>。你手握 ${Math.round(eq*100)}% 的胜算，价值领投，别让机会溜走。`;
+    else if(eq>0.4)s=`💡 <b>建议：观望</b>。白看一张牌的机会，白拿的尽调为什么要拒绝？`;
+    else s=`💡 <b>建议：观望或小额试探</b>。牌力一般，可以用小注听听风声。`;
+  }else{
+    if(eq>0.65)s=`💡 <b>建议：加注融资</b>。胜率 ${Math.round(eq*100)}% 远高于跟注成本，值得主动抬价。`;
+    else if(potOdds<eq-0.03)s=`💡 <b>建议：跟投</b>。跟注赔率划算（需 ${Math.round(potOdds*100)}% vs 胜率 ${Math.round(eq*100)}%），跟。`;
+    else if(eq>0.45&&toCall<=p.stack*0.15)s=`💡 <b>建议：跟投</b>。成本可控，保留看牌权利。`;
+    else if(eq<0.32&&toCall>=pot*0.5)s=`💡 <b>建议：止损退出</b>。胜率 ${Math.round(eq*100)}% 对上这么贵的跟注，止损是纪律不是软弱。`;
+    else s=`💡 <b>建议：谨慎</b>。赔率一般，若非深筹码可考虑观望/止损，胜率 ${Math.round(eq*100)}%。`;
+  }
+  s+=` <span style="color:#9b93a8">（${st} · 跟注¥${toCall} · 池¥${pot}）</span>`;
+  return s;
+}
+
+function updateActions(p){
+  const mine=!NET.on||NET.seat===G.cur;
+  const toCall=Math.min(G.curBet-p.bet,p.stack);
+  $('btnFold').disabled=!mine;
+  $('btnCheck').style.display=(G.curBet-p.bet<=0)?'':'none';
+  $('btnCall').style.display=(G.curBet-p.bet>0)?'':'none';
+  $('btnCall').textContent=`跟投 ¥${toCall}`;
+  $('btnCall').disabled=!mine||p.stack<=0;
+  const minR=Math.min(G.curBet+G.minRaise,p.stack+p.bet);
+  $('btnRaise').disabled=!mine||p.stack<=G.curBet-p.bet;
+  $('btnRaise').textContent=p.stack<=G.curBet-p.bet?'全押':'加注融资';
+  if(!mine){$('raiseRow').style.display='none';$('actions').classList.add('locked');}
+  else $('actions').classList.remove('locked');
+  // 策略卡
+  $('stratcards').innerHTML=`
+    <button class="strat ${p.strat.stop?'':'used'}" ${p.strat.stop?'':'disabled'} onclick="useStrat('stop')">${icon('shield','stico')} 止损卡${p.strat.stop?'':'·已用'}</button>
+    <button class="strat ${p.strat.hedge?'':'used'}" ${p.strat.hedge?'':'disabled'} onclick="useStrat('hedge')">${icon('scale','stico')} 对冲卡${p.strat.hedge?'':'·已用'}</button>
+    <button class="strat ${p.strat.insight?'':'used'}" ${p.strat.insight?'':'disabled'} onclick="useStrat('insight')">${icon('search','stico')} 洞察卡${p.strat.insight?'':'·已用'}</button>`;
+  // 加注滑条
+  const rr=$('raiseRow');
+  const maxR=Math.max(1,p.stack+p.bet);
+  const minR2=Math.min(minR,maxR);        // 保证 min<=max，否则 range 会退化成 0
+  const sl=rr.querySelector('#raiseSlider');
+  sl.min=minR2; sl.max=maxR; sl.value=minR2;
+  $('raiseVal').textContent='¥'+minR2;
+  rr.style.display='none';
+}
+$('raiseSlider')&&document.addEventListener('input',e=>{if(e.target.id==='raiseSlider')$('raiseVal').textContent='¥'+e.target.value;});
+function showRaise(){$('raiseRow').style.display='flex';}
+
+function useStrat(k){
+  if(NET.on&&NET.seat!==G.cur&&!NET.applying)return toast('还没轮到你');
+  if(NET.on&&!NET.host){netSendAct('strat',k);return;}
+  const p=G.players[G.cur];
+  if(!p.strat[k])return;
+  if(k==='stop'){p.strat.stop=0;p.__stopArmed=true;toast('🛟 止损卡已装备：本手若止损退出，收回已投入的 25%');}
+  if(k==='hedge'){p.strat.hedge=0;p.__hedgeArmed=true;toast('⚖️ 对冲卡已装备：下一次跟投费用减半');}
+  if(k==='insight'){p.strat.insight=0;const eq=equity(p.cards,G.board,G.players.filter(x=>!x.folded).length-1,900);toast(`🔍 深度尽调：你的真实胜率约 ${Math.round(eq*100)}%`);$('eqVal').textContent=Math.round(eq*100)+'%';}
+  renderAll();
+}
+
+function logStep(t){G.handLog.steps.push(t);}
+
+function act(type,amt){
+  if(NET.on&&NET.seat!==G.cur&&!NET.applying)return toast('还没轮到你，稍等一下');
+  if(NET.on&&!NET.host){netSendAct(type);return;}   // 客机只上报，由房主统一结算
+  const p=G.players[G.cur];
+  const toCall=G.curBet-p.bet;
+  if(type==='check'&&toCall>0)type='call';   // 面对下注不能「观望」，一律按跟注处理（防误触/防客机作弊）
+  let desc='';
+  if(type==='fold'){
+    p.folded=true;desc=`${p.name} 止损退出`;
+    if(p.__stopArmed){const back=Math.floor(p.committed*0.25);p.committed-=back;p.stack+=back;p.__stopArmed=false;desc+=`（止损卡收回 ¥${back}）`;}
+    comment(pick(LOSE_FOLDS).replace('{n}',p.name));
+  }else if(type==='check'){
+    desc=`${p.name} 观望`;
+  }else if(type==='call'){
+    let pay=Math.min(toCall,p.stack),saved=0;
+    if(p.__hedgeArmed){saved=Math.floor(pay/2);p.stack+=saved;pay-=saved;p.__hedgeArmed=false;}
+    p.stack-=pay;p.bet+=pay;p.committed+=pay;if(p.stack===0)p.allin=true;
+    desc=`${p.name} 跟投 ¥${pay}`+(p.allin?' · All-in':'')+(saved?`（对冲卡省下 ¥${saved}）`:'');
+  }else if(type==='raise'){
+    let target=Math.min(+($('raiseSlider').value),p.stack+p.bet);
+    let pay=target-p.bet;
+    pay=Math.min(pay,p.stack);
+    p.stack-=pay;p.bet+=pay;p.committed+=pay;
+    if(p.stack===0)p.allin=true;
+    if(p.bet>G.curBet){G.minRaise=Math.max(G.minRaise,p.bet-G.curBet);G.curBet=p.bet;G.acted=new Set([p.id]);}
+    desc=`${p.name} 加注融资至 ¥${p.bet}`+(p.allin?' · All-in！':'');
+  }
+  logStep(`[${STAGE_NAMES[G.stage].split(' ')[0]}] `+desc+`　(胜率估 ${Math.round((p.lastEq||0)*100)}%)`);
+  G.handLog.decisions=G.handLog.decisions||[];
+  G.handLog.decisions.push({player:p.name,stage:G.stage,action:type,amt:p.committed,eq:p.lastEq,toCall,pot:potTotal()});
+  renderAll();
+  advanceTurn(true);
+}
+
+function advanceTurn(fromAct){
+  const n=G.players.length;
+  // 只剩一个人没弃牌：本手立刻结束，不该再让他「观望」一遍
+  const notFolded=G.players.filter(p=>!p.folded);
+  if(notFolded.length<=1)return showdown();
+  const active=G.players.filter(p=>!p.folded&&!p.allin);
+  if(active.length===0)return endStreet();
+  if(fromAct)G.acted.add(G.cur);
+  // 若所有活跃玩家都已匹配且行动过
+  const allMatched=active.every(p=>p.bet===G.curBet)&&active.every(p=>G.acted.has(p.id));
+  if(allMatched)return endStreet();
+  // 下一个未弃牌未allin且需行动的
+  for(let k=1;k<=n;k++){
+    const i=(G.cur+k)%n;const p=G.players[i];
+    if(p.folded||p.allin)continue;
+    if(p.bet===G.curBet&&G.acted.has(p.id))continue;
+    G.cur=i;return beginTurn();
+  }
+  endStreet();
+}
+
+function endStreet(){
+  // 收注：注意每条街都要把「本轮下注额」清零，
+  // 否则翻牌后所有人还背着上一条街的注额，会被迫再跟一次 —— 这是最容易毁掉手感的一个 bug
+  G.players.forEach(p=>{p.bet=0;});
+  G.acted=new Set();
+  G.curBet=0;
+  G.minRaise=(G.bb||BLINDS[window.__cfg.blind][1]);
+  G.lastAggr=-1;
+  const order=['preflop','flop','turn','river'];
+  if(G.stage==='preflop'){G.board.push(G.deck.pop(),G.deck.pop(),G.deck.pop());G.stage='flop';logStep('A轮披露：'+G.board.slice(0,3).map(cardStr).join(' '));}
+  else if(G.stage==='flop'){G.board.push(G.deck.pop());G.stage='turn';logStep('B轮披露：'+cardStr(G.board[3]));}
+  else if(G.stage==='turn'){G.board.push(G.deck.pop());G.stage='river';logStep('IPO揭盅：'+cardStr(G.board[4]));}
+  else if(G.stage==='river'){return showdown();}
+  else return showdown();
+  // 本局路演项目带动所属板块轻微情绪（牌局 ↔ 行情联动）
+  if(G.roadshow){SAVE.market.sectorSent=SAVE.market.sectorSent||{};SAVE.market.sectorSent[G.roadshow.sector]=(SAVE.market.sectorSent[G.roadshow.sector]||0)+.02;}
+  tickMarket(); // 每条街推进行情
+  renderAll();
+  // 从庄家左侧第一个可行动者开始
+  const n=G.players.length;
+  for(let k=1;k<=n;k++){const i=(G.dealer+k)%n;const p=G.players[i];if(!p.folded&&!p.allin){G.cur=i;return beginTurn();}}
+  // 全部 allin：直接连续翻牌
+  return endStreet();
+}
+
+function buildPots(){
+  const ps=G.players.map(p=>({id:p.id,amt:p.committed,in:!p.folded})).filter(x=>x.amt>0);
+  const pots=[];let prev=0;
+  while(true){
+    const levels=ps.filter(x=>x.amt>prev).map(x=>x.amt).sort((a,b)=>a-b);
+    if(!levels.length)break;
+    const lv=levels[0];
+    const pot={amt:0,eligible:[]};
+    ps.forEach(x=>{if(x.amt>prev){pot.amt+=Math.min(x.amt,lv)-prev;if(x.in)pot.eligible.push(x.id);}});
+    pots.push(pot);prev=lv;
+  }
+  return pots;
+}
+
+function showdown(){
+  G.stage='showdown';
+  const contenders=G.players.filter(p=>!p.folded);
+  contenders.forEach(p=>p.eval=evaluate7(p.cards.concat(G.board)));
+  const pots=buildPots();
+  const results={};
+  pots.forEach((pot,pi)=>{
+    let elig=pot.eligible.map(id=>G.players[id]);
+    // 边池没有任何人有资格（都弃了）：归给还在场上的最后一人，别让筹码凭空消失
+    if(!elig.length)elig=contenders.slice(0,1);
+    if(!elig.length)return;
+    let best=null,winners=[];
+    elig.forEach(p=>{const c=best?cmpEval(p.eval,best):1;if(c>0){best=p.eval;winners=[p];}else if(c===0)winners.push(p);});
+    const share=Math.floor(pot.amt/winners.length);
+    const rem=pot.amt-share*winners.length;   // 除不尽的零头给第一个赢家
+    winners.forEach((w,wi)=>{results[w.id]=(results[w.id]||0)+share+(wi===0?rem:0);});
+  });
+  const totalGive=Object.values(results).reduce((a,b)=>a+b,0);
+  Object.entries(results).forEach(([id,amt])=>{G.players[id].stack+=amt;});
+  // 记录
+  const winnerNames=Object.keys(results).map(id=>G.players[id].name);
+  G.handLog.result={winners:winnerNames,board:G.board.map(cardStr),showdowns:contenders.map(p=>({name:p.name,cards:p.cards.map(cardStr),cat:CAT_NAMES[p.eval[0]],stack:p.stack})),payouts:results};
+  // 点评
+  let headline;
+  if(Object.keys(results).length===1){const w=G.players[Object.keys(results)[0]];
+    const eqw=w.lastEq;
+    if(eqw!==null&&eqw<0.3)headline=`🎬 {w} 用约 ${Math.round(eqw*100)}% 的胜率逆天改命！这不是运气，这是信仰（和一点点运气）。`;
+    else if(w.eval[0]>=6)headline=`🔥 {w} 亮出「${CAT_NAMES[w.eval[0]]}」，全场投资人起立鼓掌，LP 当场追加出资。`;
+    else headline=`💼 {w} 稳稳交割，落袋为安。巴菲特说的长期主义大概就是这样（大概）。`;
+    headline=headline.replace('{w}',w.name);
+  }else headline=`🤝 平分资金池——资本市场的尽头是和气生财。`;
+  comment(headline);
+  if(G.roadshow){const pr=SAVE.market.prices.find(p=>p.sym===G.roadshow.sym);const b=pr?((pr.price/(pr.base||pr.hist[0])-1)*100):0;comment(`📈 路演后记：${G.roadshow.nm} 当前 ¥${pr?pr.price:'--'}，本场累计 ${b>=0?'+':''}${b.toFixed(1)}%——牌桌上的每一次加注，都像一次尽调投票。`);}
+  SAVE.hands.unshift(G.handLog);SAVE.hands=SAVE.hands.slice(0,60);
+  // 教练报告
+  G.handLog.report=makeReport();
+  // 成就
+  checkAch(results,winnerNames);
+  lastHandIndex=0;
+  renderAll();
+  // 结算立刻广播：客机延迟 620ms 弹层，房主 700ms 弹层 —— 两端几乎同时看到结果
+  if(NET.on&&NET.host)pubResult(results,contenders,headline);
+  setTimeout(()=>showResult(results,contenders,headline),700);
+}
+function makeReport(){
+  const ds=(G.handLog.decisions||[]);
+  if(!ds.length)return{score:70,text:'本手你按兵不动，观看也是一种学习。下次可以更主动地用小注做大尽的调。'};
+  let score=70;const notes=[];
+  ds.forEach(d=>{
+    if(d.action==='fold'&&d.eq>0.5){score-=12;notes.push(`⚠️ ${d.stage==='flop'?'A轮':'B轮'}阶段你在胜率 ${Math.round(d.eq*100)}% 时止损退出——除非面对巨额加注，这样的牌值得再看一张。`);}
+    if(d.action==='call'&&d.toCall>0&&d.pot>0&&(d.toCall/(d.pot+d.toCall))>d.eq+0.12){score-=10;notes.push(`💸 跟注赔率不划算：需要 ${Math.round(d.toCall/(d.pot+d.toCall)*100)}% 胜率，你只有约 ${Math.round(d.eq*100)}%。下次让赔率说话。`);}
+    if(d.action==='raise'&&d.eq>0.6){score+=10;notes.push(`✅ 强牌主动加注融资，价值最大化，教科书式操作。`);}
+    if(d.action==='fold'&&d.eq<0.25&&d.toCall>d.pot*0.6){score+=8;notes.push(`✅ 面对重注果断止损，纪律性满分。`);}
+  });
+  score=Math.max(20,Math.min(98,score));
+  const tips=[
+    '起手两高张（A/K/Q同花或对子）才值得预热加注；杂色小牌在早期位置要学会说「下次一定」。',
+    '把资金池赔率刻进DNA：跟注前先算「需要多少胜率」再对比手里的估算。',
+    '位置就是信息：越晚行动越主动，别在枪口位拿垃圾牌演霸道总裁。',
+    '连续三手没进池？正常。德扑 folded 90% 的手牌才是专业玩家，FOMO 是最贵的情绪成本。'
+  ];
+  return{score,text:(notes.length?notes:['_ 这一手的决策都在合理区间，稳健投资人实锤。']).concat(['📌 今日精进：'+pick(tips)]).join('\n'),score};
+}
+
+function showResult(results,contenders,headline){
+  if(!G||!G.handLog){return;}   // 延迟弹层期间可能已经退出房间/换桌
+  const rep=(G.handLog&&G.handLog.report)||{score:'--',text:'本手按兵不动，观看也是学习。'};
+  $('resTitle').textContent='清算交割 · 第 '+G.handNo+' 手';
+  $('resultcards').innerHTML=contenders.filter(p=>p.cards&&p.cards.length===2).map(p=>`<div style="text-align:center"><div class="pcard ${SUITS_RED.includes(p.cards[0].s)?'red':''}" style="display:inline-flex">${cardStr(p.cards[0])}</div> <div class="pcard ${SUITS_RED.includes(p.cards[1].s)?'red':''}" style="display:inline-flex">${cardStr(p.cards[1])}</div><div style="font-size:11px;font-weight:800;margin-top:4px;color:var(--purple)">${avatarHTML(p.avatar)}${p.name}<br><span style="color:var(--warmorange)">${CAT_NAMES[p.eval?p.eval[0]:0]}</span></div></div>`).join('');
+  $('resRows').innerHTML=G.players.map(p=>{const g=results[p.id]||0;const d=g-p.committed;return `<div class="resrow"><div class="rn ${g?'win':''}">${avatarHTML(p.avatar)} ${p.name}${g?icon('trophy','rico'):''}</div><div class="rh">${d>0?'+'+d:d<0?d:'—'}</div><div class="muted">余额 ¥${p.stack}</div></div>`}).join('');
+  $('coachBox').innerHTML=`<div style="font-weight:900;color:var(--purple);font-size:13px">🤖 AI 教练 · 本手点评</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap;margin-top:6px">${headline}\n${rep.text}</div><div style="margin-top:6px">决策评分：<b class="scorebig" style="font-size:22px">${rep.score}</b>/100</div>`;
+  ui.ovResult.classList.add('on');
+  save();
+}
+let lastHandIndex=0;
+function closeResult(){ui.ovResult.classList.remove('on');}
+function openReplayOf(i){ui.ovResult.classList.remove('on');openReplay(SAVE.hands[i]);}
+/* 「下一局」：房主真正发牌，客机只发请求——客机本地绝不能自己跑引擎，否则两端牌局各走一套 */
+function nextHandBtn(){
+  if(NET.on&&!NET.host){ui.ovResult.classList.remove('on');netSendCtrl('next');toast('已告诉房主：下一手');return;}
+  nextHand();
+}
+function nextHand(){
+  if(!G)return;
+  ui.ovResult.classList.remove('on');
+  G.dealer=(G.dealer+1)%G.players.length;
+  layoutSeats();
+  dealHand();
+  if(NET.on&&NET.host)syncNow();   // 新一手立刻推，不等渲染防抖
+}
+function endMatch(){
+  const champ=[...G.players].sort((a,b)=>b.stack-a.stack)[0];
+  SAVE.wins++;SAVE.seasonPts+=5;
+  ach('season1','🏆',champ.name+' 拿下整场！');
+  save();toast(`🎉 全场结束！${champ.name} 以 ¥${champ.stack} 荣登资本之巅`);
+  go('rank');
+}
+
+/* ---------- 渲染 ---------- */
+function renderAll(){
+  if(!G)return;
+  window.__ra=(window.__ra||0)+1;
+  $('potline').textContent='资金池 ¥'+potTotal();
+  $('stagechip').textContent=STAGE_NAMES[G.stage];
+  $('board').innerHTML=G.board.map(c=>`<div class="pcard ${SUITS_RED.includes(c.s)?'red':''}"><div class="r">${RANKS[c.r]}</div><div class="s">${SUITS[c.s]}</div></div>`).join('');
+  G.players.forEach((p,i)=>{
+    const el=$('stack'+i);if(el)el.textContent='¥'+p.stack+(p.allin?' · ALL-IN':'');
+    const b=$('bet'+i);if(b)b.innerHTML=p.bet>0?`<span class="fb">¥${p.bet}</span>`:'';
+    const s=$('seat'+i);if(s)s.classList.toggle('act',i===G.cur&&G.stage!=='showdown');
+    if(s)s.classList.toggle('folded',p.folded);
+    const h=$('hole'+i);
+    // 联机模式：只看得到自己的底牌；本机模式：当前行动者亮牌后可见
+    const showReal=NET.on
+      ? ((G.stage==='showdown'&&!p.folded)||(i===NET.seat&&!p.folded))
+      : ((G.stage==='showdown'&&!p.folded)||(i===G.cur&&!p.folded&&G.revealed));
+    if(h)h.innerHTML=p.cards.length?(showReal?p.cards.map(c=>`<div class="pcard ${SUITS_RED.includes(c.s)?'red':''}"><div class="r">${RANKS[c.r]}</div><div class="s">${SUITS[c.s]}</div></div>`):'<div class="pcard back"></div><div class="pcard back"></div>'):'';
+  });
+  $('newspaper').textContent=newsLine();
+  if(NET.on&&NET.host)scheduleSync();
+}
+function renderHole(p){/* revealHand 时在座位上翻牌由 renderAll 处理 */}
+
+/* ---------- 新闻条/氛围 ---------- */
+function newsLine(){
+  const ev=SAVE.market.lastEvent||'陆家嘴咖啡因消耗量与融资额呈显著正相关（并没有）';
+  // 报纸条是 textContent 渲染的，不能带 icon() 的 HTML，否则用户会看到一堆 <svg
+  let rs='';
+  if(G&&G.roadshow){const s=SECTORS.find(x=>x.k===G.roadshow.sector);rs='　|　🎤 本局路演：'+G.roadshow.nm+' · '+(s?s.n:G.roadshow.sector);}
+  return '📰 '+ev+rs;
+}
+const WIN_LINES=['{w} 微笑收下资金池，仿佛听到了 IPO 敲钟的钟声。','{w}：不是我强，是对手们太给面子。','{w} 这波操作建议直接写进招股书。','{w} 淡定地把筹码揽入怀中——成熟投资人的自我修养。'];
+const LOSE_FOLDS=['{n} 果断止损，巴菲特附体：第一条原则是别亏钱。','{n} 转身离场的背影十分潇洒（牌是真的不行）。','{n} 止损退出——懂得放弃的人先享受周末。'];
+const BIG_RAISE=['加注融资！有人要抢庄了？','重注压上，这是信心还是表演？','筹码堆成山，气氛突然像路演现场。'];
+function comment(t){pushChat({who:'AI 风控官',text:t,me:false,sys:true});}
+function pick(a){return a[Math.floor(Math.random()*a.length)];}
+
+/* ---------- 聊天 / 语音 / 连麦 ---------- */
+function pushChat(m){m.time=new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'});(G?G.chat:[]).push(m);renderChat();}
+function renderChat(){
+  const msgs=(G?G.chat:SAVE.chat)||[];const el=$('chatmsgs');
+  el.innerHTML=msgs.slice(-60).map(m=>`<div class="cmsg ${m.me?'me':'them'} ${m.voice?'voice':''}" ${m.voice?`onclick="playVoice(this)"`:''}>${m.who?`<div class="who">${m.who} · ${m.time}</div>`:''}${m.voice?`<span style="font-size:16px">🎤</span><span class="bars"><i style="height:5px"></i><i style="height:12px"></i><i style="height:8px"></i><i style="height:14px"></i><i style="height:6px"></i></span><span style="font-size:11px">${m.voice}\"</span>`:m.text}</div>`).join('');
+  el.scrollTop=el.scrollHeight;
+}
+function sendChat(){
+  const v=$('chatinput').value.trim();if(!v)return;
+  $('chatinput').value='';
+  pushChat({who:SAVE.me.name||'我',text:v,me:true});
+  // 简单AI回应
+  setTimeout(()=>pushChat({who:'AI 风控官',text:pick(['收到，情绪稳定，符合职业选手画像。','这条消息建议归档进「凡尔赛合集」。','风控提示：嘴上越狠，手上越要稳。','好的，已为你呼叫全场最小声的嘘声。'])}),900+Math.random()*800);
+}
+let recT=null;
+function micDown(){recT=Date.now();toast('🎙️ 录音中… 松开发送');}
+function micUp(){
+  if(!recT)return;const sec=Math.max(1,((Date.now()-recT)/1000)).toFixed(1);recT=null;
+  pushChat({who:SAVE.me.name||'我',voice:sec,me:true});
+}
+function playVoice(el){
+  el.classList.add('playing');
+  try{const ac=window.__ac=window.__ac||new (window.AudioContext||window.webkitAudioContext)();
+    const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.frequency.value=300+Math.random()*200;
+    g.gain.value=.05;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.4);}catch(e){}
+  setTimeout(()=>el.classList.remove('playing'),500);
+}
+let liveOn=false;
+function toggleMic(){
+  liveOn=!liveOn;
+  $('micstate').classList.toggle('on',liveOn);
+  $('netbadge').classList.toggle('off',!liveOn);
+  $('nettext').textContent=liveOn?'连麦中':'未连麦';
+  $('micToggleBtn').textContent=liveOn?'挂断':'连麦';
+  $('chatMode').textContent=liveOn?'连麦通话中':'文字 / 语音';
+  toast(liveOn?'📞 已发起连麦，大家边聊边打！':'📞 连麦已挂断');
+}
+function openChat(){$('chatdrawer').classList.add('on');renderChat();}
+function closeChat(){$('chatdrawer').classList.remove('on');}
+
+/* ---------- 行情大厅 ---------- */
+const INDICES=[{n:'上证指数',v:3421.6},{n:'深证成指',v:10856.2},{n:'科创50',v:978.4}];
+/* 八大板块 —— 不止 AI，覆盖真实创业生态 */
+const SECTORS=[
+  {k:'all',   ico:icon('globe','secico'), n:'全部'},
+  {k:'pet',   ico:icon('paw','secico'), n:'宠物经济'},
+  {k:'cpg',   ico:icon('bag','secico'), n:'新消费'},
+  {k:'fash',  ico:icon('hanger','secico'), n:'时尚艺术'},
+  {k:'tech',  ico:icon('chip','secico'), n:'AI科技'},
+  {k:'cult',  ico:icon('knot','secico'), n:'文创非遗'},
+  {k:'helth', ico:icon('health','secico'), n:'健康医疗'},
+  {k:'life',  ico:icon('sofa','secico'), n:'空间生活'},
+  {k:'green', ico:icon('leaf','secico'), n:'绿色农业'},
+];
+/* 28 个标的：覆盖宠物 / 新消费 / 时尚艺术 / AI科技 / 文创非遗 / 健康 / 空间 / 绿色农业；部分灵感来自真实沪上创业项目与品牌，价格均为虚拟模拟 */
+const STOCKS=[
+  // 🐾 宠物经济
+  {sym:'SH-BAKEPE',nm:'焙印工坊·冻干零食',tag:'宠物食品 · 自家品牌，铲屎官刚需',sector:'pet',p:32.8,vol:.035},
+  {sym:'SH-VETRES',nm:'未卡风·宠物生活方式',tag:'宠物用品 · 灵感来自上海未卡Vetreska B+轮',sector:'pet',p:24.6,vol:.05},
+  {sym:'SH-BUBI',nm:'BUBI·宠物玩具',tag:'宠物设计 · 灵感来自上生·新所 BUBI',sector:'pet',p:11.2,vol:.065},
+  {sym:'SH-PAWCLIN',nm:'爪印诊所·宠物连锁',tag:'宠物医疗 · 连锁专科',sector:'pet',p:19.5,vol:.03},
+  // 🍰 新消费
+  {sym:'SH-WUTONG',nm:'梧桐咖啡·社区连锁',tag:'餐饮 · 上海街角咖啡密度世界第一',sector:'cpg',p:15.8,vol:.045},
+  {sym:'SH-PASTRY',nm:'沪上酥点·中式烘焙',tag:'烘焙 · 国潮点心赛道',sector:'cpg',p:13.4,vol:.055},
+  {sym:'SH-BREW',nm:'微醺局·低度精酿',tag:'酒饮 · 年轻人的第一口微醺',sector:'cpg',p:8.9,vol:.07},
+  {sym:'SH-SCENT',nm:'气味图书馆·国货香氛',tag:'香氛 · 情绪价值硬通货',sector:'cpg',p:21.7,vol:.04},
+  // 👗 时尚艺术
+  {sym:'SH-PERMA',nm:'波玛情绪装裱',tag:'艺术装裱 · 灵感来自杨浦 PERMA',sector:'fash',p:12.2,vol:.03},
+  {sym:'SH-LANE',nm:'弄堂设计师·独立成衣',tag:'独立设计 · 上海时装周新锐',sector:'fash',p:17.6,vol:.06},
+  {sym:'SH-SELECT',nm:'西岸买手店 ARTIFACT',tag:'买手零售 · 西岸艺博会周边',sector:'fash',p:26.3,vol:.05},
+  {sym:'SH-VINTAGE',nm:'古着档案馆',tag:'循环时尚 ·  vintage 中古',sector:'fash',p:6.8,vol:.08},
+  // 🤖 AI科技
+  {sym:'SH-QWEN',nm:'千问AI眼镜连锁',tag:'智能终端 · 灵感来自千问AI眼镜×吴良材',sector:'tech',p:28.6,vol:.035},
+  {sym:'SH-SSMG',nm:'烧卖购机器人小店',tag:'机器人零售 · 灵感来自商汤善慧',sector:'tech',p:16.8,vol:.05},
+  {sym:'SH-FUZOZO',nm:'芙崽·AI情感陪伴',tag:'AI潮玩 · 灵感来自珞博智能亿元Pre-A',sector:'tech',p:22.5,vol:.055},
+  {sym:'SH-OMO',nm:'OMO·AI宠护机器人',tag:'AI+宠物 · 灵感来自张江AI小镇',sector:'tech',p:9.4,vol:.075},
+  // 🎎 文创非遗
+  {sym:'SH-YHC',nm:'钓鱼结·夜航船',tag:'非遗品牌 · 手作结艺与当代叙事',sector:'cult',p:14.9,vol:.04},
+  {sym:'SH-HANFU',nm:'汉服达人AI社区',tag:'国潮文创共享 · 控江路路演',sector:'cult',p:5.9,vol:.07},
+  {sym:'SH-SUXIU',nm:'苏绣实验室',tag:'非遗×当代设计 · 联名衍生',sector:'cult',p:10.6,vol:.045},
+  // 🏥 健康医疗
+  {sym:'SH-MIRROR',nm:'AI魔镜健康',tag:'无创检测 · AI+康养',sector:'helth',p:18.3,vol:.04},
+  {sym:'SH-LIGHTM',nm:'轻食实验室·控卡餐',tag:'功能食品 · 订阅制',sector:'helth',p:7.8,vol:.05},
+  {sym:'SH-SLEEP',nm:'睡眠科技·智能床垫',tag:'睡眠经济 · 智能硬件',sector:'helth',p:20.1,vol:.035},
+  // 🏡 空间生活
+  {sym:'SH-STAY',nm:'弄堂民宿·城市更新',tag:'空间改造 · 石库门活化',sector:'life',p:16.4,vol:.04},
+  {sym:'SH-CAMP',nm:'屋顶露营·城市营地',tag:'户外生活 · 城市微度假',sector:'life',p:8.3,vol:.075},
+  {sym:'SH-FLOWER',nm:'花间订阅·无人花店',tag:'鲜花订阅 · 无人零售',sector:'life',p:6.2,vol:.065},
+  // 🌱 绿色农业
+  {sym:'SH-FARM',nm:'崇明垂直农场',tag:'农业科技 · 本地叶菜',sector:'green',p:12.8,vol:.035},
+  {sym:'SH-REPACK',nm:'循环材料·再生包装',tag:'可持续 · 品牌ESG供应链',sector:'green',p:9.7,vol:.045},
+  {sym:'SH-SOLAR',nm:'屋顶光伏·社区能源',tag:'绿色能源 · 分布式',sector:'green',p:15.2,vol:.04},
+];
+/* 板块事件：每条街可能触发一个，冲击该板块情绪 */
+const SECTOR_EVENTS={
+  pet:['🐾 双十一囤货潮启动，宠物食品板块领涨','🐾 亚宠展开幕，宠物设计品牌获渠道大单','🐾 「毛孩子医保」试点落地，宠物医疗升温','🐾 养宠人群 90/00 后占比破六成，宠物经济慢生意受追捧'],
+  cpg:['🍰 咖啡消费旺季，社区连锁同店增长超预期','🍰 国潮点心联名款售罄，产能告急','🍰 低度酒赛道再获消费基金加注','🍰 香氛品类成情绪消费第一入口'],
+  fash:['👗 西岸艺博会开幕，买手店客流翻倍','👗 上海时装周新锐设计师订单排到明年','👗 中古循环时尚被写进 ESG 报告','👗 艺术装裱进入家居消费主流'],
+  tech:['🤖 千问AI眼镜南京东路旗舰店排队 3 小时','🤖 机器人小店单店人力仅 0.2 人，资本狂追','🤖 AI 情感硬件众筹登顶日本平台榜首','🤖 张江 AI 小镇训练营早期项目 100% 获投'],
+  cult:['🎎 非遗联名系列登上城市伴手礼榜单','🎎 国潮文创完成新一轮融资','🎎 手作结艺走进当代艺术展'],
+  helth:['🏥 无创健康检测设备进社区，康养板块走强','🏥 睡眠经济报告发布，智能床垫出货提速','🏥 控卡餐订阅用户破十万'],
+  life:['🏡 石库门城市更新项目获批，民宿板块活跃','🏡 城市微度假成周末主流','🏡 无人零售点位扩张超预期'],
+  green:['🌱 崇明本地叶菜进商超，垂直农场产能爬坡','🌱 品牌 ESG 采购带动再生包装订单','🌱 分布式光伏补贴落地'],
+};
+window.__sector='all';
+function sectorOf(sym){const s=STOCKS.find(x=>x.sym===sym);return s?s.sector:'tech';}
+function sectorName(k){const s=SECTORS.find(x=>x.k===k);return s?s.ico+s.n:k;}
+function initPrices(){
+  const valid=new Set(STOCKS.map(s=>s.sym));
+  const old=SAVE.market.prices;
+  if(!old||old.length!==STOCKS.length||old.some(p=>!valid.has(p.sym))){
+    // 存档迁移：旧标的按旧价折现回存款，避免资产凭空消失
+    if(old){Object.entries(SAVE.market.positions||{}).forEach(([sym,po])=>{
+      const pr=old.find(p=>p.sym===sym);SAVE.market.cash+=(pr?pr.price:0)*po.qty;
+    });SAVE.market.positions={};}
+    SAVE.market.prices=STOCKS.map(s=>({sym:s.sym,price:s.p,hist:[s.p],base:s.p}));
+  }
+  if(!SAVE.market.sectorSent)SAVE.market.sectorSent={};
+  save();
+}
+initPrices();
+function tickMarket(){
+  SAVE.market.sent=(SAVE.market.sent||0)+(Math.random()-.5)*.2;
+  // 随机触发一个板块事件（约 1/3 概率）
+  if(Math.random()<.34){
+    const keys=Object.keys(SECTOR_EVENTS);const k=pick(keys);
+    SAVE.market.sectorSent[k]=(SAVE.market.sectorSent[k]||0)+(Math.random()*.18+.06)*(Math.random()<.3?-1:1);
+    SAVE.market.lastEvent=pick(SECTOR_EVENTS[k]);
+    SAVE.market.lastEventSector=k;
+  }
+  SAVE.market.prices.forEach(pr=>{
+    const s=STOCKS.find(x=>x.sym===pr.sym);
+    const ss=SAVE.market.sectorSent[s.sector]||0;
+    const drift=(Math.random()-.48)*s.vol+SAVE.market.sent*s.vol*.3+ss*s.vol*.6;
+    pr.price=Math.max(.5,+(pr.price*(1+drift)).toFixed(2));
+    pr.hist.push(pr.price);if(pr.hist.length>40)pr.hist.shift();
+  });
+  // 板块情绪缓慢回归均值
+  Object.keys(SAVE.market.sectorSent).forEach(k=>SAVE.market.sectorSent[k]*=.92);
+  save();
+}
+function sectorChange(k){
+  const ps=SAVE.market.prices.filter(p=>k==='all'||sectorOf(p.sym)===k);
+  if(!ps.length)return 0;
+  return ps.reduce((s,p)=>{const b=p.base||p.hist[0]||p.price;return s+(p.price/b-1);},0)/ps.length*100;
+}
+function marketHoldVal(){return SAVE.market.positions?Object.entries(SAVE.market.positions).reduce((s,[sym,po])=>{const pr=SAVE.market.prices.find(p=>p.sym===sym);return s+(pr?pr.price*po.qty:0);},0):0;}
+function pickSector(k){window.__sector=k;renderMarket();}
+function renderMarket(){
+  initPrices();
+  $('mkNet').textContent='¥'+fmt(SAVE.market.cash+marketHoldVal());
+  $('mkCash').textContent='¥'+fmt(SAVE.market.cash);
+  $('mkHold').textContent='¥'+fmt(marketHoldVal());
+  const gainers=SAVE.market.prices.map(p=>{const s=STOCKS.find(x=>x.sym===p.sym);const b=p.base||p.hist[0];return{sym:p.sym,nm:s.nm,chg:(p.price/b-1)*100};}).sort((a,b)=>b.chg-a.chg).slice(0,6);
+  const t=(SAVE.market.lastEvent?SAVE.market.lastEvent+'　·　':'')+gainers.map(g=>`${g.nm} ${g.chg>=0?'▲':'▼'}${Math.abs(g.chg).toFixed(1)}%`).join('　·　');
+  $('tickerInner').innerHTML='<span>'+t+'　·　'+t+'</span>';
+  $('idxRow').innerHTML=INDICES.map((ix,i)=>{const chg=(Math.sin(Date.now()/8e6+i*2)*2.2+(SAVE.market.sent||0)).toFixed(2);const up=chg>=0;return `<div class="idx"><div class="n">${ix.n}</div><div class="v ${(up?'up':'down')}">${(ix.v*(1+chg/100)).toFixed(1)}</div><div class="c ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(chg)}%</div></div>`}).join('');
+  $('sectorTabs').innerHTML=SECTORS.map(s=>{
+    const c=sectorChange(s.k);
+    return `<div class="sc ${window.__sector===s.k?'on':''}" data-k="${s.k}" onclick="pickSector('${s.k}')">${s.ico} ${s.n} <span style="opacity:.7">${c>=0?'+':''}${c.toFixed(1)}%</span></div>`;
+  }).join('');
+  const ev=SAVE.market.lastEvent||'📊 板块轮动中，市场情绪平稳';
+  $('sectorBand').innerHTML=`<div class="ev">📰 ${ev}</div>`;
+  const list=SAVE.market.prices.filter(p=>window.__sector==='all'||sectorOf(p.sym)===window.__sector);
+  const hot=SAVE.market.lastEventSector;
+  $('stockList').innerHTML=list.map(pr=>{
+    const s=STOCKS.find(x=>x.sym===pr.sym);
+    const base=pr.base||pr.hist[0]||pr.price;const chg=((pr.price/base-1)*100);
+    const up=chg>=0;
+    const pos=(SAVE.market.positions||{})[pr.sym];
+    return `<div class="stock ${s.sector===hot?'hot':''}">
+      <div class="info"><div class="nm">${s.nm}<span class="sc-badge">${sectorName(s.sector)}</span></div><div class="sb">${s.tag}</div>
+        <canvas id="sp-${pr.sym}" width="90" height="30"></canvas>
+        ${pos?`<div class="sb" style="color:var(--gold)">持仓 ${pos.qty} 份 · 均价 ¥${pos.avg.toFixed(2)}</div>`:''}</div>
+      <div class="px"><div class="price ${up?'up':'down'}">¥${pr.price}</div><div class="chg ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(chg).toFixed(1)}%</div>
+      <div style="display:flex;gap:5px;margin-top:6px"><button class="btn small orange" onclick="openTrade('${pr.sym}','buy')">买</button><button class="btn small soft" onclick="openTrade('${pr.sym}','sell')">卖</button></div></div>
+    </div>`;
+  }).join('');
+  list.forEach(pr=>{const c=$('sp-'+pr.sym);if(c)spark(c,pr.hist);});
+}
+function fmt(n){return Math.round(n).toLocaleString('zh-CN');}
+function spark(cv,h){
+  const ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);
+  const min=Math.min(...h),max=Math.max(...h),rng=max-min||1;
+  const up=h[h.length-1]>=h[0];
+  ctx.strokeStyle=up?'#ff8a7a':'#6fd39a';ctx.lineWidth=1.6;ctx.beginPath();
+  h.forEach((v,i)=>{const x=i/(h.length-1)*cv.width,y=cv.height-3-((v-min)/rng)*(cv.height-6);i?ctx.lineTo(x,y):ctx.moveTo(x,y);});
+  ctx.stroke();
+}
+let tradeCtx=null;
+function openTrade(sym,side){
+  const pr=SAVE.market.prices.find(p=>p.sym===sym);const s=STOCKS.find(x=>x.sym===sym);
+  tradeCtx={sym,side,price:pr.price};
+  $('trTitle').textContent=(side==='buy'?'🛒 买入 · ':'💰 卖出 · ')+s.nm;
+  $('trInfo').textContent=`现价 ¥${pr.price} · ${side==='buy'?'存款 ¥'+fmt(SAVE.market.cash):'持仓 '+((SAVE.market.positions[sym]||{}).qty||0)} 份`;
+  $('trQty').value=100;updateTrEst();
+  ui.ovTrade.classList.add('on');
+}
+function updateTrEst(){
+  if(!tradeCtx)return;
+  const q=+$('trQty').value||0;
+  $('trEst').textContent=`预计${tradeCtx.side==='buy'?'支出':'回收'} ¥${fmt(q*tradeCtx.price)}`;
+}
+document.addEventListener('input',e=>{if(e.target.id==='trQty')updateTrEst();});
+function doTrade(){
+  const {sym,side,price}=tradeCtx;const q=+$('trQty').value||0;
+  if(q<=0)return toast('数量要大于 0');
+  SAVE.market.positions=SAVE.market.positions||{};
+  const pos=SAVE.market.positions[sym]||{qty:0,avg:0};
+  if(side==='buy'){
+    const cost=q*price;
+    if(cost>SAVE.market.cash)return toast('存款不够啦，先去牌桌赚点本金？');
+    SAVE.market.cash-=cost;
+    pos.avg=(pos.avg*pos.qty+cost)/(pos.qty+q);pos.qty+=q;
+  }else{
+    if(pos.qty<q)return toast('持仓不足');
+    SAVE.market.cash+=q*price;pos.qty-=q;if(pos.qty===0)delete SAVE.market.positions[sym];
+  }
+  if(pos.qty)SAVE.market.positions[sym]=pos;
+  checkAchMarket();save();
+  ui.ovTrade.classList.remove('on');
+  renderMarket();toast(side==='buy'?'✅ 已买入':'✅ 已卖出');
+}
+
+/* ---------- 复盘室 ---------- */
+function renderReplay(){
+  const el=$('handList');
+  if(!SAVE.hands.length){el.innerHTML='<div class="card" style="text-align:center;color:#9b93a8">还没有牌局记录，先去打一手吧 🃏</div>';return;}
+  el.innerHTML=SAVE.hands.map((h,i)=>`<div class="handcard" onclick="openReplay(SAVE.hands[${i}])">
+    <div class="hn">第 ${h.no} 手 · ${h.time}</div>
+    <div class="hd2">${h.roadshow?'🎤 路演：'+h.roadshow.nm+'（'+h.roadshow.sector+'）<br>':''}${h.result?'🏆 赢家：'+h.result.winners.join('、'):'进行中'} · ${h.steps.length} 条决策记录 · 教练评分 ${h.report?h.report.score:'--'}</div>
+  </div>`).join('');
+}
+function openReplay(h){
+  if(!h)return;
+  $('rpTitle').textContent='回放 · 第 '+h.no+' 手';
+  $('rpStage').innerHTML=`公共牌：<span style="color:var(--gold);font-weight:900">${h.result?h.result.board.join(' '):'--'}</span><br>赢家：${h.result?h.result.winners.join('、'):'进行中'}`;
+  $('rpSteps').innerHTML=h.steps.map(s=>{
+    const bad=/止损退出/.test(s)&&/胜率估 (6[0-9]|[7-9][0-9])%/.test(s);
+    const good=/加注融资/.test(s)&&/胜率估 (6[0-9]|[7-9][0-9])%/.test(s);
+    return `<div class="rp-step ${bad?'bad':good?'good':''}">${s}</div>`;
+  }).join('');
+  $('rpReport').innerHTML=h.report?`<b style="color:var(--purple)">🤖 教练报告 · ${h.report.score} 分</b><div style="font-size:12px;line-height:1.7;white-space:pre-wrap;margin-top:6px">${h.report.text}</div>`:'';
+  ui.ovReplay.classList.add('on');
+}
+
+/* ---------- 排行/成就 ---------- */
+const TITLES=[[0,'实习分析员'],[5000,'投资经理'],[20000,'执行董事'],[50000,'董事总经理'],[100000,'合伙人'],[200000,'陆家嘴之狼'],[500000,'沪上巴菲特']];
+function myTitle(){const net=SAVE.market.cash+marketHoldVal();let t=TITLES[0][1];TITLES.forEach(([v,n])=>{if(net>=100000+v)t=n;});return t;}
+function seasonScore(){
+  const net=SAVE.market.cash+marketHoldVal()-100000;
+  return Math.max(0,Math.floor(net/100))+SAVE.wins*5+(SAVE.seasonPts||0);
+}
+function rankBadge(i){return '<span class="rankmedal '+(i<3?'m'+(i+1):'mn')+'">'+(i<3?['①','②','③'][i]:i+1)+'</span>';}
+function renderRank(){
+  const rows=window.__roster.map((p,i)=>({name:p.name||SAVE.me.name||'我',avatar:p.avatar,pts:seasonScore()+Math.floor(Math.random()*40)*(i===0?0:1)}));
+  rows[0].pts=seasonScore();
+  rows.sort((a,b)=>b.pts-a.pts);
+  $('rankList').innerHTML=rows.map((r,i)=>`<div class="rankrow"><div class="pos">${rankBadge(i)}</div><div>${avatarHTML(r.avatar)}</div><div class="nm">${r.name}<div class="muted">${i===0?myTitle():'挑战者'}</div></div><div class="pts">${r.pts} 分</div></div>`).join('');
+  const ACHS=[['first_win','medal','首战告捷','赢下第一手牌'],['hedge','scale','对冲大师','首次使用对冲卡'],['stop','shield','止损纪律','首次使用止损卡'],['insight','search','深度尽调','首次使用洞察卡'],['rich','coin','一夜暴富','单手净赢 ¥5000+'],['stock','chart','股神初现','行情账户浮盈 30%'],['streak','fire','三连庄','单场连续赢三手'],['seven','cards','结构之战','打满 7 人的牌局']];
+  $('achList').innerHTML=ACHS.map(([k,ico,nm,desc])=>`<div class="ach ${SAVE.ach[k]?'':'locked'}"><div class="ai">${icon(ico,'ai-ico')}</div><div><div style="font-weight:800">${nm}</div><div class="muted">${desc}</div></div><div class="spacer"></div>${SAVE.ach[k]?icon('check','acico'):icon('lock','acico')}</div>`).join('');
+}
+function ach(k,ico,desc){if(!SAVE.ach[k]){SAVE.ach[k]=true;save();toast(`${ico} 成就解锁：${desc}`);}}
+
+/* ---------- 成就检查 ---------- */
+function checkAch(results,winnerNames){
+  if(winnerNames.length)ach('first_win','🥇','首战告捷');
+  if(G.players.length>=7)ach('seven','🃏','结构之战');
+}
+function checkAchMarket(){
+  const net=SAVE.market.cash+marketHoldVal();
+  if(net>=130000)ach('stock','📈','股神初现');
+}
+const _origAct=act;
+act=function(type,amt){
+  if(type==='fold'&&G.players[G.cur].__stopArmed)ach('stop','🛟','止损纪律');
+  if(type==='call'&&G.players[G.cur].__hedgeArmed)ach('hedge','⚖️','对冲大师');
+  const before=[...G.players].sort((a,b)=>b.stack-a.stack)[0].stack;
+  _origAct(type,amt);
+  const after=[...G.players].sort((a,b)=>b.stack-a.stack)[0].stack;
+  if(after-before>=5000)ach('rich','💰','一夜暴富');
+};
+const _origUseStrat=useStrat;
+useStrat=function(k){if(k==='stop')ach('stop','🛟','止损纪律');if(k==='hedge')ach('hedge','⚖️','对冲大师');if(k==='insight')ach('insight','🔍','深度尽调');_origUseStrat(k);};
+
+/* ---------- 音乐（WebAudio 程序化 Techno/Rock） ---------- */
+let musicOn=false,musicTimer=null;
+function toggleMusic(){
+  musicOn=!musicOn;
+  $('musicbar').classList.toggle('on',musicOn&&G);
+  $('homeMusicIco').innerHTML=svgInner(musicOn?'wave':'music');
+  $('homeMusicState').textContent=musicOn?'正在播放 · Lujiazui Nights':'摇滚 / Techno · 点击开关';
+  if(musicOn)startBeat();else stopBeat();
+}
+function startBeat(){
+  stopBeat();
+  try{
+    const ac=window.__ac=window.__ac||new (window.AudioContext||window.webkitAudioContext)();
+    let step=0;
+    const scale=[110,110,130.8,110,146.8,110,164.8,146.8];
+    musicTimer=setInterval(()=>{
+      const t=ac.currentTime;
+      // kick
+      if(step%4===0){const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(150,t);o.frequency.exponentialRampToValueAtTime(45,t+.12);g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.2);}
+      // hat
+      if(step%2===1){const b=ac.createBufferSource(),buf=ac.createBuffer(1,2205,44100),d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*(1-i/d.length);b.buffer=buf;const g=ac.createGain();g.gain.value=.05;const f=ac.createBiquadFilter();f.type='highpass';f.frequency.value=7000;b.connect(f);f.connect(g);g.connect(ac.destination);b.start(t);}
+      // bass
+      const o2=ac.createOscillator(),g2=ac.createGain();o2.type='sawtooth';o2.frequency.value=scale[step%8]/2;const f2=ac.createBiquadFilter();f2.type='lowpass';f2.frequency.value=600;g2.gain.setValueAtTime(.07,t);g2.gain.exponentialRampToValueAtTime(.001,t+.22);o2.connect(f2);f2.connect(g2);g2.connect(ac.destination);o2.start(t);o2.stop(t+.24);
+      step++;
+    },140); // ≈107 BPM techno律动
+  }catch(e){toast('浏览器不支持音频');}
+}
+function stopBeat(){if(musicTimer){clearInterval(musicTimer);musicTimer=null;}}
+
+/* ---------- 路由 & 档案 ---------- */
+function go(v){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  const el=$('view-'+v);if(el)el.classList.add('on');
+  document.querySelectorAll('#tabbar .tab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));
+  $('tabbar').style.display=(v==='game'||v==='setup'||v==='room'||v==='lobby')?'none':'flex';
+  if(v==='market')renderMarket();
+  if(v==='replay')renderReplay();
+  if(v==='rank')renderRank();
+  if(v==='profile')renderProfile();
+  if(v!=='game'&&G){$('musicbar').classList.toggle('on',musicOn);}
+}
+function renderProfile(){
+  $('profAv').innerHTML=avatarHTML(SAVE.me.avatar);
+  $('profName').value=SAVE.me.name;
+  $('profName').oninput=e=>{SAVE.me.name=e.target.value;window.__roster[0].name=e.target.value;save();};
+  $('avGrid').innerHTML=AVATARS.map((a,i)=>`<div class="av ${a===SAVE.me.avatar?'on':''}" onclick="pickAv(${i})">${avatarHTML(a)}</div>`).join('');
+  const net=SAVE.market.cash+marketHoldVal();
+  $('stCash').textContent='¥'+fmt(SAVE.market.cash);
+  $('stHold').textContent='¥'+fmt(marketHoldVal());
+  $('stNet').textContent='¥'+fmt(net);
+  const pl=net-100000;
+  $('stPL').textContent=(pl>=0?'+':'−')+'¥'+fmt(Math.abs(pl));
+  $('stPL').style.color=pl>=0?'var(--coral)':'#3c9a63';
+  $('profTitle').textContent=myTitle()+' · '+seasonScore()+' 分';
+}
+function resetAll(){
+  if(!confirm('确定清空所有本地存档（档案/账户/牌局记录）？'))return;
+  localStorage.removeItem('hhdd_v1');location.reload();
+}
+/* toast */
+function toast(t){
+  document.querySelectorAll('.toast').forEach(x=>x.remove());
+  const d=document.createElement('div');d.className='toast';d.textContent=t;
+  $('phone').appendChild(d);setTimeout(()=>d.remove(),2200);
+}
+
+/* 聊天按钮绑定 */
+$('chatbtn').onclick=openChat;
+$('voicebtn').onclick=openChat;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeChat();});
+
+/* ===== 极简 QR 编码器（byte 模式 · EC=M · 版本 1–6）=====
+   只做一件事：把一段 URL 变成 0/1 矩阵。离线可用，不依赖任何图片接口。 */
+var QR=(function(){
+  var EXP=new Array(256),LOG=new Array(256);
+  (function(){var x=1;for(var i=0;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&0x100)x^=0x11d;}for(i=255;i<256;i++)EXP[i]=EXP[i-255];})();
+  function mul(a,b){return (a===0||b===0)?0:EXP[(LOG[a]+LOG[b])%255];}
+  var CAP={1:16,2:28,3:44,4:64,5:86,6:108,7:124,8:154,9:182,10:216};
+  var BLK={
+    1:{ec:10,d:[16]},2:{ec:16,d:[28]},3:{ec:26,d:[44]},4:{ec:18,d:[32,32]},
+    5:{ec:24,d:[43,43]},6:{ec:16,d:[27,27,27,27]},
+    7:{ec:18,d:[31,31,31,31]},8:{ec:22,d:[38,38,39,39]},
+    9:{ec:22,d:[36,36,36,37,37]},10:{ec:26,d:[43,43,43,43,44]}
+  };
+  var ALIGN={1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
+
+  function rsGen(n){
+    var g=[1];
+    for(var i=0;i<n;i++){
+      var ng=new Array(g.length+1).fill(0);
+      for(var j=0;j<g.length;j++){ng[j]^=g[j];ng[j+1]^=mul(g[j],EXP[i]);}
+      g=ng;
+    }
+    return g;
+  }
+  function rsEnc(data,n){
+    var g=rsGen(n),res=data.concat(new Array(n).fill(0));
+    for(var i=0;i<data.length;i++){
+      var c=res[i];if(!c)continue;
+      for(var j=0;j<g.length;j++)res[i+j]^=mul(g[j],c);
+    }
+    return res.slice(data.length);
+  }
+  function bitBuf(){return {bits:[],push:function(v,len){for(var i=len-1;i>=0;i--)this.bits.push((v>>i)&1);}};}
+
+  function encode(text){
+    var bytes=[];for(var i=0;i<text.length;i++){var c=text.charCodeAt(i);if(c<128)bytes.push(c);else if(c<2048){bytes.push(0xc0|(c>>6),0x80|(c&63));}else{bytes.push(0xe0|(c>>12),0x80|((c>>6)&63),0x80|(c&63));}}
+    var ver=0;
+    for(var v=1;v<=10;v++){if(bytes.length+2<=CAP[v]){ver=v;break;}}
+    if(!ver)throw new Error('QR 数据过长');
+    var cap=CAP[ver],bb=bitBuf();
+    bb.push(4,4);bb.push(bytes.length,8);
+    bytes.forEach(function(b){bb.push(b,8);});
+    var total=cap*8;
+    // 终止符（最多 4 个 0）→ 补到字节边界 → 再用 0xEC/0x11 交替填满
+    var term=Math.min(4,total-bb.bits.length);
+    for(var k=0;k<term;k++)bb.bits.push(0);
+    while(bb.bits.length%8!==0&&bb.bits.length<total)bb.bits.push(0);
+    var codewords=[];
+    for(var i=0;i<bb.bits.length;i+=8){var b=0;for(var k2=0;k2<8;k2++)b=(b<<1)|bb.bits[i+k2];codewords.push(b);}
+    // 补齐填充码字
+    var PAD=[0xEC,0x11],pi=0;
+    while(codewords.length<cap)codewords.push(PAD[pi++%2]);
+
+    var ecLen=BLK[ver].ec,groups=BLK[ver].d;
+    var blocks=[],off=0;
+    groups.forEach(function(len){
+      var d=codewords.slice(off,off+len);off+=len;
+      blocks.push({d:d,e:rsEnc(d,ecLen)});
+    });
+    var maxD=Math.max.apply(null,groups);
+    var finalBuf=[];
+    for(i=0;i<maxD;i++)blocks.forEach(function(b){if(i<b.d.length)finalBuf.push(b.d[i]);});
+    for(i=0;i<ecLen;i++)blocks.forEach(function(b){finalBuf.push(b.e[i]);});
+
+    var size=ver*4+17;
+    var m=[],fn=[];
+    for(i=0;i<size;i++){m.push(new Array(size).fill(0));fn.push(new Array(size).fill(0));}
+    function set(x,y,v){m[y][x]=v?1:0;fn[y][x]=1;}
+    function finder(cx,cy){
+      for(var dy=-4;dy<=4;dy++)for(var dx=-4;dx<=4;dx++){
+        var x=cx+dx,y=cy+dy;if(x<0||y<0||x>=size||y>=size)continue;
+        var d=Math.max(Math.abs(dx),Math.abs(dy));
+        set(x,y,(d!==2&&d<=3)?1:0);
+      }
+    }
+    finder(3,3);finder(size-4,3);finder(3,size-4);
+    // timing
+    for(i=8;i<size-8;i++){set(i,6,i%2===0?1:0);set(6,i,i%2===0?1:0);}
+    // alignment
+    var ap=ALIGN[ver];
+    for(var a=0;a<ap.length;a++)for(var b2=0;b2<ap.length;b2++){
+      var ax=ap[a],ay=ap[b2];
+      if((ax===6&&ay===6)||(ax===6&&ay===size-7)||(ax===size-7&&ay===6))continue;
+      for(var dy2=-2;dy2<=2;dy2++)for(var dx2=-2;dx2<=2;dx2++){
+        var dd=Math.max(Math.abs(dx2),Math.abs(dy2));
+        set(ax+dx2,ay+dy2,dd===1?0:1);
+      }
+    }
+    // 预留格式信息区
+    for(i=0;i<9;i++){if(!fn[8][i])set(i,8,0);if(!fn[i][8])set(8,i,0);}
+    for(i=0;i<8;i++){set(size-1-i,8,0);set(8,size-1-i,0);}
+    set(8,size-8,1); // dark module
+    // v7 起还要写 18 位版本信息（BCH(18,6)，生成多项式 0x1F25）
+    if(ver>=7){
+      var rv=ver,i2b;
+      for(i2b=0;i2b<12;i2b++)rv=(rv<<1)^(((rv>>11)&1)*0x1F25);
+      var vbits=((ver<<12)|(rv&0x3FFFF))&0x3FFFF;
+      for(i2b=0;i2b<18;i2b++){
+        var vb=(vbits>>i2b)&1,a2=size-11+(i2b%3),b3=Math.floor(i2b/3);
+        set(a2,b3,vb);set(b3,a2,vb);
+      }
+    }
+
+    // 数据放置（右下角起 Z 字）
+    var bitIdx=0,totalBits=finalBuf.length*8;
+    var up=true;
+    for(var right=size-1;right>=1;right-=2){
+      if(right===6)right=5;
+      for(var vert=0;vert<size;vert++){
+        var y2=up?(size-1-vert):vert;
+        for(var cc=0;cc<2;cc++){
+          var x2=right-cc;
+          if(fn[y2][x2])continue;
+          var bit=0;
+          if(bitIdx<totalBits){bit=(finalBuf[bitIdx>>3]>>(7-(bitIdx&7)))&1;bitIdx++;}
+          m[y2][x2]=bit;
+        }
+      }
+      up=!up;
+    }
+
+    function maskFn(k,x,y){
+      switch(k){
+        case 0:return (x+y)%2===0;
+        case 1:return y%2===0;
+        case 2:return x%3===0;
+        case 3:return (x+y)%3===0;
+        case 4:return (Math.floor(y/2)+Math.floor(x/3))%2===0;
+        case 5:return ((x*y)%2+(x*y)%3)===0;
+        case 6:return (((x*y)%2+(x*y)%3)%2)===0;
+        case 7:return (((x+y)%2+(x*y)%3)%2)===0;
+      }
+    }
+    function clone(){return m.map(function(r){return r.slice();});}
+
+    function placeFormat(mm,k){
+      var ecBits=0; // M = 00
+      var data=(ecBits<<3)|k,c=0;
+      var v=data<<10;
+      for(var i2=14;i2>=10;i2--){if(v&(1<<i2))v^=0x537<<(i2-10);}
+      var fmt=((data<<10)|v)^0x5412;
+      function S(x,y,b){mm[y][x]=b;}
+      for(var i=0;i<15;i++){
+        var bit=(fmt>>i)&1;
+        if(i<6)S(8,i,bit);
+        else if(i===6)S(8,7,bit);
+        else if(i===7)S(8,8,bit);
+        else if(i===8)S(7,8,bit);
+        else S(14-i,8,bit);
+        if(i<8)S(size-1-i,8,bit);
+        else S(8,size-15+i,bit);
+      }
+      S(8,size-8,1);
+      return mm;
+    }
+
+    function penalty(mm){
+      var p=0,S=size;
+      for(var y3=0;y3<S;y3++){
+        var run=1;
+        for(var x3=1;x3<S;x3++){
+          if(mm[y3][x3]===mm[y3][x3-1])run++;else{if(run>=5)p+=3+(run-5);run=1;}
+        }
+        if(run>=5)p+=3+(run-5);
+      }
+      for(var x4=0;x4<S;x4++){
+        var run2=1;
+        for(var y4=1;y4<S;y4++){
+          if(mm[y4][x4]===mm[y4-1][x4])run2++;else{if(run2>=5)p+=3+(run2-5);run2=1;}
+        }
+        if(run2>=5)p+=3+(run2-5);
+      }
+      var blocks=0;
+      for(y3=0;y3<S-1;y3++)for(x3=0;x3<S-1;x3++){
+        var v0=mm[y3][x3];
+        if(v0===mm[y3][x3+1]&&v0===mm[y3+1][x3]&&v0===mm[y3+1][x3+1])blocks++;
+      }
+      p+=blocks*3;
+      // 规则3：形似定位图案的 1:1:3:1:1 序列
+      var PAT=[1,0,1,1,1,0,1];
+      function hit(arr){
+        var n2=0;
+        for(var i3=0;i3+6<arr.length;i3++){
+          var ok=true;
+          for(var j3=0;j3<7;j3++)if(arr[i3+j3]!==PAT[j3]){ok=false;break;}
+          if(ok)n2++;
+        }
+        return n2;
+      }
+      for(y3=0;y3<S;y3++){
+        var row=[];for(x3=0;x3<S;x3++)row.push(mm[y3][x3]);
+        p+=hit(row)*40;
+      }
+      for(x3=0;x3<S;x3++){
+        var col=[];for(y3=0;y3<S;y3++)col.push(mm[y3][x3]);
+        p+=hit(col)*40;
+      }
+      var dark=0;
+      for(y3=0;y3<S;y3++)for(x3=0;x3<S;x3++)if(mm[y3][x3])dark++;
+      var ratio=Math.abs(dark*100/(S*S)-50)/5;
+      p+=Math.floor(ratio)*10;
+      return p;
+    }
+
+    var base=m.map(function(r){return r.slice();});
+    var best=null,bestP=1e9;
+    for(var k2=0;k2<8;k2++){
+      var cand=base.map(function(r){return r.slice();});
+      for(var y5=0;y5<size;y5++)for(var x5=0;x5<size;x5++){
+        if(!fn[y5][x5]&&maskFn(k2,x5,y5))cand[y5][x5]^=1;
+      }
+      cand=placeFormat(cand,k2);
+      var pn=penalty(cand);
+      if(pn<bestP){bestP=pn;best=cand;}
+    }
+    return {size:size,modules:best,version:ver};
+  }
+  return {encode:encode};
+})();
+
+/* ================================================================
+   联机：微信群开房 —— MQTT over WebSocket + 房主权威结算
+   · 房主建房 → 生成 4 位房号 + 二维码 → 发群 → 好友扫码加入
+   · 房主本地跑引擎，每步把「每人一份」的快照发到各自私有 topic，
+     别人的底牌根本不会进你的手机（比全量广播安全）
+   · 只有房主结算，避免两边各算一套导致不同步
+================================================================ */
+let MY_SEAT=-1;
+const NET={
+  on:false,host:false,code:'',seat:-1,id:'',nick:'',av:'🐱',
+  maxPlayers:4,buyin:1,blind:1,players:[],mq:null,started:false,
+  applying:false,online:false,
+  seen:{},         // 每个座位最后一次「还活着」的时间：客机掉线时房主据此托管
+  rosterSig:'',forceLobby:false
+};
+const MQ_URL='wss://broker.emqx.io:8084/mqtt';
+const MQ_ALT='wss://broker.hivemq.com:8884/mqtt';
+
+function urlParam(k){
+  const m=new RegExp('[?&]'+k+'=([^&#]*)').exec(location.href);
+  return m?decodeURIComponent(m[1]):'';
+}
+function randCode(){
+  const A='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';
+  for(let i=0;i<4;i++)s+=A[Math.floor(Math.random()*A.length)];
+  return s;
+}
+function netId(){
+  let id=localStorage.getItem('hhdd_uid');
+  if(!id){id='u'+Math.random().toString(36).slice(2,10);localStorage.setItem('hhdd_uid',id);}
+  return id;
+}
+/* 每个标签页一个身份后缀（sessionStorage 跟着标签页走）：
+   · 同一台手机开两个标签页 = 两个不同的人，不会被房主当成同一个人重复占座
+   · 同一个标签页刷新/挂后台回来，后缀不变，房主能认出你、把牌桌还给你 */
+function guestTag(){
+  let t=sessionStorage.getItem('hhdd_tag');
+  if(!t){t=Math.random().toString(36).slice(2,5);sessionStorage.setItem('hhdd_tag',t);}
+  return t;
+}
+function guestId(){return netId()+'-g'+guestTag();}
+function topicTail(){return 'hhdd/v3/'+NET.code+'/';}
+
+/* ---------- 极简 MQTT 客户端（只用 QoS0 + retain，够用且省电） ---------- */
+function mqConnect(url,onMsg,onReady){
+  const enc=new TextEncoder(),dec=new TextDecoder();
+  const C={ws:null,buf:new Uint8Array(0),tid:1,subs:[],ready:false,closed:false,ping:null};
+  const varint=n=>{const o=[];do{let b=n%128;n=Math.floor(n/128);if(n)b|=128;o.push(b);}while(n);return o;};
+  const str=s=>{const b=enc.encode(s);return [b.length>>8,b.length&255].concat(Array.from(b));};
+  const raw=arr=>{try{if(C.ws&&C.ws.readyState===1)C.ws.send(new Uint8Array(arr));}catch(e){}};
+  /* 诊断环：只留最近 120 条，排查「突然收不到消息」时用；对性能无感 */
+  const dbg=(...a)=>{try{const L=(window.__mqLog=window.__mqLog||[]);L.push(a.join(' '));if(L.length>120)L.shift();}catch(e){}};
+
+  function publish(topic,obj,retain){
+    const body=str(topic).concat(Array.from(enc.encode(JSON.stringify(obj))));
+    raw([retain?0x31:0x30].concat(varint(body.length)).concat(body));
+  }
+  function subscribe(topic){
+    const t=str(topic);
+    const body=[C.tid>>8,C.tid&255].concat(t).concat([0]);
+    C.tid=C.tid%60000+1;
+    raw([0x82].concat(varint(body.length)).concat(body));
+    if(C.subs.indexOf(topic)<0)C.subs.push(topic);
+  }
+  function handle(ab){
+    const inc=new Uint8Array(ab);
+    const merged=new Uint8Array(C.buf.length+inc.length);
+    merged.set(C.buf);merged.set(inc,C.buf.length);C.buf=merged;
+    let off=0;
+    const packets=[];
+    while(true){
+      if(C.buf.length-off<2)break;
+      const type=C.buf[off];
+      let mult=1,len=0,i=off+1,ok=false;
+      while(i<C.buf.length){
+        const b=C.buf[i++];len+=(b&127)*mult;mult*=128;
+        if(!(b&128)){ok=true;break;}
+      }
+      if(!ok||C.buf.length-i<len)break;
+      packets.push([type>>4,C.buf.slice(i,i+len)]);
+      off=i+len;
+    }
+    // 先把缓冲区指针推到位，再分发消息：
+    // 否则某一条消息处理抛错会把剩余字节留在缓冲里，之后所有消息全部解析错位、彻底哑掉
+    C.buf=C.buf.subarray(off);
+    for(let n=0;n<packets.length;n++){
+      const t=packets[n][0],body=packets[n][1];
+      try{
+        if(t===2){
+          C.ready=true;
+          dbg('open',C.url);
+          onReady&&onReady(C);
+        }
+        else if(t===3){
+          const tl=(body[0]<<8)|body[1];
+          const tp=dec.decode(body.subarray(2,2+tl));
+          dbg('rx',tp.split('/').slice(-1)[0]);
+          onMsg(tp,dec.decode(body.subarray(2+tl)));
+        }
+      }catch(e){
+        window.__netErr=String(e&&e.message||e);
+        dbg('err',window.__netErr);
+        if(window.console)console.warn('[net] 消息处理失败：',window.__netErr);
+      }
+    }
+  }
+  function open(tryAlt){
+    const target=tryAlt?MQ_ALT:url;
+    C.url=target;
+    try{C.ws=new WebSocket(target,['mqtt']);}catch(e){return;}
+    C.ws.binaryType='arraybuffer';
+    C.ws.onopen=()=>{
+      dbg('connect',target);
+      C.buf=new Uint8Array(0);
+      const p=str('MQTT').concat([4,0x02,0,60]).concat(str('hhdd_'+Math.random().toString(36).slice(2,9)));
+      raw([0x10].concat(varint(p.length)).concat(p));
+      if(C.ping)clearInterval(C.ping);
+      C.ping=setInterval(()=>raw([0xC0,0]),25000);
+    };
+    C.ws.onmessage=e=>handle(e.data);
+    C.ws.onerror=()=>{};
+    C.ws.onclose=()=>{
+      if(C.ping){clearInterval(C.ping);C.ping=null;}
+      C.ready=false;
+      dbg('close',C.url);
+      if(C.closed)return;
+      setTimeout(()=>open(!tryAlt),1200);   // 掉了就换备用 broker 重连
+    };
+  }
+  open(false);
+  return {
+    publish,subscribe,
+    resub:()=>{C.subs.slice().forEach(t=>{
+      const s=str(t);const body=[C.tid>>8,C.tid&255].concat(s).concat([0]);
+      C.tid=C.tid%60000+1;raw([0x82].concat(varint(body.length)).concat(body));
+    });},
+    close:()=>{C.closed=true;try{C.ws.close();}catch(e){}},
+    /* 页面从后台回来时连接可能已经半死（没触发 onclose）：
+       主动踢一脚，逼它走重连流程，否则会一直「假在线」 */
+    kick:()=>{try{if(C.ws&&C.ws.readyState!==1)C.ws.close();}catch(e){}},
+    get ready(){return C.ready;}
+  };
+}
+
+/* ---------- 双通道：emqx + hivemq 同时连，消息双路发、按 mid 去重收。
+   解决「房主连上了 A 服务器、好友连上了 B 服务器，俩人永远碰不上面」的死局：
+   一台连不上（某些运营商/网络封了其中一个）也照常工作。 ---------- */
+function mqDual(onMsg,onReady){
+  let readyFired=false;
+  const seen=new Set(),seenQ=[];
+  const wrap=(t,p)=>{
+    let d=null;try{d=JSON.parse(p);}catch(e){}
+    if(d&&d.__mid!=null){
+      const k=d.__mid;
+      if(seen.has(k))return;              // 两台服务器各收到一份，只处理第一份
+      seen.add(k);seenQ.push(k);
+      if(seenQ.length>400)seen.delete(seenQ.shift());
+      delete d.__mid;
+      p=JSON.stringify(d);
+    }
+    onMsg(t,p);
+  };
+  const hub={
+    publish(topic,obj,retain){
+      if(!obj||typeof obj!=='object'){a.publish(topic,obj,retain);b.publish(topic,obj,retain);return;}
+      const o=Object.assign({},obj,{__mid:'m'+Math.random().toString(36).slice(2,11)});
+      a.publish(topic,o,retain);b.publish(topic,o,retain);
+    },
+    subscribe(t){a.subscribe(t);b.subscribe(t);},
+    resub(){a.resub();b.resub();},
+    close(){a.close();b.close();},
+    kick(){a.kick();b.kick();},
+    get ready(){return a.ready||b.ready;},
+    get dual(){return [a.ready,b.ready];}
+  };
+  const onFirst=()=>{if(!readyFired){readyFired=true;onReady&&onReady(hub);}};
+  /* 每条连接每次 CONNACK（含断线重连回来）都重放自己的订阅清单：
+     b 比 a 晚连上、或掉线重连，都不会漏订阅 */
+  var a=mqConnect(MQ_URL,wrap,()=>{a.resub();onFirst();});
+  var b=mqConnect(MQ_ALT,wrap,()=>{b.resub();onFirst();});
+  return hub;
+}
+
+/* ---------- 开房设置页 ---------- */
+window.__room={size:4,buyin:1,blind:1};
+function openRoom(){
+  renderRoomCfg();
+  go('room');
+}
+function renderRoomCfg(){
+  const R=window.__room;
+  $('roomSize').innerHTML=[2,3,4,5,6,7,8].map(n=>`<div class="c ${R.size===n?'on':''}" onclick="window.__room.size=${n};renderRoomCfg()">${n} 人</div>`).join('');
+  $('roomBuyin').innerHTML=BUYINS.map((b,i)=>`<div class="c ${R.buyin===i?'on':''}" onclick="window.__room.buyin=${i};renderRoomCfg()">${b>=10000?(b/10000)+'万':b}</div>`).join('');
+  $('roomBlind').innerHTML=BLINDS.map((b,i)=>`<div class="c ${R.blind===i?'on':''}" onclick="window.__room.blind=${i};renderRoomCfg()">${b[0]}/${b[1]}</div>`).join('');
+}
+
+/* ---------- 房主建房 ---------- */
+function hostCreate(){
+  const R=window.__room;
+  const myId=netId();
+  const myName=(SAVE.me.name||'房主').slice(0,8), myAv=SAVE.me.avatar||'🐱';
+  Object.assign(NET,{on:true,host:true,code:randCode(),seat:0,id:myId,
+    nick:myName,av:myAv,
+    maxPlayers:R.size,buyin:R.buyin,blind:R.blind,started:false,online:false,seen:{},
+    /* 房主自己也要占一个座位，否则人数永远少一个、开局也点不动 */
+    players:[{id:myId,name:myName,avatar:myAv,seat:0}]});
+  $('lbTitle').textContent='等候厅 · 你是房主';
+  $('lbJoinCard').style.display='none';
+  $('lbStart').style.display='block';
+  go('lobby');
+  renderLobby();
+  wireLobby();
+
+  NET.mq=mqDual(onHostMsg,()=>{
+    NET.online=true;
+    NET.forceLobby=true;
+    NET.mq.subscribe(topicTail()+'join');
+    NET.mq.subscribe(topicTail()+'act');
+    NET.mq.subscribe(topicTail()+'ctrl');
+    NET.mq.resub();
+    pushLobby();
+    updateLobbyStatus();
+  });
+  startHeartbeat();
+}
+function lobbyPayload(){
+  return {
+    code:NET.code,max:NET.maxPlayers,buyin:NET.buyin,blind:NET.blind,
+    started:NET.started,hostId:NET.id,
+    players:NET.players.map((p,i)=>({id:p.id,name:p.name,avatar:p.avatar,seat:i}))
+  };
+}
+function pushLobby(){
+  if(!NET.mq)return;
+  // 大厅消息带着所有人的头像（可能是几 KB 的照片），心跳只在名册真的变化时才重发，
+  // 不能每 4 秒白灌一遍公共 broker
+  const sig=NET.players.map(p=>p.id+'/'+p.name+'/'+(p.avatar||'').length).join(',');
+  if(sig===NET.rosterSig&&!NET.forceLobby)return;
+  NET.rosterSig=sig;NET.forceLobby=false;
+  NET.mq.publish(topicTail()+'lobby',lobbyPayload(),true);
+}
+
+function onHostMsg(topic,payload){
+  let d;try{d=JSON.parse(payload);}catch(e){return;}
+  const tail=topic.slice(topicTail().length);
+  if(tail==='join'){
+    if(NET.started){
+      // 开局后扫码进来：如果是本房间的老面孔（换了页面/退到后台又回来），
+      // 直接把牌桌状态还给他，而不是一句「已经开始了」把人挡在门外
+      const known=NET.players.find(p=>p.id===d.id);
+      if(known){
+        NET.mq.publish(topicTail()+'you',{t:'resume',to:d.id,seat:known.seat,
+          seats:NET.players.map(p=>({name:p.name,avatar:p.avatar})),
+          cfg:{buyin:NET.buyin,blind:NET.blind}},false);
+        return;
+      }
+      NET.mq.publish(topicTail()+'deny',{id:d.id,why:'本局已经开始了，等下一局'});return;
+    }
+    let i=NET.players.findIndex(p=>p.id===d.id);
+    if(i<0){
+      if(NET.players.length>=NET.maxPlayers){
+        NET.mq.publish(topicTail()+'deny',{id:d.id,why:'房间满了（'+NET.maxPlayers+' 人）'});return;
+      }
+      NET.players.push({id:d.id,name:(d.name||'投资人').slice(0,8),avatar:d.avatar||'🐱',seat:NET.players.length});
+      NET.seen[d.id]=Date.now();
+      comment(`${d.name} 入座，资金到账，准备开打。`);
+    }else{
+      NET.players[i].name=(d.name||NET.players[i].name).slice(0,8);
+      NET.players[i].avatar=d.avatar||NET.players[i].avatar;
+    }
+    pushLobby();renderLobby();
+    if(NET.players.length>=NET.maxPlayers){
+      toast('人齐了，3 秒后自动开局');
+      setTimeout(()=>{if(!NET.started&&NET.players.length>=NET.maxPlayers)hostStart();},3000);
+    }
+  }
+  if(tail==='ctrl'){
+    if(d.id)NET.seen[d.id]=Date.now();
+    // 客机索要状态 / 请求下一手：房主是唯一权威，收到就立即补发
+    if(d.t==='hi')return;
+    if(d.t==='pull'){
+      if(!G||!NET.started)return;
+      syncNow();
+      if(G.stage==='showdown'&&NET.lastRes)NET.mq.publish(topicTail()+'res',NET.lastRes,false);
+    }
+    if(d.t==='next'){
+      if(!NET.started||!G)return;
+      if(G.stage!=='showdown')return;      // 牌局还在进行，不接受跳局
+      nextHand();
+    }
+  }
+  if(tail==='act'){
+    if(!G||!NET.started)return;
+    if(d.seat!==G.cur){                    // 客机画面落后/抢跑：直接把正确状态推回去，别让他对着旧画面瞎点
+      if(d.id)NET.mq.publish(topicTail()+'you',{t:'refresh',to:d.id},false);
+      return;
+    }
+    NET.applying=true;
+    try{
+      if(d.type==='strat')useStrat(d.key);
+      else if(d.type==='raise'){
+        const p=G.players[G.cur];
+        const max=p.stack+p.bet, min=Math.min(G.curBet+G.minRaise,max);
+        $('raiseSlider').min=min;$('raiseSlider').max=max;
+        $('raiseSlider').value=Math.max(min,Math.min(max,d.val||min));
+        act('raise');
+      }else act(d.type);
+    }finally{NET.applying=false;}
+  }
+}
+
+/* ---------- 房主开局 ---------- */
+function hostStart(){
+  if(!NET.host)return;
+  if(NET.started)return;                 // 自动开局和手动点击可能同时触发，只认第一次
+  if(NET.players.length<2)return toast('至少 2 人才能开局');
+  NET.started=true;
+  netSeq=0;NET.lastSig='';NET.lastRes=null;
+  NET.players.forEach(p=>{NET.seen[p.id]=Date.now();});
+  const seats=NET.players.map(p=>({name:p.name,avatar:p.avatar}));
+  const cfg={buyin:NET.buyin,blind:NET.blind};
+  NET.mq.publish(topicTail()+'sys',{t:'start',cfg,seats,
+    seatsMap:NET.players.map(p=>({id:p.id,seat:p.seat}))},true);
+  NET.forceLobby=true;pushLobby();
+  NET.seat=0;MY_SEAT=0;
+  buildGame(seats,cfg);
+  toast('发牌！每个人只看得到自己的底牌');
+}
+
+/* ---------- 客机：扫码进来 ---------- */
+function guestLobby(code){
+  Object.assign(NET,{on:true,host:false,code,seat:-1,
+    /* 客机身份带标签页后缀：同一台设备开两个标签页也不会被当成房主本人 */
+    id:guestId(),
+    nick:(SAVE.me.name||'').slice(0,8),av:SAVE.me.avatar||'🐱',players:[],started:false,online:false,
+    lastSeq:null,lastResHand:null,pullAt:0});
+  $('lbTitle').textContent='等候厅 · 等待房主开局';
+  $('lbStart').style.display='none';
+  $('lbJoinCard').style.display='block';
+  go('lobby');
+  renderLobby();
+  wireLobby();
+  $('joinName').value=NET.nick||'';
+  $('joinAvGrid').innerHTML=AVATARS.map(a=>`<div class="av ${a===NET.av?'on':''}" onclick="NET.av='${a}';guestJoin_renderAv()">${avatarHTML(a)}</div>`).join('');
+
+  NET.mq=mqDual((t,p)=>{
+    let d;try{d=JSON.parse(p);}catch(e){return;}
+    const tail=t.slice(topicTail().length);
+    if(tail==='lobby'){
+      NET.players=d.players||[];NET.maxPlayers=d.max;NET.started=d.started;
+      const mine=NET.players.find(x=>x.id===NET.id);
+      if(mine&&mine.seat!==NET.seat){
+        NET.seat=mine.seat;MY_SEAT=mine.seat;
+        NET.mq.subscribe(topicTail()+'st/'+mine.seat);
+        $('lbJoinCard').style.display='none';
+        toast('已加入，等待房主开局');
+      }
+      renderLobby();
+    }
+    if(tail==='st/'+(NET.seat>=0?NET.seat:'x'))applySnap(d);
+    if(tail==='sys'){
+      if(d.t==='hb'){
+        NET.lastHbAt=Date.now();          // 房主还醒着的证据，无论开局与否都记
+        // 房主报来状态指纹：和本地一比就知道有没有落后；落后才补拉，平时一个字节都不多发
+        if(NET.started&&d.sig&&d.sig!==stateSig()){
+          const now=Date.now();
+          if(!NET.pullAt||now-NET.pullAt>500){NET.pullAt=now;netSendCtrl('pull');}
+        }
+        return;
+      }
+      if(d.t==='start'){
+        NET.started=true;NET.lastSeq=null;NET.lastSnapAt=Date.now();
+        $('lbJoinCard').style.display='none';
+        if(NET.seat<0){
+          const me=(d.seatsMap||[]).find(x=>x.id===NET.id);
+          if(me){NET.seat=me.seat;MY_SEAT=me.seat;}
+        }
+        buildGameNet(d.seats,d.cfg);
+        NET.mq.subscribe(topicTail()+'st/'+NET.seat);
+        setTimeout(()=>netSendCtrl('pull'),260);   // 主动要一份完整状态，别等 retained
+      }
+    }
+    if(tail==='you'){
+      if(d.to!==NET.id)return;
+      if(d.t==='refresh'){netSendCtrl('pull');return;}
+      if(d.t==='resume'){
+        // 房主把牌桌还给我：换页面/挂后台回来还能接着打，不用让全桌等
+        NET.started=true;NET.seat=d.seat;MY_SEAT=d.seat;NET.lastSeq=null;
+        if(!G||G.stage==='idle')buildGameNet(d.seats,d.cfg);
+        $('lbJoinCard').style.display='none';
+        toast('已回到牌桌');
+        netSendCtrl('pull');
+      }
+      return;
+    }
+    if(tail==='res'){
+      if(d.handNo!=null&&NET.lastResHand===d.handNo)return;
+      NET.lastResHand=d.handNo;
+      // 房主在 showdown 后 700ms 弹层，客机晚 620ms —— 两端几乎同时看到交割单
+      setTimeout(()=>showResultRemote(d),620);
+    }
+    if(tail==='deny'&&d.id===NET.id&&!NET.started){toast(d.why||'进不去');}
+  },()=>{
+    NET.online=true;
+    NET.mq.subscribe(topicTail()+'lobby');
+    NET.mq.subscribe(topicTail()+'sys');
+    NET.mq.subscribe(topicTail()+'res');
+    NET.mq.subscribe(topicTail()+'deny');
+    NET.mq.subscribe(topicTail()+'you');
+    if(NET.seat>=0)NET.mq.subscribe(topicTail()+'st/'+NET.seat);
+    NET.mq.resub();
+    pushJoin();
+    if(NET.started)netSendCtrl('pull');
+    updateLobbyStatus();
+  });
+  startHeartbeat();
+}
+function guestJoin_renderAv(){
+  $('joinAvGrid').innerHTML=AVATARS.map(a=>`<div class="av ${a===NET.av?'on':''}" onclick="NET.av='${a}';guestJoin_renderAv()">${avatarHTML(a)}</div>`).join('');
+}
+function pushJoin(){
+  const nm=($('joinName').value||NET.nick||'投资人').trim().slice(0,8);
+  NET.nick=nm;
+  if(NET.mq)NET.mq.publish(topicTail()+'join',{id:NET.id,name:nm,avatar:NET.av},false);
+}
+function guestJoin(){
+  const nm=($('joinName').value||'').trim();
+  if(!nm)return toast('先写个昵称');
+  SAVE.me.name=nm;SAVE.me.avatar=NET.av;save();
+  pushJoin();
+  toast('已入座 · 无需房主审批，正在同步给房主…');
+  updateLobbyStatus();
+}
+/* 页面从后台回到前台：微信里切去发消息/锁屏再回来，网络连接和心跳都断了半拍。
+   这里主动踢活连接并立刻补发，别让好友对着「无响应」干等 */
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState!=='visible')return;
+  if(!NET.on||!NET.mq)return;
+  if(!NET.mq.ready)NET.mq.kick();
+  if(NET.host){
+    NET.forceLobby=true;pushLobby();
+    if(NET.started&&G)scheduleSync();
+  }else{
+    pushJoin();
+    if(NET.started)netSendCtrl('pull');
+  }
+  updateLobbyStatus();
+});
+let heartbeat=null;
+/* 状态指纹：只要牌局有任何变化（谁行动、池子、余额、街道、弃牌），指纹就会变。
+   房主心跳带着它，客机本地也算一份，两个指纹不一样就说明「我落后了」，立刻补拉。 */
+function stateSig(){
+  if(!G)return '';
+  return [G.handNo,G.stage,G.cur,G.curBet,G.board.length,
+    G.players.map(p=>p.stack+'/'+p.bet+'/'+p.committed+'/'+(p.folded?1:0)).join(',')].join('|');
+}
+function startHeartbeat(){
+  if(heartbeat)clearInterval(heartbeat);
+  let tick=0;
+  heartbeat=setInterval(()=>{
+    if(!NET.on||!NET.mq)return;
+    if(!NET.mq.ready){updateLobbyStatus();return;}
+    tick++;
+    if(NET.host){
+      if(tick%3===0)pushLobby();
+      /* 心跳无论开没开局都发：客机靠它知道「房主还醒着」。
+         房主切到微信发二维码/锁屏时心跳会停，客机就能给出明确提示，
+         而不是让好友干等着不知道发生了什么 */
+      NET.mq.publish(topicTail()+'sys',{t:'hb',
+        sig:(NET.started&&G)?stateSig():'',
+        n:NET.players.length,started:NET.started},false);
+      if(NET.started&&G){
+        const s=stateSig();
+        if(s!==NET.lastSig){NET.lastSig=s;syncNow();}   // 指纹变了但还没推：补推一次
+        NET.mq.publish(topicTail()+'sys',{t:'hb',sig:s,handNo:G.handNo},false);
+        // 掉线托管：轮到某人却 20 秒没任何动静（退群/锁屏/断网），代他观望或止损，别让整桌干等
+        const cur=G.players[G.cur];
+        if(cur&&cur.id!==0&&G.stage!=='showdown'&&!cur.folded&&!cur.allin){
+          const who=NET.players.find(p=>p.seat===G.cur);
+          const last=(who&&NET.seen[who.id])||0;
+          if(last&&Date.now()-last>20000){
+            NET.seen[who.id]=Date.now();
+            toast(`⏱ ${cur.name} 没动静，先替他${G.curBet-cur.bet>0?'止损':'观望'}`);
+            NET.applying=true;
+            try{act(G.curBet-cur.bet>0?'fold':'check');}finally{NET.applying=false;}
+          }
+        }
+      }
+      return;
+    }
+    if(!NET.started&&tick%3===0)pushJoin();   // 开局前每次心跳都报一次「我还在」
+    if(NET.started&&tick%3===0)netSendCtrl('hi');   // 开局后报活，房主用来判断掉线
+  },1200);
+}
+
+/* ---------- 大厅渲染 ---------- */
+function wireLobby(){
+  $('lbCode').textContent=NET.code;
+  const link=location.origin+location.pathname+'?r='+NET.code;
+  $('lbLink').value=link;
+  $('qrbox').innerHTML=qrSVG(link,186);
+  $('lbStatus').className='rm-badge wait';
+  updateLobbyStatus();
+}
+function updateLobbyStatus(){
+  const el=$('lbStatus');if(!el)return;
+  if(!NET.online){el.className='rm-badge err';el.textContent='连接中…';return;}
+  const n=NET.players.length;
+  if(NET.started){el.className='rm-badge';el.textContent='进行中';}
+  else if(n<2){el.className='rm-badge wait';el.textContent=`已入座 ${n}/${NET.maxPlayers} · 还差人`;}
+  else{el.className='rm-badge';el.textContent=`已入座 ${n}/${NET.maxPlayers}`;}
+  if(NET.host){
+    $('lbHint').innerHTML='把二维码发到微信群 → 保持<b>本页面在最前台</b>。<span style="color:#a1483a">切去微信聊天或锁屏时，好友的入座会收不到响应。</span>发完链接记得点左上角返回游戏。';
+    const btn=$('lbStart');
+    btn.style.display=NET.started?'none':'block';
+    btn.textContent=`开局（当前 ${n} 人）`;
+    return;
+  }
+  /* 客机：房主心跳 >10 秒没来 = 他把页面切后台/锁屏了。
+     好友端给出明确说法，而不是「假装在等待房主同意」 */
+  const hostAlive=NET.lastHbAt&&(Date.now()-NET.lastHbAt)<10000;
+  if(!NET.started&&!hostAlive){
+    el.className='rm-badge err';
+    el.textContent=NET.seat>=0?'房主暂时不在线':'联系不上房主';
+    $('lbHint').textContent='房主可能切去了微信或锁屏。已自动持续重试，请让房主回到游戏页面即可继续，无需重新扫码。';
+  }else{
+    $('lbHint').textContent=NET.seat>=0
+      ?'已入座！等房主点开局，人齐会自动开始'
+      :'填昵称 → 点「入座」。入座不需要房主审批，出现「已入座」字样即成功。';
+  }
+}
+function renderLobby(){
+  const box=$('lbSeats');if(!box)return;
+  let html='';
+  for(let i=0;i<Math.max(NET.maxPlayers,NET.players.length);i++){
+    const p=NET.players[i];
+    html+=p
+      ?`<div class="rm-seat filled"><div class="rm-av">${avatarHTML(p.avatar)}</div><div class="nm">${p.name}</div>${p.id===NET.id?'<div class="host">我</div>':(p.seat===0?'<div class="host">房主</div>':'')}</div>`
+      :`<div class="rm-seat empty"><div class="rm-av" style="opacity:.35">${avatarHTML('🕳')}</div><div class="nm">空位</div></div>`;
+  }
+  box.innerHTML=html;
+  updateLobbyStatus();
+}
+function copyRoomLink(){
+  const v=$('lbLink').value;
+  const done=()=>toast('链接已复制，去微信群粘贴');
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(v).then(done).catch(()=>fallback());
+  else fallback();
+  function fallback(){
+    const i=$('lbLink');i.removeAttribute('readonly');i.select();
+    try{document.execCommand('copy');done();}catch(e){toast('长按输入框手动复制');}
+    i.setAttribute('readonly','readonly');
+  }
+}
+function qrSVG(text,px){
+  try{
+    const r=QR.encode(text),n=r.size,m=r.modules;
+    let d='';
+    for(let y=0;y<n;y++)for(let x=0;x<n;x++)if(m[y][x])d+=`M${x} ${y}h1v1h-1z`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${px}" height="${px}" viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges" role="img" aria-label="房间二维码"><rect width="${n}" height="${n}" fill="#ffffff"/><path d="${d}" fill="#32283F"/></svg>`;
+  }catch(e){
+    return '<div style="font-size:12px;color:#a1483a;font-weight:800">二维码生成失败，请用复制链接</div>';
+  }
+}
+function leaveRoom(){
+  if(NET.mq)NET.mq.close();
+  if(heartbeat){clearInterval(heartbeat);heartbeat=null;}
+  NET.on=false;NET.host=false;NET.mq=null;NET.players=[];NET.started=false;NET.seat=-1;MY_SEAT=-1;
+  G=null;
+  go('home');
+}
+
+/* ---------- 客机：状态同步 ---------- */
+function buildGameNet(seats,cfg){
+  cfg=cfg||{buyin:1,blind:1};
+  window.__cfg=cfg;
+  G={players:seats.map((p,i)=>({id:i,name:p.name,avatar:p.avatar,stack:0,bet:0,committed:0,folded:false,allin:false,cards:[],strat:{stop:1,hedge:1,insight:1},lastEq:null})),
+    deck:[],board:[],stage:'idle',dealer:0,cur:0,curBet:0,minRaise:0,handNo:0,handLog:null,chat:[]};
+  window.__roster=seats.map(p=>({name:p.name,avatar:p.avatar}));
+  go('game');layoutSeats();
+}
+function applySnap(s){
+  if(!s)return;
+  // 只认更新的快照：retained 重投、拉取补发、乱序到达都会被这里挡掉，避免画面倒退
+  if(s.seq!=null){
+    if(NET.lastSeq!=null&&s.seq<=NET.lastSeq){window.__dropped=(window.__dropped||0)+1;return;}
+    NET.lastSeq=s.seq;
+  }
+  window.__applied=(window.__applied||0)+1;
+  NET.lastSnapAt=Date.now();
+  if(!G||G.stage==='idle'||!G.players.length)buildGameNet(s.players.map(p=>({name:p.name,avatar:p.avatar})),window.__cfg);
+  G.handNo=s.handNo;G.stage=s.stage;
+  G.board=(s.board||[]).map(c=>({r:c.r,s:c.s}));
+  G.curBet=s.curBet;G.cur=s.cur;G.dealer=s.dealer;G.minRaise=s.minRaise;
+  G.players=s.players.map(p=>Object.assign({},p,{
+    cards:(p.cards||[]).map(c=>({r:c.r,s:c.s})),
+    strat:p.strat||{stop:1,hedge:1,insight:1}
+  }));
+  G.roadshow=s.roadshow?({nm:s.roadshow.nm,sector:s.roadshow.sector,sym:s.roadshow.sym}):null;
+  if(G.stage!=='showdown')ui.ovResult.classList.remove('on');
+  renderTurnUI();
+}
+function renderTurnUI(){
+  if(!G)return;
+  const p=G.players[G.cur];
+  renderAll();
+  if(p&&!p.folded&&!p.allin&&p.stack>0&&G.stage!=='showdown'&&NET.seat===G.cur){
+    G.revealed=true;showAdvisor(p);
+  }else if(p&&NET.seat!==G.cur){
+    G.revealed=false;setWaiting(p);
+  }
+  if(p)updateActions(p);
+  renderAll();
+}
+function netSendAct(type,key){
+  if(!NET.mq||!NET.mq.ready)return toast('还没连上，稍等一秒');
+  const d={t:'act',id:NET.id,seat:NET.seat,type};
+  if(type==='raise')d.val=+($('raiseSlider').value||0);
+  if(type==='strat')d.key=key;
+  NET.mq.publish(topicTail()+'act',d,false);
+  NET.lastSnapAt=0;             // 操作已发出：如果 1.2s 内没有新快照，看门狗会主动索要
+}
+/* 客机 → 房主的控制信令：pull=要一份完整状态，next=请房主发下一手 */
+function netSendCtrl(t){
+  if(!NET.mq||!NET.mq.ready)return;
+  NET.mq.publish(topicTail()+'ctrl',{t,id:NET.id,seat:NET.seat},false);
+}
+let syncTimer=null;
+let netSeq=0;           // 房主侧快照序号：客机用它识别「丢包 / 乱序 / 重复」
+function scheduleSync(){
+  if(!NET.on||!NET.host||!G)return;
+  window.__sch=(window.__sch||0)+1;
+  if(syncTimer)clearTimeout(syncTimer);
+  syncTimer=setTimeout(()=>{syncTimer=null;syncNow();},90);
+}
+function syncNow(){
+  if(!NET.on||!NET.host||!G||!NET.mq)return;
+  if(!NET.mq.ready){return;}
+  window.__pub=(window.__pub||0)+1;
+  netSeq++;
+  G.players.forEach((p,i)=>{
+    const snap={
+      seq:netSeq,handNo:G.handNo,stage:G.stage,board:G.board,curBet:G.curBet,cur:G.cur,dealer:G.dealer,
+      minRaise:G.minRaise,roadshow:G.roadshow?{nm:G.roadshow.nm,sector:G.roadshow.sector,sym:G.roadshow.sym}:null,
+      players:G.players.map((q,j)=>({
+        id:q.id,name:q.name,avatar:q.avatar,stack:q.stack,bet:q.bet,committed:q.committed,
+        folded:q.folded,allin:q.allin,strat:q.strat,
+        cards:((G.stage==='showdown'&&!q.folded)||j===i)?q.cards:[]
+      }))
+    };
+    NET.mq.publish(topicTail()+'st/'+i,snap,true);
+  });
+}
+/* 结算结果推给所有人 */
+function pubResult(results,contenders,headline){
+  if(!NET.on||!NET.host||!G||!NET.mq)return;
+  const rep=(G.handLog&&G.handLog.report)||{score:'--',text:'本手按兵不动，观看也是学习。'};
+  const list=contenders.filter(p=>p.cards&&p.cards.length===2);
+  const d={
+    title:'清算交割 · 第 '+G.handNo+' 手',
+    handNo:G.handNo,
+    cards:list.map(p=>({av:p.avatar,name:p.name,c1:cardStr(p.cards[0]),c2:cardStr(p.cards[1]),
+      r1:SUITS_RED.includes(p.cards[0].s),r2:SUITS_RED.includes(p.cards[1].s),cat:CAT_NAMES[p.eval?p.eval[0]:0]})),
+    rows:G.players.map(p=>{const g=results[p.id]||0;return {av:p.avatar,name:p.name,gain:g-p.committed,stack:p.stack,win:!!g};}),
+    headline:headline||'',coach:rep.text,score:rep.score
+  };
+  NET.lastRes=d;                       // 存一份，客机丢了可以点「补发」/自动补发
+  NET.mq.publish(topicTail()+'res',d,false);
+}
+function showResultRemote(d){
+  $('resTitle').textContent=d.title;
+  $('resultcards').innerHTML=d.cards.map(c=>`<div style="text-align:center"><div class="pcard ${c.r1?'red':''}" style="display:inline-flex">${c.c1}</div> <div class="pcard ${c.r2?'red':''}" style="display:inline-flex">${c.c2}</div><div style="font-size:11px;font-weight:800;margin-top:4px;color:var(--purple)">${avatarHTML(c.av)}${c.name}<br><span style="color:var(--warmorange)">${c.cat}</span></div></div>`).join('');
+  $('resRows').innerHTML=d.rows.map(r=>`<div class="resrow"><div class="rn ${r.win?'win':''}">${avatarHTML(r.av)} ${r.name}${r.win?icon('trophy','rico'):''}</div><div class="rh">${r.gain>0?'+'+r.gain:r.gain<0?r.gain:'—'}</div><div class="muted">余额 ¥${r.stack}</div></div>`).join('');
+  $('coachBox').innerHTML=`<div style="font-weight:900;color:var(--purple);font-size:13px">🤖 AI 教练 · 本手点评</div><div style="font-size:12px;line-height:1.7;white-space:pre-wrap;margin-top:6px">${d.headline}\n${d.coach}</div><div style="margin-top:6px">决策评分：<b class="scorebig" style="font-size:22px">${d.score}</b>/100</div>`;
+  ui.ovResult.classList.add('on');
+}
+
+/* 启动 */
+renderProfile();
+(function boot(){
+  // 扫码/点链接进来：带 ?r=房号 直接进等候厅
+  const code=(urlParam('r')||urlParam('room')||'').toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+  if(code&&code.length>=3){
+    setTimeout(()=>guestLobby(code),260);
+    return;
+  }
+  if(!SAVE.me.name){setTimeout(()=>toast('👋 先到「档案」设置名字和头像吧'),600);}
+})();
+</script>
+</body>
+</html>
