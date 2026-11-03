@@ -661,11 +661,10 @@ body.lite .seat .bubble{background:rgba(255,255,255,.96)}
 /* 流光/位移类装饰在 lite 下静止 */
 body.lite .btn,
 body.lite .menu .m::after,
-body.lite .ticker .inner,
 body.lite #musicbar .disc{animation:none!important}
 /* 语音/话筒的均衡器动画改的是 height（会触发布局），微信里直接静态化 */
 body.lite #micstate .eqbars i,body.lite .cmsg.voice.playing .bars i{animation:none!important;height:8px!important}
-body.lite .ticker .inner{transform:none}
+/* 资讯跑马灯是纯 transform 合成器动画（不触发布局/重绘），lite 档也保留——都市 LED 屏效果 */
 body.lite .toast{animation:none}
 
 /* 4) 动效降级：入场动画保留但更短，避免连续帧合成 */
@@ -2053,7 +2052,9 @@ function renderMarket(){
   $('mkHold').textContent='¥'+fmt(marketHoldVal());
   const gainers=SAVE.market.prices.map(p=>{const s=STOCKS.find(x=>x.sym===p.sym);const b=p.base||p.hist[0];return{sym:p.sym,nm:s.nm,chg:(p.price/b-1)*100};}).sort((a,b)=>b.chg-a.chg).slice(0,6);
   const t=(SAVE.market.lastEvent?SAVE.market.lastEvent+'　·　':'')+gainers.map(g=>`${g.nm} ${g.chg>=0?'▲':'▼'}${Math.abs(g.chg).toFixed(1)}%`).join('　·　');
-  $('tickerInner').innerHTML='<span>'+t+'　·　'+t+'</span>';
+  const ti=$('tickerInner');ti.innerHTML='<span>'+t+'　·　'+t+'</span>';
+  /* LED 跑马灯：时长随内容长度自适应，保证匀速不忽快忽慢 */
+  ti.style.animationDuration=Math.max(16,Math.min(40,t.length*0.32))+'s';
   const live=LIVE_IDX&&Date.now()-LIVE_IDX_AT<120000;
   $('idxRow').innerHTML=live?LIVE_IDX.map(ix=>{
     const up=ix.c>=0;
@@ -2275,6 +2276,26 @@ if(__bgmWd&&__bgmWd.unref)__bgmWd.unref();
     else if(bgmWanted&&SAVE.bgm!==false)startBGM();
   });
 })();
+/* 状态机自愈：iOS 会把 AudioContext 置为 interrupted（state 可能是 suspended/interrupted），
+   内核也可能在重排时掐掉音源节点——状态一变就恢复，不等看门狗 */
+try{
+  const acS=_ac();
+  if(acS&&acS.addEventListener)acS.addEventListener('statechange',()=>{
+    try{
+      if(!bgmWanted||document.hidden||SAVE.bgm===false)return;
+      const st=acS.state;
+      if(st!=='running'){try{acS.resume();}catch(e){}}
+      if(acS.state==='running'&&!bgmSrc&&bgmBuf)_startBGMNode();
+    }catch(e){}
+  });
+}catch(e){}
+/* <audio> 兜底通道自愈：内核或系统暂停了它，而用户想听 → 立刻续播 */
+try{
+  if(bgmEl){
+    bgmEl.addEventListener('pause',()=>{if(bgmWanted&&!document.hidden&&SAVE.bgm!==false){const p=bgmEl.play();if(p&&p.catch)p.catch(()=>{});}});
+    bgmEl.addEventListener('ended',()=>{if(bgmWanted&&!document.hidden){const p=bgmEl.play();if(p&&p.catch)p.catch(()=>{});}});
+  }
+}catch(e){}
 /* 测试/调试句柄（const 不上 window，这里显式暴露） */
 try{window.musicOnGet=()=>musicOn;window.bgmStateGet=()=>({playing:_bgmIsPlaying(),decoded:!!bgmBuf,fallback:!!bgmDecodeFail,ctxState:(_ac()||{}).state});window.bgmElRef=bgmEl;}catch(e){}
 /* 音效合成器：短促克制的高级电子音（金币双音 / 轻点 / 筹码 / 发牌 / 胜利琶音） */
@@ -2334,6 +2355,13 @@ function go(v){
   if(v==='rank')renderRank();
   if(v==='profile')renderProfile();
   if(v!=='game'&&G){$('musicbar').classList.toggle('on',musicOn);}
+  /* 切页自愈：微信内核在大幅重排后可能把 AudioContext 置为 interrupted/suspended
+     或掐掉音源节点——每次切换页面当场检查并续上，不等 3 秒看门狗 */
+  try{
+    const ac=_ac();
+    if(ac&&ac.state!=='running'){try{ac.resume();}catch(e){}}
+    if(bgmWanted&&!_bgmIsPlaying())startBGM();
+  }catch(e){}
 }
 function goBack(){
   const v=CURVIEW;
