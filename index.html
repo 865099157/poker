@@ -796,6 +796,10 @@ body.lite .sheet{animation-duration:.16s}
         <div class="ico" data-icon="globe"></div><div class="t">微信群联机开局</div>
         <div class="d">开房 → 二维码发群 → 好友扫码入座 → 人齐开打</div>
       </div>
+      <div class="m" onclick="openJoinCode()">
+        <div class="ico" data-icon="key"></div><div class="t">用房号加入</div>
+        <div class="d">打不开链接？手动输 4 位房号进同一桌</div>
+      </div>
       <div class="m" onclick="openSetup()">
         <div class="ico" data-icon="cards"></div><div class="t">同机开局</div>
         <div class="d">一台设备轮流打 · 2–8 人</div>
@@ -870,6 +874,18 @@ body.lite .sheet{animation-duration:.16s}
       <div style="font-size:12px;line-height:1.65;color:#6b6275;margin-top:4px">房主点「开局」后自动发牌；轮到你时按钮才会亮。房主负责结算，其余人只上报操作，所以不会出现两张牌桌不同步。</div>
     </div>
     <button class="btn primary" style="width:100%;padding:16px;font-size:16px" onclick="hostCreate()">生成房间 · 邀请好友</button>
+  </div>
+
+  <!-- ============ 联机：手动输房号加入 ============ -->
+  <div class="view" id="view-joincode">
+    <h2 style="color:var(--purple)">用房号加入</h2>
+    <div class="muted" style="margin:4px 0 14px">扫码或点链接打不开时，让房主看一眼等候厅的<b>房间号</b>，在这里输入即可进同一桌。</div>
+    <div class="rm-card">
+      <div style="text-align:center;font-size:11.5px;color:#8b80a0;font-weight:800;letter-spacing:.1em">房间号（4 位）</div>
+      <input class="input" id="joinCodeInput" maxlength="4" placeholder="例如 7K2M" autocomplete="off" autocapitalize="characters"
+             style="font-size:26px;font-weight:900;letter-spacing:.35em;text-align:center;margin-top:8px;text-transform:uppercase">
+      <button class="btn primary" style="width:100%;margin-top:14px" onclick="joinByCode()">进入等候厅</button>
+    </div>
   </div>
 
   <!-- ============ 联机：等候厅 ============ -->
@@ -1070,6 +1086,7 @@ body.lite .sheet{animation-duration:.16s}
    文案里零散的 emoji 由 EMOJI_MAP + MutationObserver 自动转成同款小图标。 */
 const SVG_ATTR='viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
 const ICONS={
+  key:'<circle cx="8" cy="16" r="4.4"/><path d="m11.2 12.8 8.2-8.2M16 8l2.4 2.4M13.6 10.4l2.4 2.4"/>',
   home:'<path d="M3.4 10.6 12 3.7l8.6 6.9"/><path d="M5.6 9.6V20a1 1 0 0 0 1 1h3.6v-5.6h3.6V21h3.6a1 1 0 0 0 1-1V9.6"/>',
   chart:'<path d="M3.2 20.2h17.6M3.2 4v16.2"/><path d="m5.6 15.6 4-4.4 3.2 2.8 4.8-6"/><path d="M17.6 7.8h-2.2m2.2 0v2.2"/>',
   user:'<circle cx="12" cy="8.2" r="3.6"/><path d="M4.6 20.4c.7-3.9 3.5-6 7.4-6s6.7 2.1 7.4 6"/>',
@@ -2642,8 +2659,18 @@ const NET={
   seen:{},         // 每个座位最后一次「还活着」的时间：客机掉线时房主据此托管
   rosterSig:'',forceLobby:false
 };
-const MQ_URL='wss://broker.emqx.io:8084/mqtt';
-const MQ_ALT='wss://broker.hivemq.com:8884/mqtt';
+/* broker 覆盖：调试/测试时用 ?mq=ws://... 或 localStorage.hhdd_mq 指定自有 broker，
+   三个通道都会连到它（多路冗余仍在，__mid 去重）。平时完全不受影响 */
+const MQ_OVERRIDE=(function(){
+  try{
+    if(localStorage.getItem('hhdd_mq'))return localStorage.getItem('hhdd_mq');
+    const m=new RegExp('[?&]mq=([^&#]*)').exec(location.href);
+    return m?decodeURIComponent(m[1]):null;
+  }catch(e){return null;}
+})();
+const MQ_URL=MQ_OVERRIDE||'wss://broker.emqx.io:8084/mqtt';
+const MQ_ALT=MQ_OVERRIDE||'wss://broker.hivemq.com:8884/mqtt';
+const MQ_CN=MQ_OVERRIDE||'wss://broker-cn.emqx.io:8084/mqtt';   // EMQ 中国节点：国内 4G/微信内核直连保命线路
 
 function urlParam(k){
   const m=new RegExp('[?&]'+k+'=([^&#]*)').exec(location.href);
@@ -2671,18 +2698,32 @@ function guestId(){return netId()+'-g'+guestTag();}
 function topicTail(){return 'hhdd/v3/'+NET.code+'/';}
 
 /* ---------- 极简 MQTT 客户端（只用 QoS0 + retain，够用且省电） ---------- */
-function mqConnect(url,onMsg,onReady){
+function mqConnect(url,onMsg,onReady,startDelay){
   const enc=new TextEncoder(),dec=new TextDecoder();
-  const C={ws:null,buf:new Uint8Array(0),tid:1,subs:[],ready:false,closed:false,ping:null};
+  const C={ws:null,buf:new Uint8Array(0),tid:1,subs:[],ready:false,closed:false,ping:null,pending:[],connT:null,openIdx:0,startDelay:startDelay||0};
   const varint=n=>{const o=[];do{let b=n%128;n=Math.floor(n/128);if(n)b|=128;o.push(b);}while(n);return o;};
   const str=s=>{const b=enc.encode(s);return [b.length>>8,b.length&255].concat(Array.from(b));};
   const raw=arr=>{try{if(C.ws&&C.ws.readyState===1)C.ws.send(new Uint8Array(arr));}catch(e){}};
   /* 诊断环：只留最近 120 条，排查「突然收不到消息」时用；对性能无感 */
   const dbg=(...a)=>{try{const L=(window.__mqLog=window.__mqLog||[]);L.push(a.join(' '));if(L.length>120)L.shift();}catch(e){}};
 
-  function publish(topic,obj,retain){
+  function sendPub(topic,obj,retain){
     const body=str(topic).concat(Array.from(enc.encode(JSON.stringify(obj))));
     raw([retain?0x31:0x30].concat(varint(body.length)).concat(body));
+  }
+  /* 连接未就绪时不再静默丢消息：先缓存，CONNACK 一到立刻补发。
+     否则好友刚打开页面就点「加入」，入座消息会凭空消失 */
+  function flushPending(){
+    while(C.ready&&C.pending.length){const m=C.pending.shift();sendPub(m[0],m[1],m[2]);}
+  }
+  function publish(topic,obj,retain){
+    if(!C.ready||!C.ws||C.ws.readyState!==1){
+      C.pending.push([topic,obj,retain]);
+      if(C.pending.length>60)C.pending.shift();
+      dbg('queue',topic.split('/').slice(-1)[0]);
+      return;
+    }
+    sendPub(topic,obj,retain);
   }
   function subscribe(topic){
     const t=str(topic);
@@ -2692,6 +2733,7 @@ function mqConnect(url,onMsg,onReady){
     if(C.subs.indexOf(topic)<0)C.subs.push(topic);
   }
   function handle(ab){
+    C.lastRx=Date.now();            // 收到任何包都是「这条线还活着」的证据
     const inc=new Uint8Array(ab);
     const merged=new Uint8Array(C.buf.length+inc.length);
     merged.set(C.buf);merged.set(inc,C.buf.length);C.buf=merged;
@@ -2717,7 +2759,9 @@ function mqConnect(url,onMsg,onReady){
       try{
         if(t===2){
           C.ready=true;
+          if(C.connT){clearTimeout(C.connT);C.connT=null;}
           dbg('open',C.url);
+          flushPending();
           onReady&&onReady(C);
         }
         else if(t===3){
@@ -2733,8 +2777,11 @@ function mqConnect(url,onMsg,onReady){
       }
     }
   }
-  function open(tryAlt){
-    const target=tryAlt?MQ_ALT:url;
+  /* 三条线路轮转重连：本通道起点在先，失败后按固定顺序换下一条，
+     不同通道起点错开，重连风暴也不会全部挤到同一条线路上 */
+  C.alts=(()=>{const all=[MQ_URL,MQ_ALT,MQ_CN];const i=all.indexOf(url);return all.slice(i).concat(all.slice(0,i));})();
+  function open(idx){
+    const target=C.alts[((idx%3)+3)%3];
     C.url=target;
     try{C.ws=new WebSocket(target,['mqtt']);}catch(e){return;}
     C.ws.binaryType='arraybuffer';
@@ -2743,20 +2790,36 @@ function mqConnect(url,onMsg,onReady){
       C.buf=new Uint8Array(0);
       const p=str('MQTT').concat([4,0x02,0,60]).concat(str('hhdd_'+Math.random().toString(36).slice(2,9)));
       raw([0x10].concat(varint(p.length)).concat(p));
+      C.lastRx=Date.now();
       if(C.ping)clearInterval(C.ping);
-      C.ping=setInterval(()=>raw([0xC0,0]),25000);
+      /* keepalive 检测：微信里网络切换/锁屏常造成「半开连接」——socket 没断但
+         服务器方向已经聋了，不触发 onclose，人就这样假在线。
+         每 10s 发一次 PINGREQ，40s 内没收到任何回包（连 PINGRESP 都没有）
+         就判定线路死亡，主动断开走重连换线路 */
+      C.ping=setInterval(()=>{
+        if(C.lastRx&&Date.now()-C.lastRx>40000){dbg('ping-dead',C.url);try{C.ws.close();}catch(e){}return;}
+        raw([0xC0,0]);
+      },10000);
+      /* CONNACK 看门狗：公共 broker 对同 IP 短时新建连接有限流，超量会静默吞掉握手。
+         5 秒没等到 CONNACK 就主动断开走重连（自动换线路），绝不吊死在半开连接上 */
+      if(C.connT)clearTimeout(C.connT);
+      C.connT=setTimeout(()=>{if(!C.ready){dbg('connack-timeout',C.url);try{C.ws.close();}catch(e){}}},5000);
     };
     C.ws.onmessage=e=>handle(e.data);
     C.ws.onerror=()=>{};
     C.ws.onclose=()=>{
       if(C.ping){clearInterval(C.ping);C.ping=null;}
+      if(C.connT){clearTimeout(C.connT);C.connT=null;}
       C.ready=false;
       dbg('close',C.url);
       if(C.closed)return;
-      setTimeout(()=>open(!tryAlt),1200);   // 掉了就换备用 broker 重连
+      C.openIdx=(C.openIdx||0)+1;
+      setTimeout(()=>open(C.openIdx),1200);   // 掉了就换下一条线路重连
     };
   }
-  open(false);
+  C.openIdx=0;
+  if(C.startDelay)setTimeout(()=>open(0),C.startDelay);   // 错峰：三条通道不同时握手，避免触发 broker 限流
+  else open(0);
   return {
     publish,subscribe,
     resub:()=>{C.subs.slice().forEach(t=>{
@@ -2771,9 +2834,9 @@ function mqConnect(url,onMsg,onReady){
   };
 }
 
-/* ---------- 双通道：emqx + hivemq 同时连，消息双路发、按 mid 去重收。
+/* ---------- 三通道：emqx(海外) + hivemq(海外) + emqx中国节点 同时连，消息多路发、按 mid 去重收。
    解决「房主连上了 A 服务器、好友连上了 B 服务器，俩人永远碰不上面」的死局：
-   一台连不上（某些运营商/网络封了其中一个）也照常工作。 ---------- */
+   国内 4G/微信内核经常连不上海外公共 broker——中国线路兜底，三选一总能通。 ---------- */
 function mqDual(onMsg,onReady){
   let readyFired=false;
   const seen=new Set(),seenQ=[];
@@ -2781,7 +2844,7 @@ function mqDual(onMsg,onReady){
     let d=null;try{d=JSON.parse(p);}catch(e){}
     if(d&&d.__mid!=null){
       const k=d.__mid;
-      if(seen.has(k))return;              // 两台服务器各收到一份，只处理第一份
+      if(seen.has(k))return;              // 多台服务器各收到一份，只处理第一份
       seen.add(k);seenQ.push(k);
       if(seenQ.length>400)seen.delete(seenQ.shift());
       delete d.__mid;
@@ -2791,22 +2854,24 @@ function mqDual(onMsg,onReady){
   };
   const hub={
     publish(topic,obj,retain){
-      if(!obj||typeof obj!=='object'){a.publish(topic,obj,retain);b.publish(topic,obj,retain);return;}
+      if(!obj||typeof obj!=='object'){chs.forEach(x=>x.publish(topic,obj,retain));return;}
       const o=Object.assign({},obj,{__mid:'m'+Math.random().toString(36).slice(2,11)});
-      a.publish(topic,o,retain);b.publish(topic,o,retain);
+      chs.forEach(x=>x.publish(topic,o,retain));
     },
-    subscribe(t){a.subscribe(t);b.subscribe(t);},
-    resub(){a.resub();b.resub();},
-    close(){a.close();b.close();},
-    kick(){a.kick();b.kick();},
-    get ready(){return a.ready||b.ready;},
-    get dual(){return [a.ready,b.ready];}
+    subscribe(t){chs.forEach(x=>x.subscribe(t));},
+    resub(){chs.forEach(x=>x.resub());},
+    close(){chs.forEach(x=>x.close());},
+    kick(){chs.forEach(x=>x.kick());},
+    get ready(){return chs.some(x=>x.ready);},
+    get dual(){return chs.map(x=>x.ready);}
   };
   const onFirst=()=>{if(!readyFired){readyFired=true;onReady&&onReady(hub);}};
   /* 每条连接每次 CONNACK（含断线重连回来）都重放自己的订阅清单：
-     b 比 a 晚连上、或掉线重连，都不会漏订阅 */
-  var a=mqConnect(MQ_URL,wrap,()=>{a.resub();onFirst();});
-  var b=mqConnect(MQ_ALT,wrap,()=>{b.resub();onFirst();});
+     晚连上、或掉线重连，都不会漏订阅 */
+  var a=mqConnect(MQ_URL,wrap,()=>{a.resub();onFirst();},0);
+  var b=mqConnect(MQ_ALT,wrap,()=>{b.resub();onFirst();},300);
+  var c=mqConnect(MQ_CN,wrap,()=>{c.resub();onFirst();},600);
+  const chs=[a,b,c];
   return hub;
 }
 
@@ -2815,6 +2880,17 @@ window.__room={size:4,buyin:1,blind:1};
 function openRoom(){
   renderRoomCfg();
   go('room');
+}
+/* 手动输房号加入：链接被微信吞参数/扫码失败时的兜底通道 */
+function openJoinCode(){
+  const i=$('joinCodeInput');if(i)i.value='';
+  go('joincode');
+  setTimeout(()=>{try{i&&i.focus();}catch(e){}},350);
+}
+function joinByCode(){
+  const c=($('joinCodeInput').value||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+  if(c.length<3)return toast('先输入 4 位房间号');
+  guestLobby(c);
 }
 function renderRoomCfg(){
   const R=window.__room;
@@ -3003,6 +3079,13 @@ function guestLobby(code){
         if(NET.seat<0){
           const me=(d.seatsMap||[]).find(x=>x.id===NET.id);
           if(me){NET.seat=me.seat;MY_SEAT=me.seat;}
+          else{
+            /* 我不在座册里 = 本局开始时我还没入座。
+               绝不能进一个没有座位的空牌桌：留在等候厅，等房主的 deny 提示/下一局 */
+            $('lbJoinCard').style.display='block';
+            updateLobbyStatus();
+            return;
+          }
         }
         buildGameNet(d.seats,d.cfg);
         NET.mq.subscribe(topicTail()+'st/'+NET.seat);
@@ -3028,7 +3111,7 @@ function guestLobby(code){
       // 房主在 showdown 后 700ms 弹层，客机晚 620ms —— 两端几乎同时看到交割单
       setTimeout(()=>showResultRemote(d),620);
     }
-    if(tail==='deny'&&d.id===NET.id&&!NET.started){toast(d.why||'进不去');}
+    if(tail==='deny'&&d.id===NET.id){toast(d.why||'进不去');}
   },()=>{
     NET.online=true;
     NET.mq.subscribe(topicTail()+'lobby');
@@ -3057,7 +3140,9 @@ function guestJoin(){
   if(!nm)return toast('先写个昵称');
   SAVE.me.name=nm;SAVE.me.avatar=NET.av;save();
   pushJoin();
-  toast('已入座 · 无需房主审批，正在同步给房主…');
+  /* 名册以房主回发的 lobby 为准（toast 在那里发「已加入」）。
+     连接没就绪时消息会先进缓冲，连上自动补发，这里只说「报名」不说「已入座」 */
+  toast(NET.mq&&NET.mq.ready?'已报名，正在同步给房主…':'正在连接房间，连上自动报名…');
   updateLobbyStatus();
 }
 /* 页面从后台回到前台：微信里切去发消息/锁屏再回来，网络连接和心跳都断了半拍。
@@ -3117,7 +3202,7 @@ function startHeartbeat(){
       }
       return;
     }
-    if(!NET.started&&tick%3===0)pushJoin();   // 开局前每次心跳都报一次「我还在」
+    if(!NET.started&&tick%2===0)pushJoin();   // 开局前每次心跳都报一次「我还在」（2.4 秒一报，房主随时回来都能收到）
     if(NET.started&&tick%3===0)netSendCtrl('hi');   // 开局后报活，房主用来判断掉线
   },1200);
 }
@@ -3133,11 +3218,14 @@ function wireLobby(){
 }
 function updateLobbyStatus(){
   const el=$('lbStatus');if(!el)return;
+  /* 线路诊断：三条 MQTT 通道连上几条，一眼看出网络问题 */
+  const ch=(NET.mq&&NET.mq.dual)?NET.mq.dual.filter(Boolean).length:0;
+  const chTxt=ch?(' · 线路'+ch+'/3'):'';
   if(!NET.online){el.className='rm-badge err';el.textContent='连接中…';return;}
   const n=NET.players.length;
-  if(NET.started){el.className='rm-badge';el.textContent='进行中';}
-  else if(n<2){el.className='rm-badge wait';el.textContent=`已入座 ${n}/${NET.maxPlayers} · 还差人`;}
-  else{el.className='rm-badge';el.textContent=`已入座 ${n}/${NET.maxPlayers}`;}
+  if(NET.started){el.className='rm-badge';el.textContent='进行中'+chTxt;}
+  else if(n<2){el.className='rm-badge wait';el.textContent=`已入座 ${n}/${NET.maxPlayers}${chTxt}`;}
+  else{el.className='rm-badge';el.textContent=`已入座 ${n}/${NET.maxPlayers}${chTxt}`;}
   if(NET.host){
     $('lbHint').innerHTML='<b>① 把二维码发到微信群</b>　<b>② 保持本页面在最前台</b><br><span style="color:#a1483a">切去微信聊天或锁屏时，好友入座会收不到响应</span>';
     const btn=$('lbStart');
@@ -3153,9 +3241,11 @@ function updateLobbyStatus(){
     el.textContent=NET.seat>=0?'房主暂时不在线':'联系不上房主';
     $('lbHint').textContent='房主可能切去了微信或锁屏。已自动持续重试，请让房主回到游戏页面即可继续，无需重新扫码。';
   }else{
-    $('lbHint').textContent=NET.seat>=0
+    $('lbHint').textContent=NET.started&&NET.seat<0
+      ?'本局已在进行中（这局没赶上）。等这局结束、房主开下一局时你会自动加入。'
+      :NET.seat>=0
       ?'已入座！等房主点开局，人齐会自动开始'
-      :'填昵称 → 点「入座」。入座不需要房主审批，出现「已入座」字样即成功。';
+      :'填昵称 → 点「加入这桌」。不需要房主审批，座位区出现你的头像即成功。';
   }
 }
 function renderLobby(){
